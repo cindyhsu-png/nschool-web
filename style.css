@@ -260,6 +260,7 @@ h1, h2, h3, h4 {
 
 /* studio statement */
 .studio { min-height: 100svh; display: flex; align-items: center; }
+.studio .eyebrow { margin-bottom: 26px; }
 .studio h2 { color: #fff; max-width: 16ch; font-size: clamp(34px, 5vw, 72px); }
 
 /* ---------- clients ---------- */
@@ -271,14 +272,15 @@ h1, h2, h3, h4 {
 .logo-card {
   aspect-ratio: 16 / 10; border-radius: var(--radius);
   display: grid; place-items: center;
-  background: rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(22px) saturate(1.1);
-  -webkit-backdrop-filter: blur(22px) saturate(1.1);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  /* dark violet glass — keeps white labels readable over the bright 3D scene */
+  background: rgba(26, 20, 48, 0.5);
+  backdrop-filter: blur(22px) saturate(1.2);
+  -webkit-backdrop-filter: blur(22px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   overflow: hidden; position: relative;
 }
-.logo-card span { font-size: clamp(18px, 2vw, 28px); font-weight: 600; letter-spacing: -0.02em; color: rgba(255, 255, 255, 0.78); filter: blur(0.3px); }
-.logo-card::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 100% at 30% 20%, rgba(255,255,255,0.25), transparent 60%); }
+.logo-card span { font-size: clamp(18px, 2vw, 28px); font-weight: 600; letter-spacing: -0.02em; color: #fff; }
+.logo-card::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 100% at 30% 20%, rgba(255,255,255,0.18), transparent 58%); pointer-events: none; }
 
 /* ---------- services ---------- */
 .services { padding: clamp(80px, 12vh, 150px) 0; }
@@ -453,14 +455,34 @@ h1, h2, h3, h4 {
   .how-grid, .team-grid { grid-template-columns: 1fr; }
   .how-sticky { position: relative; height: auto; padding: 40px 0; }
   .sec-head { grid-template-columns: 1fr; }
-  .hero-caption { position: static; text-align: left; margin-top: 40px; max-width: none; color: var(--muted); }
+  /* hero stacks: caption drops below the CTA with breathing room */
+  .hero { flex-direction: column; align-items: stretch; justify-content: center; }
+  .hero-caption {
+    position: static; text-align: left;
+    width: 100%; max-width: var(--maxw); margin: 56px auto 0;
+    padding-inline: var(--pad); color: var(--muted);
+  }
+  .hero-caption .en { display: block; margin-top: 6px; }
 }
 @media (max-width: 560px) {
-  .cards-3, .cards-4, .bento, .stats-grid, .logo-grid { grid-template-columns: 1fr; }
+  /* articles + testimonials stack into a clean single column (no sideways scroll) */
+  .cards-3, .cards-4, .bento, .stats-grid { grid-template-columns: 1fr; }
   .nav-cta span { display: none; }
   /* desktop used white-space:nowrap (inline) — let phones wrap so text isn't clipped */
   .approach h2, .approach .lead { white-space: normal !important; max-width: 100% !important; }
   .approach h2 { font-size: clamp(28px, 8vw, 40px); }
+
+  /* partners — headings left-aligned, cards two-up and more compact */
+  .clients-head { justify-content: flex-start; }
+  .clients-head h2 { text-align: left; font-size: clamp(26px, 7vw, 40px); }
+  .clients-head .eyebrow { text-align: left !important; }
+  .logo-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .logo-card { aspect-ratio: 3 / 2; }
+  .logo-card span { font-size: 16px; }
+
+  /* faculty — make the second card clearly peek so more content is implied */
+  .team-track { gap: 16px; }
+  .team-track .member { flex-basis: 78%; }
 }
 
 /* ---------- trial course modal ---------- */
