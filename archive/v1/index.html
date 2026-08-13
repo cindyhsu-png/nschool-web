@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nSchool — 培養財商能力的搖籃，建立你個人的投資 DNA | 財經教育平台</title>
+<meta name="description" content="nSchool 以機構級研究方法與真實市場數據，建立可驗證、可複利的投資知識體系。總體經濟、財報分析、估值方法論、資產配置 — 完整財經教育課程。">
+<meta property="og:title" content="nSchool — 建立你個人的投資 DNA">
+<meta property="og:description" content="機構級研究方法 × 真實市場數據。不教明牌，只教方法。">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#7c3aed">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237c3aed'/%3E%3Cpath d='M18 46V18h6l16 20V18h6v28h-6L24 26v20z' fill='%23fff'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/main.css?v=20">
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- ════════ PRELOADER ════════ -->
+<div class="preloader" id="preloader">
+  <div class="preloader-inner">
+    <img class="preloader-logo" src="img/nschool_black.svg" alt="nSchool">
+    <div class="preloader-count" id="preloaderCount">00</div>
+    <div class="preloader-label">CAPITAL LITERACY · 資本的語言</div>
+  </div>
+  <div class="preloader-curtain"></div>
+</div>
+
+<!-- ════════ CUSTOM CURSOR ════════ -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ════════ WEBGL CANVAS (fixed, behind everything) ════════ -->
+<canvas id="gl" aria-hidden="true"></canvas>
+
+<!-- ════════ GRAIN OVERLAY ════════ -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ════════ SCROLL PROGRESS ════════ -->
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ════════ NAV ════════ -->
+<header class="nav" id="nav">
+  <a class="nav-logo" href="#top" data-magnetic aria-label="nSchool 首頁">
+    <img class="nav-logo-img" src="img/nschool_black.svg" alt="nSchool">
+  </a>
+  <nav class="nav-links">
+    <a href="#method" data-magnetic>方法論</a>
+    <a href="#courses" data-magnetic>課程體系</a>
+    <a href="#evidence" data-magnetic>市場研究</a>
+    <a href="#faculty" data-magnetic>師資</a>
+    <a href="#voices" data-magnetic>學員成果</a>
+  </nav>
+  <div class="nav-right">
+    <span class="nav-clock mono" id="navClock">TPE 00:00:00</span>
+    <a href="#cta" class="btn btn-solid btn-sm" data-magnetic><span>預約諮詢</span></a>
+  </div>
+  <button class="nav-burger" id="navBurger" aria-label="開啟選單">
+    <span></span><span></span>
+  </button>
+</header>
+
+<!-- ════════ MOBILE MENU ════════ -->
+<div class="menu" id="menu">
+  <nav class="menu-links">
+    <a href="#method"><span class="mono">01</span>方法論</a>
+    <a href="#courses"><span class="mono">02</span>課程體系</a>
+    <a href="#evidence"><span class="mono">03</span>市場研究</a>
+    <a href="#faculty"><span class="mono">04</span>師資</a>
+    <a href="#voices"><span class="mono">05</span>學員成果</a>
+    <a href="#cta"><span class="mono">06</span>預約諮詢</a>
+  </nav>
+  <div class="menu-foot mono">nSchool · 財經教育平台 · TAIPEI</div>
+</div>
+
+<main id="top">
+
+  <!-- ════════ HERO ════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-beams" aria-hidden="true"></div>
+
+    <!-- orbiting financial UI cards — LEFT cluster -->
+    <div class="hero-orbit hero-orbit-l" aria-hidden="true">
+      <div class="ocard ocard-mkt" data-depth="0.95" style="--x:15.5%;--y:34%;--s:1;--tz:14px;--cry:9deg;--crx:3deg">
+        <div class="ocard-in" style="--dur:10s;--dl:-1s">
+          <div class="omkt-head mono"><span class="panel-live"><i></i>加權指數 TAIEX</span></div>
+          <div class="omkt-row"><span class="omkt-px mono">23,847.62</span><span class="mono t-up">▲ +1.24%</span></div>
+          <svg class="omkt-spark" viewBox="0 0 220 64" preserveAspectRatio="none" aria-hidden="true"></svg>
+        </div>
+      </div>
+      <div class="ocard" data-depth="0.6" style="--x:11.5%;--y:67%;--s:0.84;--b:1px;--o:0.92;--tz:-8px;--cry:11deg;--crx:-5deg">
+        <div class="ocard-in oc-alloc" style="--dur:12s;--dl:-6s">
+          <svg class="oc-donut" viewBox="0 0 44 44" aria-hidden="true">
+            <circle class="od-track" cx="22" cy="22" r="16"></circle>
+            <circle class="od-eq" cx="22" cy="22" r="16"></circle>
+            <circle class="od-bd" cx="22" cy="22" r="16"></circle>
+          </svg>
+          <div class="oc-alloc-meta">
+            <span class="mono">資產配置</span>
+            <span>股 60 · 債 40</span>
+          </div>
+        </div>
+      </div>
+      <div class="ocard" data-depth="0.46" style="--x:21%;--y:14%;--s:0.8;--b:2px;--o:0.7;--tz:-26px;--cry:8deg;--crx:5deg">
+        <div class="ocard-in" style="--dur:13s;--dl:-3s">
+          <span class="mono oc-code">F-01</span><span class="oc-course">總體經濟</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- orbiting financial UI cards — RIGHT cluster -->
+    <div class="hero-orbit hero-orbit-r" aria-hidden="true">
+      <div class="ocard" data-depth="1.05" style="--x:85%;--y:35%;--s:0.98;--tz:20px;--cry:-9deg;--crx:3deg">
+        <div class="ocard-in" style="--dur:11s;--dl:-4s">
+          <span class="oc-label mono">TAIEX · 5D</span>
+          <svg class="oc-candle" viewBox="0 0 120 46" preserveAspectRatio="none" aria-hidden="true"></svg>
+        </div>
+      </div>
+      <div class="ocard ocard-quote" data-depth="0.7" style="--x:88.5%;--y:67%;--s:0.86;--b:1px;--o:0.92;--tz:-8px;--cry:-11deg;--crx:-5deg">
+        <div class="ocard-in" style="--dur:12.5s;--dl:-2s">
+          <div class="oq-name">台積電 2330</div>
+          <div class="oq-row"><span class="oq-px mono">1,085</span><span class="mono t-up">▲ +1.40%</span></div>
+          <svg class="oq-spark" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"></svg>
+        </div>
+      </div>
+      <div class="ocard" data-depth="0.46" style="--x:79%;--y:14%;--s:0.8;--b:2px;--o:0.7;--tz:-26px;--cry:-8deg;--crx:5deg">
+        <div class="ocard-in" style="--dur:13.5s;--dl:-5s">
+          <span class="mono oc-code">F-03</span><span class="oc-course">估值方法論</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- centered hero content -->
+    <div class="hero-center">
+      <h1 class="hero-title">
+        <span class="line"><span class="line-inner">建構你個人的<em>投資DNA</em></span></span>
+      </h1>
+      <p class="hero-sub reveal-fade">
+        從總體經濟到資產配置，nSchool 以研究方法與真實市場數據和教練互動，建立可驗證、可複利的投資知識體系。
+      </p>
+      <div class="hero-cta reveal-fade">
+        <a href="#courses" class="btn btn-solid" data-magnetic><span>開始學習路徑</span>
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        </a>
+        <a href="#method" class="btn btn-ghost" data-magnetic><span>了解方法論</span></a>
+      </div>
+      <div class="hero-trust reveal-fade">
+        <div class="trust-item">
+          <span class="trust-v mono">1,000<sup>+</sup></span>
+          <span class="trust-k">累積學員</span>
+        </div>
+        <span class="trust-sep"></span>
+        <div class="trust-item">
+          <span class="trust-v mono">82<sup>%</sup></span>
+          <span class="trust-k">互動率</span>
+        </div>
+        <span class="trust-sep"></span>
+        <div class="trust-item">
+          <span class="trust-v mono">5<sup>+</sup></span>
+          <span class="trust-k">學習領域</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- extreme-foreground bokeh card — depth device -->
+    <div class="hero-orbit-front" aria-hidden="true">
+      <div class="ocard ocard-bokeh" data-depth="2.1" style="--x:8%;--y:89%;--s:1.45;--b:10px;--o:0.46;--tz:50px;--cry:-16deg;--crx:-8deg">
+        <div class="ocard-in" style="--dur:14s;--dl:-3s">
+          <svg class="oc-spark" viewBox="0 0 160 60" preserveAspectRatio="none" aria-hidden="true"></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll mono reveal-fade">
+      <span>SCROLL</span>
+      <span class="hero-scroll-line"></span>
+    </div>
+  </section>
+
+  <!-- ════════ MANIFESTO ════════ -->
+  <section class="manifesto" id="manifesto">
+    <div class="container">
+      <p class="manifesto-text split-words">
+        市場上從不缺資訊，缺的是判讀資訊的框架。我們相信，真正的財務自由來自一套能被驗證、能被複製、能穿越週期的思考體系 — 而不是任何一支明牌。
+      </p>
+      <div class="manifesto-sig mono reveal-fade">— nSchool 教育宣言 · 第一條</div>
+    </div>
+  </section>
+
+  <!-- ════════ METHOD ════════ -->
+  <section class="method" id="method">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-label mono reveal-fade"><span class="section-label-num">01</span>METHODOLOGY</div>
+        <h2 class="section-title split-lines">三個先於，<br>構成我們的教學紀律</h2>
+      </div>
+
+      <div class="method-list">
+        <article class="method-item" data-method="0">
+          <div class="method-num mono">原則 01</div>
+          <h3 class="method-name">證據<span class="method-x">／</span>先於觀點</h3>
+          <p class="method-desc">每一堂課的論點，都對應可回測的歷史數據與經同儕審查的學術文獻。我們公開資料來源與計算方式，邀請你質疑、驗證、推翻。</p>
+          <div class="method-tag mono">DATA-FIRST · 1,400+ 篇文獻引用</div>
+        </article>
+        <article class="method-item" data-method="1">
+          <div class="method-num mono">原則 02</div>
+          <h3 class="method-name">體系<span class="method-x">／</span>先於技巧</h3>
+          <p class="method-desc">不教捷徑與訊號，建立從總體經濟、產業結構到個股估值的完整分析框架。技巧會過時，框架讓你在任何市場環境都有判斷座標。</p>
+          <div class="method-tag mono">FRAMEWORK · 由上而下三層架構</div>
+        </article>
+        <article class="method-item" data-method="2">
+          <div class="method-num mono">原則 03</div>
+          <h3 class="method-name">風險<span class="method-x">／</span>先於報酬</h3>
+          <p class="method-desc">部位思維與資金管理，永遠排在報酬率敘事之前。我們教你先計算最大可承受損失，再談預期報酬 — 順序錯了，數學再對也沒用。</p>
+          <div class="method-tag mono">RISK-FIRST · 凱利公式 × 回撤管理</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SCENES (image band) ════════ -->
+  <section class="scenes" id="scenes">
+    <div class="container">
+      <div class="scenes-row">
+        <figure class="photo-card reveal-up">
+          <div class="photo-wrap">
+            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=70&auto=format&fit=crop" alt="實體講座現場" loading="lazy">
+          </div>
+          <figcaption>
+            <span class="mono">SC-01</span>
+            <strong>台北 · 實體講座</strong>
+            <span>每季巡迴開講，與講師面對面拆解當期市場</span>
+          </figcaption>
+        </figure>
+        <figure class="photo-card reveal-up">
+          <div class="photo-wrap">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=70&auto=format&fit=crop" alt="線上互動課程" loading="lazy">
+          </div>
+          <figcaption>
+            <span class="mono">SC-02</span>
+            <strong>線上 · 互動課程</strong>
+            <span>直播答疑與作業批改，完課率 94% 的原因</span>
+          </figcaption>
+        </figure>
+        <figure class="photo-card reveal-up">
+          <div class="photo-wrap">
+            <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1200&q=70&auto=format&fit=crop" alt="研究例會" loading="lazy">
+          </div>
+          <figcaption>
+            <span class="mono">SC-03</span>
+            <strong>社群 · 研究例會</strong>
+            <span>學員自組研究小組，每週產出一份產業備忘錄</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ COURSES ════════ -->
+  <section class="courses" id="courses">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-label mono reveal-fade"><span class="section-label-num">02</span>CURRICULUM</div>
+        <h2 class="section-title split-lines">六門核心課程，<br>一條完整的能力路徑</h2>
+        <p class="section-sub reveal-fade">由淺入深、彼此銜接。每門課皆含實作作業、真實案例研究與結業評核。</p>
+      </div>
+
+      <div class="course-grid">
+        <a class="course-card" href="#cta">
+          <div class="course-top">
+            <span class="course-code mono">F-01</span>
+            <span class="course-level mono">築基</span>
+          </div>
+          <h3 class="course-name">總體經濟解讀</h3>
+          <p class="course-desc">利率、通膨、央行政策與景氣循環 — 學會讀懂影響所有資產價格的底層變數。</p>
+          <div class="course-foot mono">
+            <span>12 週 · 24 講</span>
+            <svg viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
+        </a>
+        <a class="course-card" href="#cta">
+          <div class="course-top">
+            <span class="course-code mono">F-02</span>
+            <span class="course-level mono">築基</span>
+          </div>
+          <h3 class="course-name">財報分析實務</h3>
+          <p class="course-desc">三大報表的勾稽邏輯、盈餘品質判讀與財務造假紅旗 — 用財報還原企業真實體質。</p>
+          <div class="course-foot mono">
+            <span>10 週 · 20 講</span>
+            <svg viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
+        </a>
+        <a class="course-card" href="#cta">
+          <div class="course-top">
+            <span class="course-code mono">F-03</span>
+            <span class="course-level mono">進階</span>
+          </div>
+          <h3 class="course-name">估值方法論</h3>
+          <p class="course-desc">DCF、相對估值與情境分析。估值不是算出一個數字，而是理解價格隱含的假設。</p>
+          <div class="course-foot mono">
+            <span>8 週 · 16 講</span>
+            <svg viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
+        </a>
+        <a class="course-card" href="#cta">
+          <div class="course-top">
+            <span class="course-code mono">F-04</span>
+            <span class="course-level mono">進階</span>
+          </div>
+          <h3 class="course-name">資產配置與組合管理</h3>
+          <p class="course-desc">從效率前緣到再平衡紀律，建構與你的人生階段、風險承受度相符的投資組合。</p>
+          <div class="course-foot mono">
+            <span>8 週 · 16 講</span>
+            <svg viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
+        </a>
+        <a class="course-card" href="#cta">
+          <div class="course-top">
+            <span class="course-code mono">F-05</span>
+            <span class="course-level mono">實戰</span>
+          </div>
+          <h3 class="course-name">量化思維入門</h3>
+          <p class="course-desc">回測方法、統計顯著性與過度擬合陷阱 — 用數據驗證策略，而不是用故事說服自己。</p>
+          <div class="course-foot mono">
+            <span>10 週 · 20 講</span>
+            <svg viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
+        </a>
+        <a class="course-card" href="#cta">
+          <div class="course-top">
+            <span class="course-code mono">F-06</span>
+            <span class="course-level mono">實戰</span>
+          </div>
+          <h3 class="course-name">行為金融與決策</h3>
+          <p class="course-desc">損失趨避、錨定效應與過度自信 — 認識你大腦裡的系統性偏誤，建立反脆弱的決策流程。</p>
+          <div class="course-foot mono">
+            <span>6 週 · 12 講</span>
+            <svg viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ EVIDENCE / DATA ════════ -->
+  <section class="evidence" id="evidence">
+    <div class="container">
+      <div class="evidence-grid">
+        <div class="evidence-copy">
+          <div class="section-label mono reveal-fade"><span class="section-label-num">03</span>EVIDENCE</div>
+          <h2 class="section-title split-lines">我們用真實數據教學，<br>不用想像力</h2>
+          <p class="section-sub reveal-fade">
+            右側是 1928 年至今，美國大型股、長期公債與現金的實質累積報酬（對數刻度）。這張圖出現在我們第一堂課 — 因為理解「時間 × 資產類別」的複利差距，比任何投資技巧都重要。
+          </p>
+          <ul class="evidence-points">
+            <li class="reveal-fade"><span class="mono">96 年</span>跨越大蕭條、戰爭、停滯性通膨與金融海嘯的完整樣本</li>
+            <li class="reveal-fade"><span class="mono">10.2%</span>美股長期年化名目報酬 — 以及換來它所需承受的回撤</li>
+            <li class="reveal-fade"><span class="mono">-83%</span>1929–1932 年最大回撤：報酬的代價，第一課就講清楚</li>
+          </ul>
+        </div>
+        <figure class="evidence-chart reveal-fade">
+          <div class="chart-frame">
+            <div class="chart-head mono">
+              <span>REAL TOTAL RETURN · LOG SCALE · 1928–2024</span>
+              <span class="chart-legend">
+                <i class="lg lg-violet"></i>US EQUITIES
+                <i class="lg lg-teal"></i>10Y TREASURY
+                <i class="lg lg-dim"></i>CASH
+              </span>
+            </div>
+            <svg id="chartSvg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet" aria-label="長期資產實質報酬比較圖"></svg>
+            <figcaption class="chart-foot mono">資料示意：依 Damodaran / Shiller 公開長期序列重繪 · 僅供教學說明</figcaption>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ STATS BAND ════════ -->
+  <section class="stats" id="stats">
+    <div class="container stats-row">
+      <div class="stat">
+        <div class="stat-num mono"><span data-count="1000">0</span><sup>+</sup></div>
+        <div class="stat-label">累積學員</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num mono"><span data-count="82">0</span><sup>%</sup></div>
+        <div class="stat-label">互動率</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num mono"><span data-count="5">0</span><sup>+</sup></div>
+        <div class="stat-label">學習領域</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FACULTY ════════ -->
+  <section class="faculty" id="faculty">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-label mono reveal-fade"><span class="section-label-num">04</span>FACULTY</div>
+        <h2 class="section-title split-lines">在市場第一線<br>待過的人來教</h2>
+      </div>
+
+      <div class="faculty-list">
+        <article class="faculty-card reveal-up">
+          <div class="faculty-photo">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=70&auto=format&fit=crop" alt="總體經濟首席講師" loading="lazy">
+            <span class="faculty-id mono">T-01</span>
+          </div>
+          <div class="faculty-main">
+            <h3 class="faculty-name">總體經濟 · 首席講師</h3>
+            <p class="faculty-bio">前外資投行宏觀策略分析師，十二年央行政策與利率市場研究。主筆 nSchool 每週總經備忘錄，累積發布 400 餘期。</p>
+            <div class="faculty-creds mono">
+              <span>CFA 特許金融分析師</span>
+              <span>經濟學碩士</span>
+            </div>
+          </div>
+        </article>
+        <article class="faculty-card reveal-up">
+          <div class="faculty-photo">
+            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=70&auto=format&fit=crop" alt="財報與估值主任講師" loading="lazy">
+            <span class="faculty-id mono">T-02</span>
+          </div>
+          <div class="faculty-main">
+            <h3 class="faculty-name">財報與估值 · 主任講師</h3>
+            <p class="faculty-bio">前四大會計師事務所審計經理、上市公司財務長幕僚。經手百餘件 IPO 與併購盡職調查，擅長從附註裡讀出企業真相。</p>
+            <div class="faculty-creds mono">
+              <span>CPA 會計師</span>
+              <span>會計學碩士</span>
+            </div>
+          </div>
+        </article>
+        <article class="faculty-card reveal-up">
+          <div class="faculty-photo">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&q=70&auto=format&fit=crop" alt="量化研究客座講師" loading="lazy">
+            <span class="faculty-id mono">T-03</span>
+          </div>
+          <div class="faculty-main">
+            <h3 class="faculty-name">量化研究 · 客座講師</h3>
+            <p class="faculty-bio">自營量化交易團隊研究主管，專長統計套利與風險模型。負責課程中所有回測框架的設計與審核，把學術嚴謹帶進教室。</p>
+            <div class="faculty-creds mono">
+              <span>FRM 金融風險管理師</span>
+              <span>應用數學博士</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ VOICES ════════ -->
+  <section class="voices" id="voices">
+    <div class="container">
+      <div class="section-label mono reveal-fade"><span class="section-label-num">05</span>VOICES</div>
+      <div class="voices-stack">
+        <blockquote class="voice reveal-up">
+          <p class="voice-quote">「上完估值課之後，我第一次有能力對市場共識說『我不同意』，而且說得出理由。」</p>
+          <footer class="voice-meta mono">科技業 PM · F-03 估值方法論 結業</footer>
+        </blockquote>
+        <blockquote class="voice reveal-up">
+          <p class="voice-quote">「它救了我的不是報酬率，是 2022 年的回撤 — 資產配置課教的再平衡紀律，讓我跌得比大盤少一半。」</p>
+          <footer class="voice-meta mono">執業醫師 · F-04 資產配置 結業</footer>
+        </blockquote>
+        <blockquote class="voice reveal-up">
+          <p class="voice-quote">「我以前看財經新聞像看天書。現在我會先問：數據來源是什麼？樣本多長？這就是框架的力量。」</p>
+          <footer class="voice-meta mono">新創營運長 · 完整路徑學員</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CTA ════════ -->
+  <section class="cta" id="cta">
+    <div class="container cta-inner">
+      <div class="section-label mono reveal-fade"><span class="section-label-num">06</span>BEGIN</div>
+      <h2 class="cta-title split-lines">市場不會等你準備好，<br>但你可以從今天開始準備</h2>
+      <p class="cta-sub reveal-fade">預約 30 分鐘一對一學習規劃 — 我們會根據你的目標與現況，給你一條明確的學習路徑。免費，無推銷。</p>
+      <div class="cta-actions reveal-fade">
+        <a href="mailto:hello@nschool.tw" class="btn btn-solid btn-lg" data-magnetic><span>預約學習規劃</span>
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        </a>
+        <span class="cta-note mono">每月開放 40 個名額 · 本月剩餘 7 名</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img class="footer-word" src="img/nschool_white.svg" alt="nSchool">
+          <p class="footer-tag">培養財商能力的搖籃｜建立你個人的投資 DNA</p>
+          <p class="footer-url mono">www.nschool.tw</p>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <div class="footer-col-title mono">學習</div>
+            <a href="#courses">課程體系</a>
+            <a href="#method">方法論</a>
+            <a href="#evidence">市場研究</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title mono">機構</div>
+            <a href="#faculty">師資介紹</a>
+            <a href="#voices">學員成果</a>
+            <a href="#cta">聯絡我們</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title mono">追蹤</div>
+            <a href="#" rel="noopener">YouTube</a>
+            <a href="#" rel="noopener">Instagram</a>
+            <a href="#" rel="noopener">電子報</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-disclaimer">
+        <p>重要聲明 — nSchool 為財經教育機構，所有課程與內容僅供教育用途，不構成任何投資建議、要約或招攬。投資涉及風險，金融商品價格可升可跌，過往績效不代表未來表現。讀者應依自身狀況獨立判斷，必要時諮詢持牌專業人士。</p>
+      </div>
+      <div class="footer-bottom mono">
+        <span>© 2026 NSCHOOL EDUCATION. ALL RIGHTS RESERVED.</span>
+        <span>TAIPEI · 25.0330° N, 121.5654° E</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<!-- ════════ TICKER (fixed bottom) ════════ -->
+<div class="ticker" id="ticker" aria-hidden="true">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script type="module" src="assets/js/scene.js?v=20"></script>
+<script src="assets/js/main.js?v=20" defer></script>
+</body>
+</html>

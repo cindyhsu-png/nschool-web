@@ -8,10 +8,11 @@
 使用 ES Modules（Three.js import map），需經 HTTP 伺服器開啟：
 
 ```bash
-cd clone
 python3 -m http.server 5500
 # 瀏覽 http://localhost:5500
 ```
+
+正式站：<https://cindyhsu-png.github.io/nschool-web/>（GitHub Pages，push 到 `main` 自動部署）
 
 ## 結構
 
@@ -23,7 +24,8 @@ main.js          — Hero 股市標註、文章專區動態渲染、師資輪播
 articles.json    — 文章專區資料（由 CI 每日自動更新）
 img/             — logo 與師資照片（自包含）
 scripts/         — 文章抓取腳本（Playwright，僅 CI 用）
-.github/         — 每日排程 workflow
+.github/         — deploy.yml（Pages 部署）＋ update-articles.yml（每日排程）
+archive/v1/      — v1.0 舊版首頁封存，不部署（見 archive/v1/ARCHIVE.md）
 ```
 
 ## 技術棧

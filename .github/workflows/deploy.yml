@@ -1,0 +1,35 @@
+# 部署到 GitHub Pages（純靜態，無 build）
+# 觸發時機：
+#   1. 推送到 main 分支
+#   2. 手動：GitHub → Actions → 本 workflow → Run workflow
+#   3. 每日排程更新 articles.json 後的那次 push 也會觸發
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .          # repo 根即網站根（index.html 在根目錄）
+      - id: deployment
+        uses: actions/deploy-pages@v4
