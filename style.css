@@ -784,3 +784,102 @@ h1, h2, h3, h4 {
 .logo img { height: 34px; }
 .footer .logo img { height: 32px; }
 @media (max-width: 560px) { .logo img { height: 26px; } }
+
+/* ============================================================
+   v2.5 追加 — 首頁數據、header 捲動隱藏、透明夥伴區、放大課程主題、學員成果改版
+   ============================================================ */
+
+/* ---- 6. header：只留 logo，往下捲動時收起 ---- */
+.nav { justify-content: flex-start; transition: transform 0.4s var(--ease), opacity 0.3s ease; }
+.nav.hidden { transform: translateY(calc(-1 * var(--nav-h))); opacity: 0; pointer-events: none; }
+
+/* ---- 5+7. 首頁關鍵數據（Hero 內） ---- */
+.hero .actions { margin-top: 30px; }
+.hero-stats {
+  display: flex; flex-wrap: wrap; gap: clamp(26px, 4vw, 64px);
+  margin-top: clamp(38px, 6vh, 66px);
+}
+.hstat .num {
+  font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  font-size: clamp(30px, 3.4vw, 50px); color: #fff; text-shadow: var(--sh-white);
+}
+.hstat .lab {
+  margin-top: 8px; font-size: 13.5px; color: rgba(255, 255, 255, 0.86);
+  text-shadow: var(--sh-white-sm);
+}
+.hstat .lab i { font-style: normal; font-family: var(--font-en); opacity: 0.55; margin-left: 5px; letter-spacing: 0.04em; }
+
+/* ---- 1. 企業合作夥伴：透明底、白色 logo ---- */
+.clients-sm .clients-head h2 { color: #fff; text-shadow: var(--sh-white); }
+.clients-sm .corp-row {
+  background: transparent; border: 0; padding: 8px 0;
+}
+.clients-sm .corp-item + .corp-item::before { background: rgba(255, 255, 255, 0.35); }
+.clients-sm .corp-item img { opacity: 0.92; max-height: 58px; filter: drop-shadow(0 2px 12px rgba(16, 12, 28, 0.35)); }
+.clients-sm .corp-item:hover img { opacity: 1; }
+
+/* ---- 3. 最後一區：兩行 + 更大更明顯的 CTA ---- */
+.cta h2 { white-space: normal; font-size: clamp(30px, 4.4vw, 66px); max-width: none; }
+.btn-xl {
+  font-size: clamp(17px, 1.5vw, 21px); font-weight: 600;
+  padding: 20px 32px; border-radius: 14px; gap: 14px;
+  background-image: var(--grad); background-size: 100% 100%; color: #fff;
+  box-shadow: 0 18px 48px rgba(124, 58, 237, 0.4);
+}
+.btn-xl .arrow { width: 30px; height: 30px; background: rgba(255, 255, 255, 0.22); }
+.btn-xl .arrow svg { width: 15px; height: 15px; }
+.btn-xl:hover { transform: translateY(-3px); box-shadow: 0 24px 62px rgba(124, 58, 237, 0.52); background-size: 160% 100%; }
+.btn-xl:hover .arrow { background: #fff; color: var(--accent); }
+.cta .btn { margin-top: 40px; }
+
+/* ---- 4. 課程主題：主題放大、內文精簡 ---- */
+.pillars .sec-lead { white-space: nowrap; max-width: none; }
+.pil { padding: 30px 24px 32px; gap: 10px; }
+.pil h3 { font-size: clamp(24px, 2.3vw, 32px); letter-spacing: -0.02em; }
+.pil-ic { width: 44px; height: 44px; }
+.pil-ic svg { width: 23px; height: 23px; }
+.pil li { font-size: 14px; }
+
+/* ---- 10. 學員成果：卡片牆，段落連續不斷行 ---- */
+.voices { padding: clamp(80px, 12vh, 150px) 0; }
+.voices .h-section { margin: 16px 0 10px; }
+.v-grid {
+  margin-top: clamp(40px, 6vh, 64px);
+  columns: 3; column-gap: 20px;
+}
+.v-card {
+  position: relative; break-inside: avoid; margin-bottom: 20px;
+  padding: 30px 28px 26px; border-radius: var(--radius-lg);
+  background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.v-card:nth-child(3n+2) { background: var(--card); }
+.v-card:hover { transform: translateY(-5px); box-shadow: 0 20px 54px rgba(16, 12, 28, 0.13); }
+.v-mark {
+  display: block; font-family: var(--font-display); font-size: 54px; line-height: 0.6;
+  color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text;
+  margin-bottom: 12px;
+}
+.v-text {
+  font-size: 15px; line-height: 1.85; color: rgba(10, 10, 10, 0.78);
+  text-align: justify; text-justify: inter-character; word-break: normal; overflow-wrap: break-word;
+}
+.v-who { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(10, 10, 10, 0.1); }
+.v-course {
+  display: inline-block; font-size: 12px; font-weight: 600; color: #fff;
+  background: var(--accent); border-radius: 999px; padding: 4px 12px; margin-bottom: 8px;
+}
+.v-who-name { display: block; font-size: 13.5px; color: var(--muted); }
+
+/* ---- RWD ---- */
+@media (max-width: 1100px) {
+  .v-grid { columns: 2; }
+  .pillars .sec-lead { white-space: normal; }
+}
+@media (max-width: 760px) {
+  .v-grid { columns: 1; }
+  .hero-stats { gap: 22px 32px; }
+  .hstat .num { font-size: 26px; }
+  .hstat .lab { font-size: 12px; }
+  .cta .btn { margin-top: 28px; }
+}

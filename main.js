@@ -182,7 +182,7 @@
 
   // ---------- reveal on scroll ----------
   const reveal = document.querySelectorAll(
-    ".s-card, .w-card, .b-card, .t-card, .stat, .pil, .corp-item"
+    ".s-card, .w-card, .b-card, .v-card, .pil, .corp-item"
   );
   reveal.forEach((el) => {
     el.style.opacity = "0";
@@ -212,6 +212,23 @@
       track.appendChild(c);
     });
   }
+
+  // ---------- header：往下捲動時收起，往上捲或回到頂端時再出現 ----------
+  (function stickyNav() {
+    const nav = document.querySelector(".nav");
+    if (!nav) return;
+    let last = scrollY, ticking = false;
+    const update = () => {
+      ticking = false;
+      const y = scrollY;
+      // 頂端一律顯示；往下超過門檻才收起，往上就拉回來
+      if (y < 80) nav.classList.remove("hidden");
+      else if (y > last + 6) nav.classList.add("hidden");
+      else if (y < last - 6) nav.classList.remove("hidden");
+      last = y;
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  })();
 
   // ---------- footer disclaimer: 一行顯示，字級自動縮到剛好放得下（絕不截字） ----------
   (function fitDisclaimer() {

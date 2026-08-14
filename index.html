@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=26" />
+  <link rel="stylesheet" href="style.css?v=27" />
   <script type="importmap">
   {
     "imports": {
@@ -45,18 +45,15 @@
     <a class="logo" href="#top" aria-label="nSchool 首頁">
       <img src="img/nschool_logo.png" alt="nSchool" />
     </a>
-    <a class="nav-cta" href="https://www.surveycake.com/s/80KmQ" target="_blank" rel="noopener">
-      <span>一對一諮詢 <i>Book a call</i></span>
-      <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
-    </a>
   </header>
 
   <!-- 左側欄導覽：一條線 + 圓點節點，捲動時高亮目前區塊 -->
   <nav class="rail" id="rail" aria-label="區塊導覽">
     <span class="rail-line" aria-hidden="true"><i class="rail-fill" id="railFill"></i></span>
     <a href="#top" data-sec="top"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">首頁</span></a>
-    <a href="#method" data-sec="method"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">關於我們</span></a>
+    <a href="#method" data-sec="method"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">為什麼選擇</span></a>
     <a href="#pillars" data-sec="pillars"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">課程主題</span></a>
+    <a href="#approach" data-sec="approach"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">學習地圖</span></a>
     <a href="#courses" data-sec="courses"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">文章專欄</span></a>
     <a href="#faculty" data-sec="faculty"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">顧問師資</span></a>
     <a href="#contact" data-sec="contact"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">預約諮詢</span></a>
@@ -69,8 +66,14 @@
         <p class="hero-en">Build Your Investment DNA</p>
         <h1 class="display">建構你的專屬<br>投資 <span class="gtext">DNA</span>。</h1>
         <div class="actions">
-          <a class="btn btn-grad" href="#courses">開始學習路徑</a>
-          <a class="btn ghost" href="#method">了解方法論</a>
+          <a class="btn btn-grad" href="#pillars">開始學習路徑</a>
+          <!-- TODO 待提供專屬表單連結後替換此 href（目前先指向現行一對一諮詢表單） -->
+          <a class="btn ghost" href="https://www.surveycake.com/s/80KmQ" target="_blank" rel="noopener">一對一諮詢預約</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hstat"><div class="num" data-count="2000" data-suffix="+">0</div><div class="lab">累積學員 <i>Students</i></div></div>
+          <div class="hstat"><div class="num" data-count="100" data-suffix="+">0</div><div class="lab">上線課程單元 <i>Lessons</i></div></div>
+          <div class="hstat"><div class="num" data-count="98" data-suffix="%">0</div><div class="lab">投資成長 <i>Growth</i></div></div>
         </div>
       </div>
       <p class="hero-caption">以扎實的研究方法與真實市場數據，建立可驗證、可複利的投資知識體系。<span class="en">Institutional-grade research. Real market data.</span></p>
@@ -81,7 +84,7 @@
       <div class="wrap">
         <div class="sec-head">
           <div class="lt">
-            <p class="eyebrow">你會學到 <span>What You Learn</span></p>
+            <p class="eyebrow">為什麼選擇 <span>Why nSchool</span></p>
             <h2 class="h-section">從理財新手，到配置大師。</h2>
             <p class="lead">每一步都幫你走得穩、賺得對。<span class="en">From beginner to portfolio master.</span></p>
           </div>
@@ -116,7 +119,7 @@
         <h2 class="h-section">股市投資四聯手，加上 ETF。</h2>
         <div class="sec-head">
           <div class="lt">
-            <p class="sec-lead">五大主題各自成課、彼此銜接 —— 理論打底、實作驗收，讓你看得懂、也做得到。</p>
+            <p class="sec-lead">五大主題各自成課、彼此銜接，理論打底、實作驗收。</p>
           </div>
           <button type="button" class="btn" id="trialBtn">試看課程 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></button>
         </div>
@@ -126,11 +129,9 @@
             <p class="pil-en">Fundamentals</p>
             <h3>基本面</h3>
             <ul>
-              <li>總體經濟與產業分析</li>
-              <li>財報快速攻略、營收與三率</li>
-              <li>財務指標：EPS、ROE、毛利率</li>
-              <li>價值指標：本益比、股價淨值比</li>
-              <li>自由現金流量、估價法與存股</li>
+              <li>總經與產業分析</li>
+              <li>財報三表與三率</li>
+              <li>估價法與存股</li>
             </ul>
           </article>
           <article class="pil">
@@ -138,11 +139,9 @@
             <p class="pil-en">Technicals</p>
             <h3>技術面</h3>
             <ul>
-              <li>K 線與成交量、均線理論</li>
-              <li>技術指標：KD、MACD、RSI</li>
-              <li>技術型態：頭肩頂底、W 底、M 頭</li>
-              <li>布林通道、缺口理論</li>
-              <li>停損停利與綜合案例分析</li>
+              <li>K 線、均線與量價</li>
+              <li>KD／MACD／RSI</li>
+              <li>型態與停損停利</li>
             </ul>
           </article>
           <article class="pil">
@@ -150,11 +149,9 @@
             <p class="pil-en">Chips</p>
             <h3>籌碼面</h3>
             <ul>
-              <li>三大法人與買賣超追蹤</li>
-              <li>大小股東與主力動向</li>
-              <li>總股東持股人數變化、董監持股</li>
-              <li>融資融券餘額</li>
-              <li>大戶／散戶持股比例變化</li>
+              <li>三大法人買賣超</li>
+              <li>主力與董監持股</li>
+              <li>融資融券與大戶比</li>
             </ul>
           </article>
           <article class="pil">
@@ -162,11 +159,9 @@
             <p class="pil-en">ETF</p>
             <h3>ETF</h3>
             <ul>
-              <li>各類型 ETF：指數、槓桿、反向、期貨</li>
-              <li>ETF 價格的影響因素</li>
-              <li>成分組成查詢、折溢價與交易時機</li>
-              <li>指標型 ETF 的投資策略</li>
-              <li>複利再投入</li>
+              <li>各類型 ETF 差異</li>
+              <li>成分股與折溢價</li>
+              <li>指數投資與複利</li>
             </ul>
           </article>
           <article class="pil">
@@ -174,11 +169,9 @@
             <p class="pil-en">Mindset</p>
             <h3>投資觀念</h3>
             <ul>
-              <li>投資不是看運氣、風險與報酬</li>
-              <li>存錢不虧？風險分散與投資組合</li>
-              <li>股票怎麼運作、股票獲利方式</li>
+              <li>風險與報酬</li>
+              <li>資產配置與分散</li>
               <li>長期持有策略</li>
-              <li>特定標的觀察與趨勢分析</li>
             </ul>
           </article>
         </div>
@@ -189,7 +182,7 @@
     <!-- APPROACH (why nSchool) -->
     <section class="approach" id="approach">
       <div class="wrap">
-        <p class="eyebrow">為什麼選擇 <span>Our Approach</span></p>
+        <p class="eyebrow">學習地圖 <span>Learning Map</span></p>
         <h2 class="h-section" style="margin-top:16px;white-space:nowrap">為你量身打造，而非套用公式。</h2>
         <p class="lead" style="margin-top:14px;max-width:none;white-space:nowrap">先認知，再投資 —— 從你的目標出發，建立屬於你的投資決策。</p>
         <div class="bento">
@@ -223,27 +216,6 @@
               <p>從理財新手到配置大師，專屬顧問陪你走每一步，走得穩、賺得對。</p>
             </div>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- STATS -->
-    <section class="stats">
-      <div class="wrap">
-        <div class="sec-head">
-          <div class="lt">
-            <p class="eyebrow light">關鍵數據 <span>Key Stats</span></p>
-            <h2 class="h-section" style="margin-top:16px;max-width:20ch">讓數據，見證你的成長。</h2>
-          </div>
-          <a class="btn" href="https://www.surveycake.com/s/80KmQ" target="_blank" rel="noopener">預約諮詢 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></a>
-        </div>
-        <div class="stats-grid">
-          <div class="stat"><div class="num" data-count="52000" data-suffix="+">0</div><div class="lab">累積學員 <i>Students</i></div></div>
-          <div class="stat"><div class="num" data-count="94" data-suffix="%">0</div><div class="lab">平均完課率 <i>Completion</i></div></div>
-          <div class="stat"><div class="num" data-count="98" data-suffix="%">0</div><div class="lab">學習滿意度 <i>Satisfaction</i></div></div>
-          <div class="stat"><div class="num" data-count="1200" data-suffix="+">0</div><div class="lab">上線課程單元 <i>Lessons</i></div></div>
-          <div class="stat"><div class="num" data-count="5" data-suffix="">0</div><div class="lab">核心學習主題 <i>Topics</i></div></div>
-          <div class="stat"><div class="num" data-count="100" data-suffix="%">0</div><div class="lab">一對一諮詢 <i>1-on-1</i></div></div>
         </div>
       </div>
     </section>
@@ -329,7 +301,7 @@
 
 
     <!-- PARTNERS -->
-    <section class="clients clients-sm plate" id="partners">
+    <section class="clients clients-sm" id="partners">
       <div class="wrap">
         <div class="clients-head">
           <div>
@@ -337,26 +309,68 @@
           </div>
         </div>
         <div class="corp-row">
-          <div class="corp-item"><img src="img/partners/capital.png" alt="群益金鼎證券 CAPITAL" loading="lazy" decoding="async" /></div>
-          <div class="corp-item"><img src="img/partners/pocket.png" alt="口袋證券 POCKET SECURITIES" loading="lazy" decoding="async" /></div>
-          <div class="corp-item"><img src="img/partners/xplatform.png" alt="X Platform 職能共學平台" loading="lazy" decoding="async" /></div>
+          <div class="corp-item"><img src="img/partners/capital_white.png" alt="群益金鼎證券 CAPITAL" loading="lazy" decoding="async" /></div>
+          <div class="corp-item"><img src="img/partners/pocket_white.png" alt="口袋證券 POCKET SECURITIES" loading="lazy" decoding="async" /></div>
+          <div class="corp-item"><img src="img/partners/xplatform_white.png" alt="X Platform 職能共學平台" loading="lazy" decoding="async" /></div>
         </div>
       </div>
     </section>
 
     <!-- VOICES -->
-    <section class="tmt plate">
+    <section class="voices plate" id="voices">
       <div class="wrap">
         <p class="eyebrow">學員成果 <span>Voices</span></p>
-        <div class="tmt-lead" style="margin-top:18px">
-          聽聽學員怎麼說。
-          <span class="q">「它救了我的不是報酬率，是 2022 年的回撤 —— 資產配置課教的再平衡紀律，讓我跌得比大盤少一半。」—— 執業醫師</span>
-        </div>
-        <div class="cards-4 tmt-cards">
-          <article class="t-card"><p class="quote">「上完估值課之後，我第一次有能力對市場共識說『我不同意』，而且說得出理由。」</p><div class="who"><span class="av" style="background-image:url('https://images.unsplash.com/photo-1488820098099-8d4a4723a490?w=160&h=160&fit=crop&crop=faces&q=70&auto=format')"></span><span><b>科技業 PM</b><span>F-03 估值方法論 結業</span></span></div></article>
-          <article class="t-card"><p class="quote">「我以前看財經新聞像看天書。現在我會先問：數據來源是什麼？樣本多長？這就是框架的力量。」</p><div class="who"><span class="av" style="background-image:url('https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?w=160&h=160&fit=crop&crop=faces&q=70&auto=format')"></span><span><b>小吃店老闆娘</b><span>理財規劃工具 結業</span></span></div></article>
-          <article class="t-card"><p class="quote">「不教明牌這件事，一開始讓我懷疑。半年後我才懂，會自己判斷，比任何一支飆股都值錢。」</p><div class="who"><span class="av" style="background-image:url('https://images.unsplash.com/photo-1542909192-2f2241a99c9d?w=160&h=160&fit=crop&crop=faces&q=70&auto=format')"></span><span><b>外商業務</b><span>F-01 總體經濟 結業</span></span></div></article>
-          <article class="t-card"><p class="quote">「課程把學術的嚴謹帶進教室，每個結論都有出處可查。這是我看過最像研究所的財經課。」</p><div class="who"><span class="av" style="background-image:url('https://images.unsplash.com/photo-1616268164880-673b3ba611bb?w=160&h=160&fit=crop&crop=faces&q=70&auto=format')"></span><span><b>退休教師</b><span>量化思維入門 結業</span></span></div></article>
+        <h2 class="h-section">聽聽學員怎麼說。</h2>
+        <p class="sec-lead">來自不同背景、不同階段的學員 —— 他們拿走的不是一份明牌清單，是一套自己用得上的判斷方法。</p>
+        <div class="v-grid">
+          <article class="v-card">
+            <span class="v-mark" aria-hidden="true">&ldquo;</span>
+            <p class="v-text">以前看研究報告只會看結論，現在我會先翻開附錄找假設。上完估值課之後，我第一次有能力對市場共識說「我不同意」，而且說得出理由 —— 折現率我用幾趴、成長期我抓幾年、為什麼跟賣方不一樣。這不是變聰明，是終於有一套自己的框架。</p>
+            <div class="v-who">
+              <span class="v-course">估值方法論 · 結業</span>
+              <span class="v-who-name">科技業產品經理｜學習 8 個月</span>
+            </div>
+          </article>
+          <article class="v-card">
+            <span class="v-mark" aria-hidden="true">&ldquo;</span>
+            <p class="v-text">它救了我的不是報酬率，是 2022 年的回撤。那年所有人都在恐慌，我照著資產配置課教的再平衡紀律，把跌深的部位補回目標權重 —— 結果整年跌得比大盤少一半，隔年反彈時反而站得比較前面。真正值錢的是「跌的時候知道要做什麼」。</p>
+            <div class="v-who">
+              <span class="v-course">資產配置 · 結業</span>
+              <span class="v-who-name">執業醫師｜學習 1 年 2 個月</span>
+            </div>
+          </article>
+          <article class="v-card">
+            <span class="v-mark" aria-hidden="true">&ldquo;</span>
+            <p class="v-text">我不是財金背景，一開始連本益比都要查。助教沒有笑我，反而把我的收支表拉出來一欄一欄對，先幫我把每個月的現金流理清楚，才開始談投資。半年後我第一次有了三個月的緊急預備金 —— 這件事比賺到任何一支股票都讓我安心。</p>
+            <div class="v-who">
+              <span class="v-course">理財規劃工具 · 結業</span>
+              <span class="v-who-name">小吃店經營者｜學習 6 個月</span>
+            </div>
+          </article>
+          <article class="v-card">
+            <span class="v-mark" aria-hidden="true">&ldquo;</span>
+            <p class="v-text">我以前看財經新聞像看天書，聽到「升息」只知道要怕。現在我會先問三個問題：數據來源是什麼？樣本多長？跟上一次循環比起來在哪個位置？學會問問題之後，新聞就從噪音變成材料了。</p>
+            <div class="v-who">
+              <span class="v-course">總體經濟 · 結業</span>
+              <span class="v-who-name">外商業務主管｜學習 10 個月</span>
+            </div>
+          </article>
+          <article class="v-card">
+            <span class="v-mark" aria-hidden="true">&ldquo;</span>
+            <p class="v-text">課程把學術的嚴謹帶進教室，每個結論都有出處可查，老師不會說「相信我就對了」。我這個年紀最怕被話術，這裡反而是我看過最像研究所的財經課 —— 每週有作業、有複盤、有人跟你討論你哪裡想錯了。</p>
+            <div class="v-who">
+              <span class="v-course">技術面選股 · 結業</span>
+              <span class="v-who-name">退休國中教師｜學習 1 年</span>
+            </div>
+          </article>
+          <article class="v-card">
+            <span class="v-mark" aria-hidden="true">&ldquo;</span>
+            <p class="v-text">不教明牌這件事，一開始讓我懷疑 —— 我是來賺錢的，不是來上學的。半年後我才懂，會自己判斷比任何一支飆股都值錢。現在朋友報明牌給我，我第一個反應是打開財報自己看一遍，而不是直接下單。</p>
+            <div class="v-who">
+              <span class="v-course">一對一諮詢 · 學員</span>
+              <span class="v-who-name">自由接案設計師｜學習 7 個月</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -385,8 +399,8 @@
     <section class="cta" id="contact">
       <div class="wrap">
         <p class="hero-en" style="margin-bottom:18px">Start today</p>
-        <h2 class="display">市場不會等你準備好，但你可以從今天開始準備。</h2>
-        <a class="btn" href="https://www.surveycake.com/s/80KmQ" target="_blank" rel="noopener">立即填寫資料卡位 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></a>
+        <h2 class="display">市場不會等你準備好，<br>但你可以從今天開始準備。</h2>
+        <a class="btn btn-xl" href="https://www.surveycake.com/s/80KmQ" target="_blank" rel="noopener">立即填寫資料卡位 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></a>
         <p class="cta-note">一對一諮詢，幫你找到最適合的投資策略。</p>
       </div>
     </section>
@@ -403,7 +417,7 @@
         </div>
         <div class="footer-col">
           <h4>探索 <i>Explore</i></h4>
-          <a href="#method">關於我們</a><a href="#pillars">課程主題</a><a href="#partners">企業合作夥伴</a><a href="#courses">文章專欄</a><a href="#faculty">顧問師資</a>
+          <a href="#method">為什麼選擇</a><a href="#pillars">課程主題</a><a href="#approach">學習地圖</a><a href="#partners">企業合作夥伴</a><a href="#courses">文章專欄</a><a href="#faculty">顧問師資</a>
         </div>
         <div class="footer-col">
           <h4>資訊 <i>Info</i></h4>
@@ -440,6 +454,6 @@
   </div>
 
   <script type="module" src="hero.js?v=7"></script>
-  <script src="main.js?v=19"></script>
+  <script src="main.js?v=20"></script>
 </body>
 </html>
