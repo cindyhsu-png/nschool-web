@@ -170,12 +170,20 @@
       const fmtN = (n) => n.toLocaleString("en-US");
       if (reduce) { el.textContent = fmtN(target) + suffix; return; }
       const dur = 1600, t0 = performance.now();
+      const final = fmtN(target) + suffix;
+      let done = false;
+      const settle = () => { if (!done) { done = true; el.textContent = final; } };
       (function step(now) {
+        if (done) return;
         const p = Math.min((now - t0) / dur, 1);
         const e = 1 - Math.pow(1 - p, 3);
         el.textContent = fmtN(Math.round(target * e)) + suffix;
-        if (p < 1) requestAnimationFrame(step);
+        if (p < 1) requestAnimationFrame(step); else done = true;
       })(t0);
+      // 保險：分頁被切到背景時 rAF 會被凍住，數字會卡在中途的錯誤值。
+      // 用計時器與 visibilitychange 補上最終值，確保永遠停在正確數字。
+      setTimeout(settle, dur + 400);
+      document.addEventListener("visibilitychange", () => { if (document.hidden) settle(); }, { once: true });
     });
   }, { threshold: 0.6 });
   nums.forEach((n) => io.observe(n));
