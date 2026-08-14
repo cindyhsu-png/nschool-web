@@ -37,17 +37,31 @@ repo 根目錄就是網站根目錄（純靜態、無 build、無後端）。
    - 每天：`0 0 * * *`　每 6 小時：`0 */6 * * *`　每週一：`0 0 * * 1`
 3. 想立即跑一次：repo → Actions →「Update latest articles」→ Run workflow。
 
-## 三、遷入 Kolable 後台（比照 nova）
+## 三、遷入 Kolable（比照 nova）
 
-nova 的做法：站台本體留在 GitHub Pages，Kolable 後台建一個自訂頁面把 Pages 網址嵌進來，
-頁面最底加一條 Kolable 平台樣式的白色版權頁尾，讓嵌入後視覺能銜接平台。
+**做法：把 public GitHub Pages 網址交給 Kolable，對方遷入後會回一個驗證網址供預覽。**
+站台本體始終留在這個 repo，Kolable 端只是把它接進平台。
 
-對應到 nSchool：
-1. 先確認 GitHub Pages 網址可正常開啟（含 3D Hero 與文章專區）。
-2. Kolable 後台 → nschool 品牌 → 建立／編輯首頁自訂頁面 → 嵌入 Pages 網址。
-3. 站台已含 Kolable 平台樣式白色頁尾（`index.html` 最底 `.kolable-footer`），
-   連到 `https://nschool.tw/statement-of-terms` 與 `https://nschool.tw/terms-tech`。
-   若嵌入後平台本身已有頁尾造成重複，把該區塊移除即可。
+要交出去的網址：
+
+```
+https://cindyhsu-png.github.io/nschool-web/
+```
+
+（nova 的對應網址是 `https://cindyhsu-png.github.io/nova-web/`，同一套規格。）
+
+前提條件（本 repo 已符合）：
+
+- repo 必須是 **public**（GitHub Pages 免費方案的限制）
+- Pages 來源設為 **GitHub Actions**，且 `deploy.yml` 已成功跑過一次
+
+其他注意：
+
+- 站台最底已放 Kolable 平台樣式白色版權頁尾（`index.html` 的 `.kolable-footer`），
+  連到 `https://nschool.tw/statement-of-terms` 與 `https://nschool.tw/terms-tech`。
+  若遷入後平台本身已有頁尾造成重複，把該區塊整段移除再推一次即可。
+- 遷入後官網要改版，一樣是改這個 repo 推 `main`，Pages 自動重新部署；
+  Kolable 端不用重設。
 
 ## 本機預覽
 
