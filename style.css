@@ -524,3 +524,192 @@ h1, h2, h3, h4 {
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; }
 }
+
+/* ============================================================
+   v2.1 追加 — 白字可讀性、學習地圖、課綱、三師、APP、企業夥伴、師資改版
+   ============================================================ */
+
+/* ---- 1. 白色文字可讀性：淺色 3D 背景上的白字補陰影 ---- */
+:root {
+  --sh-white: 0 1px 2px rgba(16, 12, 28, 0.42), 0 2px 14px rgba(16, 12, 28, 0.34), 0 6px 40px rgba(16, 12, 28, 0.22);
+  --sh-white-sm: 0 1px 2px rgba(16, 12, 28, 0.4), 0 1px 10px rgba(16, 12, 28, 0.3);
+}
+.hero h1,
+.studio h2,
+.clients-head h2,
+.cta h2 { text-shadow: var(--sh-white); }
+.hero .hero-en,
+.hero-caption,
+.hero-caption .en,
+.studio .eyebrow.light,
+.clients .eyebrow.light,
+.lead.light,
+.logo-card span { text-shadow: var(--sh-white-sm); }
+/* 提高本身的對比，不只靠陰影 */
+.hero .hero-en { color: rgba(255, 255, 255, 0.86); }
+.hero-caption { color: rgba(255, 255, 255, 0.94); }
+.eyebrow.light { color: rgba(255, 255, 255, 0.9); }
+.lead.light { color: rgba(255, 255, 255, 0.92); }
+/* 深底區塊的白字不需要陰影（本來就夠對比） */
+.s-card.dark h3, .s-card.dark p { text-shadow: none; }
+
+/* ---- 共用：區塊標題間距 ---- */
+.sec-lead { color: var(--muted); font-size: clamp(15px, 1.2vw, 18px); max-width: 60ch; margin-top: 14px; }
+
+/* ---- 2. 學習地圖 L1–L5 ---- */
+.roadmap { padding: clamp(80px, 12vh, 150px) 0; }
+.roadmap .h-section { margin: 16px 0 10px; }
+.rm-track {
+  margin-top: 48px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px;
+}
+.rm-card {
+  position: relative; display: flex; flex-direction: column; gap: 14px;
+  padding: 26px 22px 28px; border-radius: var(--radius-lg);
+  background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.rm-card:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(16, 12, 28, 0.12); }
+.rm-card::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 4px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0; background: var(--lv, var(--accent));
+}
+.rm-lv { font-family: var(--font-display); font-size: 30px; font-weight: 700; line-height: 1; color: var(--lv, var(--accent)); letter-spacing: -0.02em; }
+.rm-name { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+.rm-pill {
+  align-self: flex-start; font-size: 12.5px; font-weight: 500; color: #fff;
+  background: var(--lv, var(--accent)); border-radius: 999px; padding: 5px 12px; line-height: 1.4;
+}
+.rm-kv { font-size: 14px; color: var(--muted); }
+.rm-out { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.rm-out li { position: relative; padding-left: 15px; font-size: 14px; color: rgba(10, 10, 10, 0.72); }
+.rm-out li::before { content: ""; position: absolute; left: 0; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--lv, var(--accent)); }
+.rm-time {
+  margin-top: auto; padding-top: 14px; border-top: 1px solid rgba(10, 10, 10, 0.08);
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.03em; color: var(--muted-2);
+}
+.rm-all {
+  margin-top: 18px; padding: 15px 24px; border-radius: 999px; background: var(--grad); color: #fff;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 14px;
+  font-size: 15px; font-weight: 500; text-align: center;
+}
+.rm-all i { font-style: normal; font-family: var(--font-mono); font-size: 12.5px; opacity: 0.78; letter-spacing: 0.03em; }
+.rm-notes { margin-top: 22px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.rm-note { padding: 20px 22px; border-radius: var(--radius); background: rgba(255, 255, 255, 0.62); border: 1px solid rgba(10, 10, 10, 0.06); }
+.rm-note h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+.rm-note p { font-size: 13.5px; color: var(--muted); }
+
+/* ---- 3. 課程主題（四聯手 + ETF）---- */
+.pillars { padding: clamp(80px, 12vh, 150px) 0; }
+.pillars .h-section { margin: 16px 0 10px; }
+.pil-grid { margin-top: 44px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+.pil {
+  display: flex; flex-direction: column; gap: 12px; padding: 28px 24px;
+  border-radius: var(--radius-lg); background: var(--card); border: 1px solid rgba(10, 10, 10, 0.06);
+  transition: transform 0.4s var(--ease), background 0.4s var(--ease);
+}
+.pil:hover { transform: translateY(-6px); background: var(--white); }
+.pil-ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--grad-soft); color: var(--accent); }
+.pil-ic svg { width: 21px; height: 21px; }
+.pil h3 { font-size: 19px; font-weight: 600; }
+.pil-en { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-2); }
+.pil ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.pil li { position: relative; padding-left: 14px; font-size: 13.5px; color: rgba(10, 10, 10, 0.7); }
+.pil li::before { content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.55; }
+
+/* ---- 4. 三師同步教學 ---- */
+.trio { padding: clamp(80px, 12vh, 150px) 0; }
+.trio .h-section { margin: 16px 0 10px; }
+.trio-grid { margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.trio-card {
+  padding: 32px 28px 34px; border-radius: var(--radius-lg); color: #fff;
+  background: var(--card-dark); position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.trio-card::after { content: ""; position: absolute; inset: auto -30% -40% auto; width: 240px; height: 240px; border-radius: 50%; background: var(--grad); opacity: 0.3; filter: blur(30px); }
+.trio-card > * { position: relative; z-index: 1; }
+.trio-num { font-family: var(--font-display); font-size: 13px; letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.5); }
+.trio-card h3 { font-size: 22px; font-weight: 600; }
+.trio-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.trio-card li { position: relative; padding-left: 16px; font-size: 14.5px; color: rgba(255, 255, 255, 0.8); }
+.trio-card li::before { content: ""; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: #c44cf0; }
+.trio-foot {
+  margin-top: 26px; padding: 18px 26px; border-radius: var(--radius); text-align: center;
+  background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(10, 10, 10, 0.06);
+  font-size: 15.5px; font-weight: 500;
+}
+
+/* ---- 5. 投資學院 APP ---- */
+.appx { padding: clamp(80px, 12vh, 150px) 0; }
+.appx .h-section { margin: 16px 0 10px; }
+.app-grid { margin-top: 44px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.app-card {
+  padding: 26px 24px 30px; border-radius: var(--radius-lg);
+  background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07);
+  display: flex; flex-direction: column; gap: 10px;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.app-card:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(16, 12, 28, 0.12); }
+.app-tag { align-self: flex-start; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: #fff; background: var(--accent); border-radius: 999px; padding: 4px 10px; }
+.app-card h3 { font-size: 18px; font-weight: 600; }
+.app-card p { font-size: 14px; color: var(--muted); }
+.app-note { margin-top: 22px; font-family: var(--font-mono); font-size: 12.5px; color: var(--muted-2); letter-spacing: 0.02em; }
+
+/* ---- 6. 企業合作夥伴 ---- */
+.corp { padding: clamp(70px, 10vh, 120px) 0; }
+.corp-head { text-align: center; }
+.corp-head .h-section { margin: 14px 0 0; }
+.corp-row {
+  margin-top: 46px; display: grid; grid-template-columns: repeat(3, 1fr); align-items: center;
+  gap: 0; background: var(--white); border-radius: var(--radius-lg); border: 1px solid rgba(10, 10, 10, 0.07);
+  padding: 40px clamp(20px, 3vw, 44px);
+}
+.corp-item { display: grid; place-items: center; padding: 18px clamp(14px, 2.4vw, 40px); position: relative; }
+.corp-item + .corp-item::before { content: ""; position: absolute; left: 0; top: 8%; bottom: 8%; width: 1px; background: rgba(10, 10, 10, 0.12); }
+.corp-item img { max-width: 100%; height: auto; max-height: 78px; object-fit: contain; opacity: 0.82; transition: opacity 0.35s ease, transform 0.35s var(--ease); }
+.corp-item:hover img { opacity: 1; transform: scale(1.03); }
+
+/* ---- 7. 顧問師資改版（11 位，資訊卡）---- */
+.team-track .member { flex: 0 0 calc((100% - 48px) / 3); }
+.member {
+  background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07); border-radius: var(--radius-lg);
+  padding: 20px 20px 24px; display: flex; flex-direction: column;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.member:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(16, 12, 28, 0.12); }
+.member .ph { aspect-ratio: 1 / 1; border-radius: var(--radius); margin-bottom: 16px; }
+.member b { font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
+.member .tags {
+  display: block; margin-top: 8px; font-size: 13px; font-weight: 500; color: var(--accent);
+  letter-spacing: 0.01em; line-height: 1.5;
+}
+.member .roles { list-style: none; margin: 14px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(10, 10, 10, 0.08); display: flex; flex-direction: column; gap: 5px; }
+.member .roles li { position: relative; padding-left: 14px; font-size: 13.5px; color: rgba(10, 10, 10, 0.68); line-height: 1.55; }
+.member .roles li::before { content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
+.member .quote {
+  margin-top: auto; padding-top: 16px; font-size: 13px; line-height: 1.65; color: var(--muted);
+  font-style: normal;
+}
+.member .quote em { font-style: normal; display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+.team-count { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted-2); letter-spacing: 0.04em; margin-top: 18px; }
+
+/* ---- RWD ---- */
+@media (max-width: 1100px) {
+  .rm-track, .pil-grid { grid-template-columns: repeat(2, 1fr); }
+  .app-grid { grid-template-columns: repeat(2, 1fr); }
+  .rm-notes, .trio-grid { grid-template-columns: 1fr; }
+  .team-track .member { flex: 0 0 calc((100% - 24px) / 2); }
+}
+@media (max-width: 760px) {
+  .rm-track, .pil-grid, .app-grid, .corp-row { grid-template-columns: 1fr; }
+  .corp-item + .corp-item::before { left: 8%; right: 8%; top: 0; bottom: auto; width: auto; height: 1px; }
+  .corp-row { padding: 24px; gap: 8px; }
+  .team-track .member { flex: 0 0 100%; }
+}
+
+/* 淺色 3D 背景上的英文副標：0.5 透明度會糊掉，拉高對比 */
+.hero .hero-en span,
+.hero-caption .en,
+.studio .eyebrow.light span,
+.clients .eyebrow.light span { opacity: 0.82; }
+.studio .eyebrow.light,
+.clients .eyebrow.light { font-weight: 500; }
