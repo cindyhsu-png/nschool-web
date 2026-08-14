@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=24" />
+  <link rel="stylesheet" href="style.css?v=26" />
   <script type="importmap">
   {
     "imports": {
@@ -43,7 +43,7 @@
   <!-- navigation -->
   <header class="nav">
     <a class="logo" href="#top" aria-label="nSchool 首頁">
-      <img src="img/nschool_black.svg" alt="nSchool" />
+      <img src="img/nschool_logo.png" alt="nSchool" />
     </a>
     <a class="nav-cta" href="https://www.surveycake.com/s/80KmQ" target="_blank" rel="noopener">
       <span>一對一諮詢 <i>Book a call</i></span>
@@ -57,7 +57,6 @@
     <a href="#top" data-sec="top"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">首頁</span></a>
     <a href="#method" data-sec="method"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">關於我們</span></a>
     <a href="#pillars" data-sec="pillars"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">課程主題</span></a>
-    <a href="#roadmap" data-sec="roadmap"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">學習地圖</span></a>
     <a href="#courses" data-sec="courses"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">文章專欄</span></a>
     <a href="#faculty" data-sec="faculty"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">顧問師資</span></a>
     <a href="#contact" data-sec="contact"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">預約諮詢</span></a>
@@ -77,33 +76,6 @@
       <p class="hero-caption">以扎實的研究方法與真實市場數據，建立可驗證、可複利的投資知識體系。<span class="en">Institutional-grade research. Real market data.</span></p>
     </section>
 
-    <!-- MANIFESTO -->
-    <section class="studio">
-      <div class="wrap">
-        <p class="eyebrow light">先認知，再投資 <span>Manifesto</span></p>
-        <h2 class="display">開始學理財，你也能翻轉財務命運，實現人生的主導權。</h2>
-      </div>
-    </section>
-
-    <!-- PARTNERS -->
-    <section class="clients">
-      <div class="wrap">
-        <div class="clients-head">
-          <div>
-            <h2>企業合作夥伴</h2>
-          </div>
-        </div>
-        <div class="corp-row">
-          <div class="corp-item"><img src="img/partners/capital.png" alt="群益金鼎證券 CAPITAL" loading="lazy" decoding="async" /></div>
-          <div class="corp-item"><img src="img/partners/pocket.png" alt="口袋證券 POCKET SECURITIES" loading="lazy" decoding="async" /></div>
-          <div class="corp-item"><img src="img/partners/xplatform.png" alt="X Platform 職能共學平台" loading="lazy" decoding="async" /></div>
-        </div>
-        <div class="clients-cta">
-          <a class="btn" href="https://iopen.capital.com.tw/eopenWeb/#/home?ReferralCode=63aha65GGq" target="_blank" rel="noopener">前往開戶 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></a>
-        </div>
-      </div>
-    </section>
-
     <!-- METHOD -->
     <section class="services plate" id="method">
       <div class="wrap">
@@ -113,7 +85,6 @@
             <h2 class="h-section">從理財新手，到配置大師。</h2>
             <p class="lead">每一步都幫你走得穩、賺得對。<span class="en">From beginner to portfolio master.</span></p>
           </div>
-          <button type="button" class="btn" id="trialBtn">試看課程 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></button>
         </div>
         <div class="cards-3">
           <article class="s-card dark">
@@ -143,7 +114,12 @@
       <div class="wrap">
         <p class="eyebrow">課程主題 <span>Curriculum</span></p>
         <h2 class="h-section">股市投資四聯手，加上 ETF。</h2>
-        <p class="sec-lead">五大主題各自成課、彼此銜接 —— 理論打底、實作驗收，讓你看得懂、也做得到。</p>
+        <div class="sec-head">
+          <div class="lt">
+            <p class="sec-lead">五大主題各自成課、彼此銜接 —— 理論打底、實作驗收，讓你看得懂、也做得到。</p>
+          </div>
+          <button type="button" class="btn" id="trialBtn">試看課程 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></button>
+        </div>
         <div class="pil-grid">
           <article class="pil">
             <div class="pil-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V3"/><path d="M3 21h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg></div>
@@ -210,26 +186,6 @@
       </div>
     </section>
 
-    <!-- COURSES -->
-    <section class="work plate" id="courses">
-      <div class="wrap">
-        <div class="sec-head">
-          <div class="lt">
-            <p class="eyebrow">文章專區 <span>Insights</span></p>
-            <h2 class="h-section">市場每天在變，先讀懂再出手。</h2>
-            <p class="lead">每週更新的深度專欄與市場解析，把複雜的訊息拆成你能用的判斷。</p>
-          </div>
-          <a class="btn" href="https://nschool.tw/blog" target="_blank" rel="noopener">看更多文章 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></a>
-        </div>
-        <div class="cards-4" id="articleGrid">
-          <a class="w-card" href="https://nschool.tw/posts/054b0bce-9f0a-4396-955d-2ad79d5c0ecd" target="_blank" rel="noopener"><div class="thumb"><img src="https://static.kolable.com/post_covers/nschool/054b0bce-9f0a-4396-955d-2ad79d5c0ecd/a7e45f0f-c2e1-49c5-814d-c3bfe040426e/1200" alt="斷頭大清洗" loading="lazy" /></div><div class="tag">深度專欄 · 2026.06.12</div><h4 class="w-name">斷頭大清洗！解碼期權連環套與非理性流動性劫持</h4></a>
-          <a class="w-card" href="https://nschool.tw/posts/969c8e1e-ce38-4402-be6a-c03861ce866a" target="_blank" rel="noopener"><div class="thumb"><img src="https://static.kolable.com/post_covers/nschool/969c8e1e-ce38-4402-be6a-c03861ce866a/42f3756a-0a79-4992-a780-21e1ab83098a/1200" alt="雲端集權到邊緣割據" loading="lazy" /></div><div class="tag">深度專欄 · 2026.06.05</div><h4 class="w-name">解碼「雲端集權」到「邊緣割據」的數據定價權</h4></a>
-          <a class="w-card" href="https://nschool.tw/posts/a04e5141-f9f6-45eb-8727-4538f42466a7" target="_blank" rel="noopener"><div class="thumb"><img src="https://static.kolable.com/post_covers/nschool/a04e5141-f9f6-45eb-8727-4538f42466a7/7d884f4e-9582-43c5-ac46-ddf050cab3ac/1200" alt="兆元宴踩碎美伊地緣恐慌" loading="lazy" /></div><div class="tag">深度專欄 · 2026.05.29</div><h4 class="w-name">1.8 兆的反擊：「兆元宴」如何踩碎美伊地緣恐慌？</h4></a>
-          <a class="w-card" href="https://nschool.tw/posts/017b7e5a-b2e2-4f23-85b1-5b29c91aaec8" target="_blank" rel="noopener"><div class="thumb"><img src="https://static.kolable.com/post_covers/nschool/017b7e5a-b2e2-4f23-85b1-5b29c91aaec8/9b1f0510-f61a-4fae-8348-7c2d36658feb/1200" alt="780萬美元AI機架帳單" loading="lazy" /></div><div class="tag">深度專欄 · 2026.05.22</div><h4 class="w-name">780 萬美元的 AI 機架帳單：NVL72 背後的創新代價</h4></a>
-        </div>
-      </div>
-    </section>
-
     <!-- APPROACH (why nSchool) -->
     <section class="approach" id="approach">
       <div class="wrap">
@@ -270,87 +226,6 @@
         </div>
       </div>
     </section>
-
-    <!-- APP -->
-    <section class="appx plate" id="app">
-      <div class="wrap">
-        <p class="eyebrow">學員專屬 <span>Investment App</span></p>
-        <h2 class="h-section">投資學院 APP，VIP 功能限時開放。</h2>
-        <p class="sec-lead">學員免費升級 VIP 用戶，附專屬教學。提供個股行情、資訊、財報、討論、時事新聞專欄與各類投資選股工具。</p>
-        <div class="app-grid">
-          <article class="app-card">
-            <span class="app-tag">VIP</span>
-            <h3>分點偵探</h3>
-            <p>一鍵查閱券商操作績效，抓出異常買超的主力動態；三步驟看出隱藏券商的掃貨軌跡。</p>
-          </article>
-          <article class="app-card">
-            <span class="app-tag">VIP</span>
-            <h3>主力籌碼</h3>
-            <p>一眼觀看內部買賣動態，大股東狂吃貨自動警示，順勢搭上主力的順風車。</p>
-          </article>
-          <article class="app-card">
-            <span class="app-tag">VIP</span>
-            <h3>精選策略</h3>
-            <p>200+ 高市場參考指標，一鍵找出盤中飆股，篩選出屬於你的專屬股票清單。</p>
-          </article>
-          <article class="app-card">
-            <span class="app-tag">VIP</span>
-            <h3>智能選股與健檢</h3>
-            <p>策略自訂模組、個股健檢與市場健檢，讓每一次進場都有依據。</p>
-          </article>
-        </div>
-        <p class="app-note">＊VIP 功能為學員限定，實際開放項目依當期公告為準。</p>
-      </div>
-    </section>
-
-    <!-- JOURNEY (學習旅程 × 學習地圖：橫式節點，電流沿線推進) -->
-    <section class="journey plate" id="roadmap">
-      <div class="wrap">
-        <p class="eyebrow">學習旅程 <span>Learning Map</span></p>
-        <h2 class="h-section">從投資小白，走到系統化穩定獲利。</h2>
-        <p class="sec-lead">一條清楚的五級進化路徑 —— 每往前一個節點，你看市場的方式就更完整一層。</p>
-
-        <div class="jn" aria-label="學習地圖 L1 到 L5">
-          <div class="jn-plot">
-            <svg class="jn-svg" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-              <defs>
-                <linearGradient id="jnGrad" x1="0" y1="1" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#4f46e5"/><stop offset="28%" stop-color="#7c3aed"/>
-                  <stop offset="55%" stop-color="#a855f7"/><stop offset="80%" stop-color="#e0409a"/>
-                  <stop offset="100%" stop-color="#e08c00"/>
-                </linearGradient>
-                <linearGradient id="jnSpark" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
-                  <stop offset="50%" stop-color="#fff" stop-opacity="1"/>
-                  <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <path class="jn-path" d="M80 178 C 170 176, 200 150, 290 138 S 420 114, 500 98 S 630 74, 710 58 S 840 26, 920 18"/>
-              <path class="jn-spark" d="M80 178 C 170 176, 200 150, 290 138 S 420 114, 500 98 S 630 74, 710 58 S 840 26, 920 18"/>
-            </svg>
-            <span class="jn-dot" style="--x:8%;--y:89%;--lv:#4f46e5" aria-hidden="true"></span>
-            <span class="jn-dot" style="--x:29%;--y:69%;--lv:#7c3aed" aria-hidden="true"></span>
-            <span class="jn-dot" style="--x:50%;--y:49%;--lv:#a855f7" aria-hidden="true"></span>
-            <span class="jn-dot" style="--x:71%;--y:29%;--lv:#e0409a" aria-hidden="true"></span>
-            <span class="jn-dot" style="--x:92%;--y:9%;--lv:#e08c00" aria-hidden="true"></span>
-          </div>
-          <ol class="jn-nodes">
-            <li class="jn-node" style="--x:8%;--lv:#4f46e5"><span class="jn-lv">L1</span><span class="jn-name">財經啟蒙</span></li>
-            <li class="jn-node" style="--x:29%;--lv:#7c3aed"><span class="jn-lv">L2</span><span class="jn-name">市場啟蒙</span></li>
-            <li class="jn-node" style="--x:50%;--lv:#a855f7"><span class="jn-lv">L3</span><span class="jn-name">進階實戰</span></li>
-            <li class="jn-node" style="--x:71%;--lv:#e0409a"><span class="jn-lv">L4</span><span class="jn-name">交易系統</span></li>
-            <li class="jn-node" style="--x:92%;--lv:#e08c00"><span class="jn-lv">L5</span><span class="jn-name">穩定獲利</span></li>
-          </ol>
-        </div>
-
-        <div class="jn-foot">
-          <span>核心課表 8 個月打好基本功</span>
-          <span>進階持續建立自己的交易系統</span>
-          <span>財經投資主題講堂跨等級持續更新</span>
-        </div>
-      </div>
-    </section>
-
 
     <!-- STATS -->
     <section class="stats">
@@ -453,6 +328,22 @@
     </section>
 
 
+    <!-- PARTNERS -->
+    <section class="clients clients-sm plate" id="partners">
+      <div class="wrap">
+        <div class="clients-head">
+          <div>
+            <h2>企業合作夥伴</h2>
+          </div>
+        </div>
+        <div class="corp-row">
+          <div class="corp-item"><img src="img/partners/capital.png" alt="群益金鼎證券 CAPITAL" loading="lazy" decoding="async" /></div>
+          <div class="corp-item"><img src="img/partners/pocket.png" alt="口袋證券 POCKET SECURITIES" loading="lazy" decoding="async" /></div>
+          <div class="corp-item"><img src="img/partners/xplatform.png" alt="X Platform 職能共學平台" loading="lazy" decoding="async" /></div>
+        </div>
+      </div>
+    </section>
+
     <!-- VOICES -->
     <section class="tmt plate">
       <div class="wrap">
@@ -470,11 +361,31 @@
       </div>
     </section>
 
+    <!-- COURSES -->
+    <section class="work plate" id="courses">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="lt">
+            <p class="eyebrow">文章專區 <span>Insights</span></p>
+            <h2 class="h-section">市場每天在變，先讀懂再出手。</h2>
+            <p class="lead">每週更新的深度專欄與市場解析，把複雜的訊息拆成你能用的判斷。</p>
+          </div>
+          <a class="btn" href="https://nschool.tw/blog" target="_blank" rel="noopener">看更多文章 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></a>
+        </div>
+        <div class="cards-4" id="articleGrid">
+          <a class="w-card" href="https://nschool.tw/posts/054b0bce-9f0a-4396-955d-2ad79d5c0ecd" target="_blank" rel="noopener"><div class="thumb"><img src="https://static.kolable.com/post_covers/nschool/054b0bce-9f0a-4396-955d-2ad79d5c0ecd/a7e45f0f-c2e1-49c5-814d-c3bfe040426e/1200" alt="斷頭大清洗" loading="lazy" /></div><div class="tag">深度專欄 · 2026.06.12</div><h4 class="w-name">斷頭大清洗！解碼期權連環套與非理性流動性劫持</h4></a>
+          <a class="w-card" href="https://nschool.tw/posts/969c8e1e-ce38-4402-be6a-c03861ce866a" target="_blank" rel="noopener"><div class="thumb"><img src="https://static.kolable.com/post_covers/nschool/969c8e1e-ce38-4402-be6a-c03861ce866a/42f3756a-0a79-4992-a780-21e1ab83098a/1200" alt="雲端集權到邊緣割據" loading="lazy" /></div><div class="tag">深度專欄 · 2026.06.05</div><h4 class="w-name">解碼「雲端集權」到「邊緣割據」的數據定價權</h4></a>
+          <a class="w-card" href="https://nschool.tw/posts/a04e5141-f9f6-45eb-8727-4538f42466a7" target="_blank" rel="noopener"><div class="thumb"><img src="https://static.kolable.com/post_covers/nschool/a04e5141-f9f6-45eb-8727-4538f42466a7/7d884f4e-9582-43c5-ac46-ddf050cab3ac/1200" alt="兆元宴踩碎美伊地緣恐慌" loading="lazy" /></div><div class="tag">深度專欄 · 2026.05.29</div><h4 class="w-name">1.8 兆的反擊：「兆元宴」如何踩碎美伊地緣恐慌？</h4></a>
+          <a class="w-card" href="https://nschool.tw/posts/017b7e5a-b2e2-4f23-85b1-5b29c91aaec8" target="_blank" rel="noopener"><div class="thumb"><img src="https://static.kolable.com/post_covers/nschool/017b7e5a-b2e2-4f23-85b1-5b29c91aaec8/9b1f0510-f61a-4fae-8348-7c2d36658feb/1200" alt="780萬美元AI機架帳單" loading="lazy" /></div><div class="tag">深度專欄 · 2026.05.22</div><h4 class="w-name">780 萬美元的 AI 機架帳單：NVL72 背後的創新代價</h4></a>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section class="cta" id="contact">
       <div class="wrap">
         <p class="hero-en" style="margin-bottom:18px">Start today</p>
-        <h2 class="display">市場不會等你準備好，<br>但你可以從今天開始準備。</h2>
+        <h2 class="display">市場不會等你準備好，但你可以從今天開始準備。</h2>
         <a class="btn" href="https://www.surveycake.com/s/80KmQ" target="_blank" rel="noopener">立即填寫資料卡位 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></a>
         <p class="cta-note">一對一諮詢，幫你找到最適合的投資策略。</p>
       </div>
@@ -486,13 +397,13 @@
     <div class="wrap">
       <div class="footer-grid">
         <div>
-          <a class="logo" href="#top"><img src="img/nschool_black.svg" alt="nSchool" /></a>
+          <a class="logo" href="#top"><img src="img/nschool_logo.png" alt="nSchool" /></a>
           <p class="footer-tag">先認知，再投資 ｜ 從理財新手到配置大師</p>
           <p class="footer-url">www.nschool.tw</p>
         </div>
         <div class="footer-col">
           <h4>探索 <i>Explore</i></h4>
-          <a href="#method">關於我們</a><a href="#pillars">課程主題</a><a href="#roadmap">學習地圖</a><a href="#courses">文章專欄</a><a href="#faculty">顧問師資</a>
+          <a href="#method">關於我們</a><a href="#pillars">課程主題</a><a href="#partners">企業合作夥伴</a><a href="#courses">文章專欄</a><a href="#faculty">顧問師資</a>
         </div>
         <div class="footer-col">
           <h4>資訊 <i>Info</i></h4>
@@ -529,6 +440,6 @@
   </div>
 
   <script type="module" src="hero.js?v=7"></script>
-  <script src="main.js?v=18"></script>
+  <script src="main.js?v=19"></script>
 </body>
 </html>
