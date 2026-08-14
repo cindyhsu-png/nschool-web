@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=19" />
+  <link rel="stylesheet" href="style.css?v=24" />
   <script type="importmap">
   {
     "imports": {
@@ -45,18 +45,23 @@
     <a class="logo" href="#top" aria-label="nSchool 首頁">
       <img src="img/nschool_black.svg" alt="nSchool" />
     </a>
-    <nav class="nav-pill">
-      <a href="#method">關於我們</a>
-      <a href="#pillars">課程主題</a>
-      <a href="#roadmap">學習地圖</a>
-      <a href="#courses">文章專欄</a>
-      <a href="#faculty">顧問師資</a>
-    </nav>
     <a class="nav-cta" href="https://www.surveycake.com/s/80KmQ" target="_blank" rel="noopener">
       <span>一對一諮詢 <i>Book a call</i></span>
       <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
     </a>
   </header>
+
+  <!-- 左側欄導覽：一條線 + 圓點節點，捲動時高亮目前區塊 -->
+  <nav class="rail" id="rail" aria-label="區塊導覽">
+    <span class="rail-line" aria-hidden="true"><i class="rail-fill" id="railFill"></i></span>
+    <a href="#top" data-sec="top"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">首頁</span></a>
+    <a href="#method" data-sec="method"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">關於我們</span></a>
+    <a href="#pillars" data-sec="pillars"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">課程主題</span></a>
+    <a href="#roadmap" data-sec="roadmap"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">學習地圖</span></a>
+    <a href="#courses" data-sec="courses"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">文章專欄</span></a>
+    <a href="#faculty" data-sec="faculty"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">顧問師資</span></a>
+    <a href="#contact" data-sec="contact"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">預約諮詢</span></a>
+  </nav>
 
   <main>
     <!-- HERO -->
@@ -85,8 +90,7 @@
       <div class="wrap">
         <div class="clients-head">
           <div>
-            <p class="eyebrow light" style="text-align:right;margin-bottom:14px">企業合作夥伴 <span>Corporate Partners</span></p>
-            <h2>與專業券商及產業夥伴攜手，<br>讓投資更省、更穩。</h2>
+            <h2>企業合作夥伴</h2>
           </div>
         </div>
         <div class="corp-row">
@@ -267,46 +271,6 @@
       </div>
     </section>
 
-    <!-- TRIO (三師同步教學) -->
-    <section class="trio plate" id="trio">
-      <div class="wrap">
-        <p class="eyebrow">教學團隊 <span>Your Team</span></p>
-        <h2 class="h-section">三大輔導團隊，三師同步教學。</h2>
-        <p class="sec-lead">不是一位講師講完就散場 —— 財經教練、助教、產業講師同時在線，從課程進度到實際操盤全程陪跑。</p>
-        <div class="trio-grid">
-          <article class="trio-card">
-            <p class="trio-num">01 · Coach</p>
-            <h3>nSchool 財經教練</h3>
-            <ul>
-              <li>從訓練到實戰，手把手帶操作</li>
-              <li>實際操盤演練</li>
-              <li>投資實戰的完整陪跑</li>
-            </ul>
-          </article>
-          <article class="trio-card">
-            <p class="trio-num">02 · Teaching Assistant</p>
-            <h3>助教</h3>
-            <ul>
-              <li>定期關懷學習狀況</li>
-              <li>討論課程進度與學習規劃</li>
-              <li>協助課內疑問排除、平台使用問題</li>
-              <li>真人線上回覆、協助預約業師諮詢</li>
-            </ul>
-          </article>
-          <article class="trio-card">
-            <p class="trio-num">03 · Industry Mentor</p>
-            <h3>產業講師諮詢</h3>
-            <ul>
-              <li>真實業界實戰分享</li>
-              <li>以業界角度親身解惑</li>
-              <li>個股評估建議與市場結構分析</li>
-            </ul>
-          </article>
-        </div>
-        <p class="trio-foot">OMO 線上線下整合學習 · 依個人目標客製化內容 · 1 對 1 個人化指導 · 從實際操作到職涯規劃</p>
-      </div>
-    </section>
-
     <!-- APP -->
     <section class="appx plate" id="app">
       <div class="wrap">
@@ -339,89 +303,54 @@
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
-    <section class="how">
-      <div class="wrap how-grid">
-        <div class="how-sticky">
-          <div>
-            <p class="eyebrow light" style="margin-bottom:18px">學習旅程 <span>How it works</span></p>
-            <h2 class="display lbl" style="font-size:clamp(38px,4.6vw,76px)">為你量身<br>打造的<br>學習路徑。</h2>
+    <!-- JOURNEY (學習旅程 × 學習地圖：橫式節點，電流沿線推進) -->
+    <section class="journey plate" id="roadmap">
+      <div class="wrap">
+        <p class="eyebrow">學習旅程 <span>Learning Map</span></p>
+        <h2 class="h-section">從投資小白，走到系統化穩定獲利。</h2>
+        <p class="sec-lead">一條清楚的五級進化路徑 —— 每往前一個節點，你看市場的方式就更完整一層。</p>
+
+        <div class="jn" aria-label="學習地圖 L1 到 L5">
+          <div class="jn-plot">
+            <svg class="jn-svg" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="jnGrad" x1="0" y1="1" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#4f46e5"/><stop offset="28%" stop-color="#7c3aed"/>
+                  <stop offset="55%" stop-color="#a855f7"/><stop offset="80%" stop-color="#e0409a"/>
+                  <stop offset="100%" stop-color="#e08c00"/>
+                </linearGradient>
+                <linearGradient id="jnSpark" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
+                  <stop offset="50%" stop-color="#fff" stop-opacity="1"/>
+                  <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path class="jn-path" d="M80 178 C 170 176, 200 150, 290 138 S 420 114, 500 98 S 630 74, 710 58 S 840 26, 920 18"/>
+              <path class="jn-spark" d="M80 178 C 170 176, 200 150, 290 138 S 420 114, 500 98 S 630 74, 710 58 S 840 26, 920 18"/>
+            </svg>
+            <span class="jn-dot" style="--x:8%;--y:89%;--lv:#4f46e5" aria-hidden="true"></span>
+            <span class="jn-dot" style="--x:29%;--y:69%;--lv:#7c3aed" aria-hidden="true"></span>
+            <span class="jn-dot" style="--x:50%;--y:49%;--lv:#a855f7" aria-hidden="true"></span>
+            <span class="jn-dot" style="--x:71%;--y:29%;--lv:#e0409a" aria-hidden="true"></span>
+            <span class="jn-dot" style="--x:92%;--y:9%;--lv:#e08c00" aria-hidden="true"></span>
           </div>
+          <ol class="jn-nodes">
+            <li class="jn-node" style="--x:8%;--lv:#4f46e5"><span class="jn-lv">L1</span><span class="jn-name">財經啟蒙</span></li>
+            <li class="jn-node" style="--x:29%;--lv:#7c3aed"><span class="jn-lv">L2</span><span class="jn-name">市場啟蒙</span></li>
+            <li class="jn-node" style="--x:50%;--lv:#a855f7"><span class="jn-lv">L3</span><span class="jn-name">進階實戰</span></li>
+            <li class="jn-node" style="--x:71%;--lv:#e0409a"><span class="jn-lv">L4</span><span class="jn-name">交易系統</span></li>
+            <li class="jn-node" style="--x:92%;--lv:#e08c00"><span class="jn-lv">L5</span><span class="jn-name">穩定獲利</span></li>
+          </ol>
         </div>
-        <div class="how-steps">
-          <div class="step"><div class="ic">&#9737;</div><p class="step-en">01 · Discovery Call</p><h3>預約諮詢</h3><p>30 分鐘一對一對談，了解你的目標、現況與時間規劃。免費，無推銷。</p></div>
-          <div class="step"><div class="ic">&#10033;</div><p class="step-en">02 · Assessment</p><h3>能力診斷</h3><p>透過實作評測，定位你目前的財商能力與知識缺口。</p></div>
-          <div class="step"><div class="ic">&#10033;</div><p class="step-en">03 · Personal Path</p><h3>客製學習路徑</h3><p>依診斷結果，為你排定由淺入深、彼此銜接的課程順序。</p></div>
-          <div class="step"><div class="ic">&#9707;</div><p class="step-en">04 · Start Learning</p><h3>開始學習與複盤</h3><p>直播答疑、作業批改與研究例會，讓知識真正內化為能力。</p></div>
+
+        <div class="jn-foot">
+          <span>核心課表 8 個月打好基本功</span>
+          <span>進階持續建立自己的交易系統</span>
+          <span>財經投資主題講堂跨等級持續更新</span>
         </div>
       </div>
     </section>
 
-    <!-- ROADMAP (學習地圖 L1–L5) -->
-    <section class="roadmap plate" id="roadmap">
-      <div class="wrap">
-        <p class="eyebrow">學習地圖 <span>Learning Map</span></p>
-        <h2 class="h-section">從投資小白，走到系統化穩定獲利。</h2>
-        <p class="sec-lead">一條清楚的 5 級進化路徑。核心課表 8 個月打好完整基本功，再進入交易系統與長期修練 —— 你會很清楚，現在的自己在哪一級、下一步會變成什麼樣的人。</p>
-        <div class="rm-track">
-          <article class="rm-card" style="--lv:#4f46e5">
-            <span class="rm-lv">L1</span>
-            <h3 class="rm-name">財經啟蒙</h3>
-            <span class="rm-pill">從一無所知 → 看懂投資理財</span>
-            <p class="rm-kv">從零建立正確的投資理財認知，打好觀念地基。認識「理財是什麼、投資是什麼」，建立正確金錢觀與投資思維。</p>
-            <ul class="rm-out"><li>完整投資理財基礎</li><li>正確的風險意識</li><li>認識各種投資工具</li></ul>
-            <p class="rm-time">第 1–3 月 · 3 個月 · 觀念地基</p>
-          </article>
-          <article class="rm-card" style="--lv:#7c3aed">
-            <span class="rm-lv">L2</span>
-            <h3 class="rm-name">市場啟蒙</h3>
-            <span class="rm-pill">用四大分析 → 看懂市場</span>
-            <p class="rm-kv">建立看懂市場的分析基本功，不再霧裡看花。學會用基本面、技術面、籌碼面、ETF 四種角度分析市場。</p>
-            <ul class="rm-out"><li>財報三表判讀與估值</li><li>三大法人籌碼追蹤</li><li>K 線、均線、技術指標</li></ul>
-            <p class="rm-time">第 4–7 月 · 4 個月 · 四大分析</p>
-          </article>
-          <article class="rm-card" style="--lv:#a855f7">
-            <span class="rm-lv">L3</span>
-            <h3 class="rm-name">進階實戰</h3>
-            <span class="rm-pill">把知識 → 變成實戰能力</span>
-            <p class="rm-kv">將知識轉化為實戰，往五大方向深化運用。進階技法、模擬倉實戰、跨商品、量化入門、交易門派邏輯。</p>
-            <ul class="rm-out"><li>跟法人／主力操作策略</li><li>券商分點偵探能力</li><li>完整實務操作藍圖</li></ul>
-            <p class="rm-time">第 8 月起 · 實戰深化</p>
-          </article>
-          <article class="rm-card" style="--lv:#e0409a">
-            <span class="rm-lv">L4</span>
-            <h3 class="rm-name">交易系統</h3>
-            <span class="rm-pill">打造專屬你的賺錢系統</span>
-            <p class="rm-kv">化整為零，建立一套屬於自己的交易系統。清楚知道怎麼選、為何選、何時進出，培養執行的紀律。</p>
-            <ul class="rm-out"><li>個人化交易系統</li><li>資金與心態管理</li><li>量化分析入門</li></ul>
-            <p class="rm-time">進階持續 · 系統建立期</p>
-          </article>
-          <article class="rm-card" style="--lv:#e08c00">
-            <span class="rm-lv">L5</span>
-            <h3 class="rm-name">穩定獲利</h3>
-            <span class="rm-pill">有意識地賺對的錢</span>
-            <p class="rm-kv">跨越交易里程碑，邁向系統化的穩定獲利。無論賺賠都能檢討原因，持續修練部位與心態管理。</p>
-            <ul class="rm-out"><li>穩定的獲利邏輯</li><li>賺賠都懂的檢討機制</li><li>持續進化的交易心法</li></ul>
-            <p class="rm-time">長期修練 · 穩定獲利期</p>
-          </article>
-        </div>
-        <div class="rm-all">財經投資主題講堂（講師群）<i>跨等級 · 持續更新</i></div>
-        <div class="rm-notes">
-          <div class="rm-note">
-            <h4>走期怎麼看</h4>
-            <p>核心課表約 8 個月帶你完成 L1→L3 的完整基本功；L4–L5 是建立個人交易系統與長期修練的進階階段，依個人節奏持續深化。</p>
-          </div>
-          <div class="rm-note">
-            <h4>擴充教材（持續更新）</h4>
-            <p>投資實務操作、期貨實戰、加密貨幣投資入門、財經投資講堂等，搭配核心課表隨時補強，累積跨商品與實戰經驗。</p>
-          </div>
-          <div class="rm-note">
-            <h4>程度分級一句話</h4>
-            <p>L1 小白啟蒙 → L2 市場入門 → L3 進階實戰 → L4 交易系統 → L5 系統化獲利。每一級都有明確的「你會變成什麼」。</p>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- STATS -->
     <section class="stats">
@@ -444,6 +373,86 @@
       </div>
     </section>
 
+    <!-- FACULTY -->
+    <section class="team plate" id="faculty">
+      <div class="wrap">
+        <p class="eyebrow">顧問師資 <span>Faculty</span></p>
+        <h2 class="h-section">適合你現階段的人，來教你。</h2>
+        <p class="team-lead">專業顧問、實戰講師、產業前輩 —— 11 位合作師資，找到最適合你現在學習階段的那一位。</p>
+        <div class="team-carousel" id="teamCarousel">
+          <div class="team-track" id="teamTrack">
+              <div class="member">
+                <div class="ph" style="background-image:url('img/charlotte.jpeg?v=2')"></div>
+                <b>夏綠蒂</b>
+                <span class="tags">ETF｜財報分析｜資產配置</span>
+                <span class="role">夏綠蒂聊投資 創辦人・雲投資 共同創辦人</span>
+              </div>
+              <div class="member">
+                <div class="ph" style="background-image:url('img/chike.jpeg?v=2')"></div>
+                <b>齊克用</b>
+                <span class="tags">股票｜期貨｜基金｜金融操作</span>
+                <span class="role">金融研訓院菁英講師・證基會專任講師</span>
+              </div>
+              <div class="member">
+                <div class="ph" style="background-image:url('img/faculty/andyworld.jpg')"></div>
+                <b>Andyworld</b>
+                <span class="tags">ETF｜存股領息</span>
+                <span class="role">《Money 錢》雜誌封面故事・個人品牌 Andyworld</span>
+              </div>
+              <div class="member">
+                <div class="ph" style="background-image:url('img/faculty/fuyiwen.jpg')"></div>
+                <b>傅儀文</b>
+                <span class="tags">金融市場解讀｜產業趨勢研究</span>
+                <span class="role">非凡電視台新聞主播・東森財經台晨間主播</span>
+              </div>
+              <div class="member">
+                <div class="ph" style="background-image:url('img/leefang.jpg?v=2')"></div>
+                <b>郭莉芳</b>
+                <span class="tags">小資理財｜退休理財｜保險規劃</span>
+                <span class="role">演講與教學經驗逾 10 年・《終結零存款》作者</span>
+              </div>
+              <div class="member">
+                <div class="ph" style="background-image:url('img/faculty/wangchihchun.jpg')"></div>
+                <b>王志均</b>
+                <span class="tags">家庭財務規劃與現金流管理</span>
+                <span class="role">王老師財富管理學院創辦人・著有 21 本理財書</span>
+              </div>
+              <div class="member">
+                <div class="ph" style="background-image:url('img/faculty/fengfeng.jpg')"></div>
+                <b>馮馮</b>
+                <span class="tags">國際金融｜資產配置</span>
+                <span class="role">金融分析師、投資課程講師・10+ 年金融實戰</span>
+              </div>
+              <div class="member">
+                <div class="ph" style="background-image:url('img/faculty/buluoke.jpg')"></div>
+                <b>不落客</b>
+                <span class="tags">總經｜匯率｜ETF｜房市</span>
+                <span class="role">住展雜誌記者・Smart 智富記者</span>
+              </div>
+              <div class="member">
+                <div class="ph" style="background-image:url('img/mrwang.jpg?v=2')"></div>
+                <b>王老先生 景毅</b>
+                <span class="tags">區塊鏈｜加密貨幣｜DeFi 套利</span>
+                <span class="role">2017 年起投入加密貨幣・NFT 社群經營與講座</span>
+              </div>
+              <div class="member">
+                <div class="ph" style="background-image:url('img/faculty/puman.jpg')"></div>
+                <b>撲滿</b>
+                <span class="tags">ETF｜資產配置｜被動加薪</span>
+                <span class="role">上櫃公司軟體技術副理・撲滿日記版主</span>
+              </div>
+              <div class="member">
+                <div class="ph" style="background-image:url('img/faculty/xiaoh.jpg')"></div>
+                <b>小 H 的成長日記</b>
+                <span class="tags">小資理財｜資產分配｜被動收入</span>
+                <span class="role">自媒體作者・醫材公司合夥人</span>
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
     <!-- VOICES -->
     <section class="tmt plate">
       <div class="wrap">
@@ -457,105 +466,6 @@
           <article class="t-card"><p class="quote">「我以前看財經新聞像看天書。現在我會先問：數據來源是什麼？樣本多長？這就是框架的力量。」</p><div class="who"><span class="av" style="background-image:url('https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?w=160&h=160&fit=crop&crop=faces&q=70&auto=format')"></span><span><b>小吃店老闆娘</b><span>理財規劃工具 結業</span></span></div></article>
           <article class="t-card"><p class="quote">「不教明牌這件事，一開始讓我懷疑。半年後我才懂，會自己判斷，比任何一支飆股都值錢。」</p><div class="who"><span class="av" style="background-image:url('https://images.unsplash.com/photo-1542909192-2f2241a99c9d?w=160&h=160&fit=crop&crop=faces&q=70&auto=format')"></span><span><b>外商業務</b><span>F-01 總體經濟 結業</span></span></div></article>
           <article class="t-card"><p class="quote">「課程把學術的嚴謹帶進教室，每個結論都有出處可查。這是我看過最像研究所的財經課。」</p><div class="who"><span class="av" style="background-image:url('https://images.unsplash.com/photo-1616268164880-673b3ba611bb?w=160&h=160&fit=crop&crop=faces&q=70&auto=format')"></span><span><b>退休教師</b><span>量化思維入門 結業</span></span></div></article>
-        </div>
-      </div>
-    </section>
-
-    <!-- FACULTY -->
-    <section class="team plate" id="faculty">
-      <div class="wrap">
-        <p class="eyebrow">顧問師資 <span>Faculty</span></p>
-        <h2 class="h-section">適合你現階段的人，來教你。</h2>
-        <div class="team-grid">
-          <div class="team-intro">
-            <p class="eyebrow">合作師資 <span>Our Partner</span></p>
-            <p>專業顧問、實戰講師、產業前輩 —— 一鍵了解誰最適合你現在的學習階段。</p>
-            <div class="team-nav">
-              <button type="button" class="team-prev" aria-label="上一位師資">&#8249;</button>
-              <button type="button" class="team-next" aria-label="下一位師資">&#8250;</button>
-            </div>
-            <p class="team-count">11 位合作師資 · Faculty</p>
-          </div>
-          <div class="team-carousel">
-            <div class="team-track" id="teamTrack">
-              <div class="member">
-                <div class="ph" style="background-image:url('img/charlotte.jpeg?v=2')"></div>
-                <b>夏綠蒂</b>
-                <span class="tags">ETF｜財報分析｜資產配置</span>
-                <ul class="roles"><li>夏綠蒂聊投資 創辦人</li><li>雲投資 共同創辦人</li></ul>
-                <p class="quote"><em>名言</em>彼得・林區：假如我有一塊錢，把它給了你，那一塊錢就變成你的了，但假如我給你的是一種觀念，那我們兩人便同時擁有它了。</p>
-              </div>
-              <div class="member">
-                <div class="ph" style="background-image:url('img/chike.jpeg?v=2')"></div>
-                <b>齊克用</b>
-                <span class="tags">股票｜期貨｜基金｜金融操作</span>
-                <ul class="roles"><li>金融研訓院 菁英講師</li><li>證基會 專任講師</li><li>寰宇出版 專任講師</li></ul>
-                <p class="quote"><em>理念</em>致力於金融教育訓練、操盤手訓練，教育訓練與演講萬場以上經驗。</p>
-              </div>
-              <div class="member">
-                <div class="ph" style="background-image:url('img/faculty/andyworld.jpg')"></div>
-                <b>Andyworld</b>
-                <span class="tags">ETF｜存股領息</span>
-                <ul class="roles"><li>投資歷程獲選為《Money 錢》雜誌封面故事</li><li>經營個人品牌 Andyworld</li></ul>
-                <p class="quote"><em>理念</em>投資路上保有耐心，最終能嚐到獲利果實。</p>
-              </div>
-              <div class="member">
-                <div class="ph" style="background-image:url('img/faculty/fuyiwen.jpg')"></div>
-                <b>傅儀文</b>
-                <span class="tags">金融市場解讀｜產業趨勢研究</span>
-                <ul class="roles"><li>非凡電視台 新聞主播、財經記者</li><li>東森財經台 晨間主播、財經記者、房產主持人</li><li>臺灣銀行訓練所 媒體公關講師</li></ul>
-                <p class="quote"><em>名言</em>不要在該奮鬥時選擇安逸。不是只有驚天動地的人生才需要努力，平凡的幸福，也需要不凡的努力。</p>
-              </div>
-              <div class="member">
-                <div class="ph" style="background-image:url('img/leefang.jpg?v=2')"></div>
-                <b>郭莉芳</b>
-                <span class="tags">小資理財｜退休理財｜保險規劃｜置產財務規劃</span>
-                <ul class="roles"><li>演講與教學經驗逾 10 年</li><li>著有《終結零存款：上班族這樣存，不靠老闆照樣年年加薪》</li></ul>
-                <p class="quote"><em>名言</em>違背人性的事，註定要失敗。</p>
-              </div>
-              <div class="member">
-                <div class="ph" style="background-image:url('img/faculty/wangchihchun.jpg')"></div>
-                <b>王志均</b>
-                <span class="tags">家庭財務規劃與現金流管理</span>
-                <ul class="roles"><li>《王老師財富管理學院》創辦人</li><li>著有 21 本暢銷理財相關書籍</li><li>十餘年理財教學經驗，持續舉辦全台公益講座</li></ul>
-                <p class="quote"><em>名言</em>愛，是人生最大的財富！</p>
-              </div>
-              <div class="member">
-                <div class="ph" style="background-image:url('img/faculty/fengfeng.jpg')"></div>
-                <b>馮馮</b>
-                <span class="tags">國際金融｜資產配置</span>
-                <ul class="roles"><li>金融分析師、投資課程講師</li><li>10+ 年金融實戰經驗</li></ul>
-                <p class="quote"><em>名言</em>波動只是表象，趨勢才是真相，格局決定方向。用國際視野，捕捉爆發的轉折，看清資金的下一站。</p>
-              </div>
-              <div class="member">
-                <div class="ph" style="background-image:url('img/faculty/buluoke.jpg')"></div>
-                <b>不落客</b>
-                <span class="tags">總經｜匯率｜ETF｜房市</span>
-                <ul class="roles"><li>住展雜誌 記者</li><li>Smart 智富 記者</li></ul>
-                <p class="quote"><em>名言</em>投資如海，關鍵不是征服它，而是找到最適合自己的航道。</p>
-              </div>
-              <div class="member">
-                <div class="ph" style="background-image:url('img/mrwang.jpg?v=2')"></div>
-                <b>王老先生 景毅</b>
-                <span class="tags">區塊鏈｜加密貨幣｜比特幣｜DeFi 套利｜以太坊合約交易</span>
-                <ul class="roles"><li>2017 年接觸加密貨幣</li><li>2020–2022 經營 NFT 社群，並鑽研去中心化交易所間的套利技巧</li><li>2023–2025 於 Twitch、YouTube、推特等平台曝光及演講</li></ul>
-              </div>
-              <div class="member">
-                <div class="ph" style="background-image:url('img/faculty/puman.jpg')"></div>
-                <b>撲滿</b>
-                <span class="tags">ETF｜資產配置｜被動加薪</span>
-                <ul class="roles"><li>上櫃公司 軟體技術副理</li><li>撲滿日記部落格 版主</li><li>IG 社群平台累積 4.6 萬粉絲</li></ul>
-                <p class="quote"><em>名言</em>懂理財，是為了懂得「過好人生」。理財不必犧牲生活品質，生活即是一場豐富的投資。</p>
-              </div>
-              <div class="member">
-                <div class="ph" style="background-image:url('img/faculty/xiaoh.jpg')"></div>
-                <b>小 H 的成長日記</b>
-                <span class="tags">小資理財｜資產分配｜被動收入</span>
-                <ul class="roles"><li>自媒體作者 —— 小 H 的成長日記</li><li>醫材公司 合夥人</li></ul>
-                <p class="quote"><em>名言</em>真正的自由，是不用為了錢去做任何不想做的事。</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -619,6 +529,6 @@
   </div>
 
   <script type="module" src="hero.js?v=7"></script>
-  <script src="main.js?v=13"></script>
+  <script src="main.js?v=18"></script>
 </body>
 </html>

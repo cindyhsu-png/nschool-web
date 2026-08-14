@@ -182,8 +182,7 @@
 
   // ---------- reveal on scroll ----------
   const reveal = document.querySelectorAll(
-    ".s-card, .w-card, .b-card, .t-card, .member, .stat, .step, " +
-      ".pil, .rm-card, .rm-note, .trio-card, .app-card, .corp-item"
+    ".s-card, .w-card, .b-card, .t-card, .stat, .pil, .app-card, .corp-item, .jn-foot span"
   );
   reveal.forEach((el) => {
     el.style.opacity = "0";
@@ -203,25 +202,79 @@
   }, { threshold: 0.18 });
   reveal.forEach((el) => ro.observe(el));
 
-  // ---------- faculty carousel (switchable) ----------
+  // ---------- faculty marquee: duplicate the cards so the CSS loop is seamless ----------
   const track = document.getElementById("teamTrack");
-  const carousel = document.querySelector(".team-carousel");
-  if (track && carousel) {
-    let idx = 0;
-    const cards = () => track.children;
-    const step = () => {
-      const c = cards()[0];
-      const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || 24) || 24;
-      return c ? c.getBoundingClientRect().width + gap : 0;
-    };
-    const perView = () => Math.max(1, Math.round(carousel.clientWidth / Math.max(1, step())));
-    const maxIdx = () => Math.max(0, cards().length - perView());
-    const apply = () => { track.style.transform = `translateX(${-idx * step()}px)`; };
-    const go = (d) => { idx = Math.min(maxIdx(), Math.max(0, idx + d)); apply(); };
-    document.querySelector(".team-prev")?.addEventListener("click", () => go(-1));
-    document.querySelector(".team-next")?.addEventListener("click", () => go(1));
-    let rz; addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { idx = Math.min(idx, maxIdx()); apply(); }, 200); });
+  if (track && !reduce) {
+    const originals = [...track.children];
+    originals.forEach((el) => {
+      const c = el.cloneNode(true);
+      c.setAttribute("aria-hidden", "true");
+      track.appendChild(c);
+    });
   }
+
+  // ---------- footer disclaimer: 一行顯示，字級自動縮到剛好放得下（絕不截字） ----------
+  (function fitDisclaimer() {
+    const el = document.querySelector(".footer-disclaimer");
+    if (!el) return;
+    const MAX = 11.5, MIN = 9;
+    // 用一顆離屏的量測節點：量真實文字寬度，不受父層裁切影響
+    const probe = document.createElement("span");
+    probe.textContent = el.textContent;
+    probe.style.cssText = "position:absolute;left:-9999px;top:0;white-space:nowrap;visibility:hidden";
+    const avail = () => el.parentElement.clientWidth
+      - parseFloat(getComputedStyle(el.parentElement).paddingLeft)
+      - parseFloat(getComputedStyle(el.parentElement).paddingRight);
+    const fit = () => {
+      const room = avail();
+      if (room <= 0) return;
+      document.body.appendChild(probe);
+      const cs = getComputedStyle(el);
+      probe.style.fontFamily = cs.fontFamily;
+      probe.style.fontWeight = cs.fontWeight;
+      probe.style.letterSpacing = cs.letterSpacing;
+      let size = MAX;
+      probe.style.fontSize = size + "px";
+      while (probe.offsetWidth > room && size > MIN) {
+        size = Math.round((size - 0.25) * 100) / 100;
+        probe.style.fontSize = size + "px";
+      }
+      const fits = probe.offsetWidth <= room;
+      probe.remove();
+      // 縮到下限還放不下（窄螢幕）→ 換行；寧可多行，也不能截掉聲明內容
+      el.classList.toggle("wrapped", !fits);
+      el.style.fontSize = fits ? size + "px" : "";
+    };
+    fit();
+    if (window.ResizeObserver) new ResizeObserver(fit).observe(el.parentElement);
+    else addEventListener("resize", fit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  })();
+
+  // ---------- left rail: scroll-spy + progress fill ----------
+  (function rail() {
+    const rail = document.getElementById("rail");
+    const fill = document.getElementById("railFill");
+    if (!rail) return;
+    const links = [...rail.querySelectorAll("a[data-sec]")];
+    const secs = links.map((a) => document.getElementById(a.dataset.sec)).filter(Boolean);
+    if (!secs.length) return;
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const mid = scrollY + innerHeight * 0.4;
+      let cur = 0;
+      secs.forEach((s, i) => { if (s.offsetTop <= mid) cur = i; });
+      links.forEach((a, i) => a.classList.toggle("on", i === cur));
+      if (fill) {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        fill.style.height = Math.min(100, Math.max(0, (scrollY / Math.max(1, max)) * 100)) + "%";
+      }
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    addEventListener("resize", update);
+    update();
+  })();
 
   // ---------- article grid: render from articles.json (auto-updated by CI) ----------
   (function renderArticles() {
