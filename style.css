@@ -1111,26 +1111,26 @@ h1, h2, h3, h4 {
     radial-gradient(38% 34% at 50% 50%, rgba(255, 111, 214, 0.08), transparent 72%);
 }
 .cs-ring {
-  position: absolute; left: 50%; top: 50%; width: min(112vw, 1500px); aspect-ratio: 1;
+  position: absolute; left: 50%; top: 50%; width: min(150vw, 1900px); aspect-ratio: 1;
   transform: translate(-50%, -50%);
   animation: csSpin var(--dur) linear infinite;
 }
 .cs-ring2 { animation-direction: reverse; }
-.cs-ring3 { width: min(140vw, 1900px); }
+.cs-ring3 { width: min(170vw, 2200px); }
 @keyframes csSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 .cs-d {
   position: absolute; left: 50%; top: 50%; width: var(--s); height: var(--s);
   margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); border-radius: 50%;
-  background: rgba(124, 58, 237, 0.6);
-  box-shadow: 0 0 9px rgba(196, 76, 240, 0.75);
+  background: rgba(124, 58, 237, 0.75);
+  box-shadow: 0 0 10px rgba(196, 76, 240, 0.9);
   transform: rotate(var(--a)) translateX(var(--r));
 }
-.cs-ring2 .cs-d { background: rgba(224, 64, 154, 0.55); box-shadow: 0 0 9px rgba(224, 64, 154, 0.7); }
-.cs-ring3 .cs-d { background: rgba(79, 70, 229, 0.5); box-shadow: 0 0 8px rgba(79, 70, 229, 0.65); }
+.cs-ring2 .cs-d { background: rgba(224, 64, 154, 0.7); box-shadow: 0 0 10px rgba(224, 64, 154, 0.85); }
+.cs-ring3 .cs-d { background: rgba(79, 70, 229, 0.65); box-shadow: 0 0 9px rgba(79, 70, 229, 0.8); }
 /* 邊緣淡出，避免粒子貼著區塊邊界被切斷 */
 .cs-bg {
-  -webkit-mask-image: radial-gradient(78% 70% at 50% 50%, #000 40%, transparent 92%);
-  mask-image: radial-gradient(78% 70% at 50% 50%, #000 40%, transparent 92%);
+  -webkit-mask-image: radial-gradient(86% 82% at 50% 50%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(86% 82% at 50% 50%, #000 55%, transparent 100%);
 }
 @media (prefers-reduced-motion: reduce) { .cs-ring { animation: none; } }
 @media (max-width: 760px) { .cs-ring3 { display: none; } }
