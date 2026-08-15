@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=28" />
+  <link rel="stylesheet" href="style.css?v=29" />
   <script type="importmap">
   {
     "imports": {
@@ -67,8 +67,8 @@
         <h1 class="display">建構你的專屬<br>投資 <span class="gtext">DNA</span>。</h1>
         <div class="actions">
           <a class="btn btn-grad" href="#pillars">開始學習路徑</a>
-          <!-- TODO 待提供專屬表單連結後替換此 href（目前先指向現行一對一諮詢表單） -->
-          <a class="btn ghost" href="https://www.surveycake.com/s/80KmQ" target="_blank" rel="noopener">一對一諮詢預約</a>
+          <!-- TODO 專屬表單連結待提供：拿到後把這個 button 換回 <a href="..."> 即可 -->
+          <button type="button" class="btn ghost btn-pending" aria-disabled="true">一對一諮詢預約</button>
         </div>
         <div class="hero-stats">
           <div class="hstat"><div class="num" data-count="2000" data-suffix="+">0</div><div class="lab">累積學員 <i>Students</i></div></div>
@@ -79,35 +79,109 @@
       <p class="hero-caption">以扎實的研究方法與真實市場數據，建立可驗證、可複利的投資知識體系。<span class="en">Institutional-grade research. Real market data.</span></p>
     </section>
 
-    <!-- METHOD -->
-    <section class="services plate" id="method">
+    <!-- CORE VALUE + LEARNING MAP -->
+    <section class="core-sec plate" id="method">
       <div class="wrap">
-        <div class="sec-head">
-          <div class="lt">
-            <p class="eyebrow">為什麼選擇 <span>Why nSchool</span></p>
-            <h2 class="h-section">從理財新手，到配置大師。</h2>
-            <p class="lead">每一步都幫你走得穩、賺得對。<span class="en">From beginner to portfolio master.</span></p>
-          </div>
+        <p class="eyebrow">為什麼選擇 nSchool <span>Why nSchool</span></p>
+        <h2 class="h-section">五道核心壁壘，把「想學投資」變成「真的會投資」。</h2>
+        <p class="sec-lead">投資不是天分，是一項可以被拆解、被練習、被驗收的技能。我們把散戶最常卡住的五個地方，一次補起來。</p>
+
+        <div class="core-grid">
+          <article class="core">
+            <span class="core-no">01</span>
+            <div class="core-ic" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="4.5"/><path d="M4 27a8 8 0 0 1 16 0"/><circle cx="23" cy="13" r="3.5"/><path d="M20 27a6.5 6.5 0 0 1 8.5-6.2"/></svg></div>
+            <p class="core-en">Coaching</p>
+            <h3>專業團隊陪跑</h3>
+            <p class="core-txt">不是丟一堆影片讓你自己看。財經教練、助教、產業業師三線同時在線，卡關當天就有人回你。</p>
+          </article>
+          <article class="core">
+            <span class="core-no">02</span>
+            <div class="core-ic" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H15v22H6.5A2.5 2.5 0 0 1 4 24.5z"/><path d="M28 7.5A2.5 2.5 0 0 0 25.5 5H17v22h8.5a2.5 2.5 0 0 0 2.5-2.5z"/></svg></div>
+            <p class="core-en">Curriculum</p>
+            <h3>100+ 課程單元</h3>
+            <p class="core-txt">從零基礎到交易系統，順序已經幫你排好。你只要照著走，不用自己拼湊零散的知識點。</p>
+          </article>
+          <article class="core">
+            <span class="core-no">03</span>
+            <div class="core-ic" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="20" height="24" rx="2.5"/><path d="M11 11h10M11 16h10M11 21h6"/></svg></div>
+            <p class="core-en">Journal</p>
+            <h3>學習投資日誌</h3>
+            <p class="core-txt">每一筆進出都留下理由，賺賠都能回頭檢討。能複盤的人，才走得到穩定獲利那一步。</p>
+          </article>
+          <article class="core">
+            <span class="core-no">04</span>
+            <div class="core-ic" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="26" height="17" rx="2.5"/><path d="M11 28h10M16 23v5"/><path d="M8 17l4-4 3 2.5L23 10"/></svg></div>
+            <p class="core-en">Simulation</p>
+            <h3>模擬工具系統</h3>
+            <p class="core-txt">先用模擬倉把手感練穩，再拿真錢進場。練習的學費，不需要讓市場來收。</p>
+          </article>
+          <article class="core">
+            <span class="core-no">05</span>
+            <div class="core-ic" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M27 18a4 4 0 0 1-4 4h-8l-6 4v-4H9a4 4 0 0 1-4-4V10a4 4 0 0 1 4-4h14a4 4 0 0 1 4 4z"/><path d="M11 12h10M11 16h6"/></svg></div>
+            <p class="core-en">1-on-1</p>
+            <h3>一對一諮詢</h3>
+            <p class="core-txt">你的資金、目標、風險承受度都不一樣。顧問看你的實際狀況給建議，不是套同一份公式。</p>
+          </article>
         </div>
-        <div class="cards-3">
-          <article class="s-card dark">
-            <div class="ic">&#10033;</div><div class="grow"></div>
-            <p class="card-en">Money Planning</p>
-            <h3>理財規劃工具</h3>
-            <p>薪水再少也能開始！搞懂收支分配，擺脫月光、開始掌控金錢。</p>
-          </article>
-          <article class="s-card">
-            <div class="ic">&#9901;</div><div class="grow"></div>
-            <p class="card-en">Long-term Strategy</p>
-            <h3>長期投資策略與風險分散</h3>
-            <p>不再亂買殺低！看懂風險與週期，穩穩投資也不怕波動。</p>
-          </article>
-          <article class="s-card">
-            <div class="ic">&#9707;</div><div class="grow"></div>
-            <p class="card-en">Technical + Fundamental</p>
-            <h3>技術分析＋基本面選股</h3>
-            <p>不是財金出身也能懂！用方法挑股票，找到潛力標的更安心。</p>
-          </article>
+
+        <div class="mapx" id="approach">
+          <div class="mapx-head">
+            <p class="eyebrow">學習地圖 <span>Learning Map</span></p>
+            <h3 class="mapx-title">從投資小白，一階一階走到系統化穩定獲利。</h3>
+            <p class="sec-lead">五個等級，每一級都有明確的「你會變成什麼樣的人」。</p>
+          </div>
+          <ol class="mstairs">
+            <li class="mstep" style="--i:0">
+              <div class="mstep-card">
+                <span class="mstep-lv">L1</span>
+                <div class="mstep-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.4 5.3L20 9l-4 4.2.9 5.8L12 16.4 7.1 19 8 13.2 4 9l5.6-.7z"/></svg></div>
+                <h4>財經啟蒙</h4>
+                <p>從一無所知到看懂投資理財</p>
+                <span class="mstep-time">第 1–3 月</span>
+              </div>
+              <span class="mstep-tread" aria-hidden="true"></span>
+            </li>
+            <li class="mstep" style="--i:1">
+              <div class="mstep-card">
+                <span class="mstep-lv">L2</span>
+                <div class="mstep-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/><path d="M8 13V9.5M11 13V7M14 13v-2.5"/></svg></div>
+                <h4>市場啟蒙</h4>
+                <p>用四大分析看懂市場</p>
+                <span class="mstep-time">第 4–7 月</span>
+              </div>
+              <span class="mstep-tread" aria-hidden="true"></span>
+            </li>
+            <li class="mstep" style="--i:2">
+              <div class="mstep-card">
+                <span class="mstep-lv">L3</span>
+                <div class="mstep-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l5-6 4 3 9-10"/><path d="M21 5h-5M21 5v5"/></svg></div>
+                <h4>進階實戰</h4>
+                <p>把知識變成實戰能力</p>
+                <span class="mstep-time">第 8 月起</span>
+              </div>
+              <span class="mstep-tread" aria-hidden="true"></span>
+            </li>
+            <li class="mstep" style="--i:3">
+              <div class="mstep-card">
+                <span class="mstep-lv">L4</span>
+                <div class="mstep-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.6"/><rect x="13" y="3" width="8" height="8" rx="1.6"/><rect x="3" y="13" width="8" height="8" rx="1.6"/><rect x="13" y="13" width="8" height="8" rx="1.6"/></svg></div>
+                <h4>交易系統</h4>
+                <p>打造專屬你的賺錢系統</p>
+                <span class="mstep-time">進階持續</span>
+              </div>
+              <span class="mstep-tread" aria-hidden="true"></span>
+            </li>
+            <li class="mstep" style="--i:4">
+              <div class="mstep-card">
+                <span class="mstep-lv">L5</span>
+                <div class="mstep-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 4h12v5a6 6 0 0 1-12 0z"/><path d="M6 6H3.5v1A3.5 3.5 0 0 0 6 10.4M18 6h2.5v1A3.5 3.5 0 0 1 18 10.4"/></svg></div>
+                <h4>穩定獲利</h4>
+                <p>有意識地賺對的錢</p>
+                <span class="mstep-time">長期修練</span>
+              </div>
+              <span class="mstep-tread" aria-hidden="true"></span>
+            </li>
+          </ol>
         </div>
       </div>
     </section>
@@ -179,53 +253,12 @@
       </div>
     </section>
 
-    <!-- APPROACH (why nSchool) -->
-    <section class="approach" id="approach">
-      <div class="wrap">
-        <p class="eyebrow">學習地圖 <span>Learning Map</span></p>
-        <h2 class="h-section" style="margin-top:16px;white-space:nowrap">為你量身打造，而非套用公式。</h2>
-        <p class="lead" style="margin-top:14px;max-width:none;white-space:nowrap">先認知，再投資 —— 從你的目標出發，建立屬於你的投資決策。</p>
-        <div class="bento">
-          <article class="b-card">
-            <div class="b-ic" aria-hidden="true">
-              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="9"/><path d="M20.7 20.7 28 28"/><path d="M10 16.5v-2.5M14 16.5v-6M18 16.5v-3.5"/></svg>
-            </div>
-            <div class="b-body">
-              <p class="card-en">Market Insight</p>
-              <h3>懂市場資訊</h3>
-              <p>不再被新聞牽著走！判斷市場動向，做出屬於你的投資決策。</p>
-            </div>
-          </article>
-          <article class="b-card">
-            <div class="b-ic" aria-hidden="true">
-              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 27V5"/><path d="M5 27h22"/><path d="M8 21l6-6 4 3 8-9"/><circle cx="26" cy="9" r="1.6" fill="currentColor" stroke="none"/></svg>
-            </div>
-            <div class="b-body">
-              <p class="card-en">Personalized</p>
-              <h3>個人化資產配置</h3>
-              <p>不套公式，而是為你量身打造！從目標出發，建立獨一無二的資產配置策略。</p>
-            </div>
-          </article>
-          <article class="b-card">
-            <div class="b-ic" aria-hidden="true">
-              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 16c0-3-2-5-4.5-5S2 13 2 16s2 5 4.5 5 4.5-3 6.5-6 4.5-6 6.5-6S30 13 30 16s-2 5-4.5 5S21 19 19 16"/></svg>
-            </div>
-            <div class="b-body">
-              <p class="card-en">1-on-1 Guidance</p>
-              <h3>一對一陪伴</h3>
-              <p>從理財新手到配置大師，專屬顧問陪你走每一步，走得穩、賺得對。</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <!-- FACULTY -->
     <section class="team plate" id="faculty">
       <div class="wrap">
         <p class="eyebrow">顧問師資 <span>Faculty</span></p>
-        <h2 class="h-section">適合你現階段的人，來教你。</h2>
-        <p class="team-lead">專業顧問、實戰講師、產業前輩 —— 11 位合作師資，找到最適合你現在學習階段的那一位。</p>
+        <h2 class="h-section">在市場第一線的人，親自帶你。</h2>
+        <p class="team-lead">金融研訓院講師、非凡與東森財經主播、券商與基金操盤手、暢銷理財作者 —— 業界檯面上的老師，來當你的業師。</p>
         <div class="team-carousel" id="teamCarousel">
           <div class="team-track" id="teamTrack">
               <div class="member">
@@ -301,7 +334,7 @@
 
 
     <!-- PARTNERS -->
-    <section class="clients clients-sm" id="partners">
+    <section class="clients clients-sm plate" id="partners">
       <div class="wrap">
         <div class="clients-head">
           <div>
@@ -454,6 +487,6 @@
   </div>
 
   <script type="module" src="hero.js?v=7"></script>
-  <script src="main.js?v=21"></script>
+  <script src="main.js?v=22"></script>
 </body>
 </html>

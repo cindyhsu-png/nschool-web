@@ -190,7 +190,7 @@
 
   // ---------- reveal on scroll ----------
   const reveal = document.querySelectorAll(
-    ".s-card, .w-card, .b-card, .v-card, .pil, .corp-item"
+    ".w-card, .v-card, .pil, .corp-item, .core"
   );
   reveal.forEach((el) => {
     el.style.opacity = "0";
