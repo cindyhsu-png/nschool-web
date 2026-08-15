@@ -952,8 +952,8 @@ h1, h2, h3, h4 {
   gap: clamp(10px, 1.4vw, 20px);
 }
 .mstep { position: relative; display: flex; flex-direction: column; justify-content: flex-end; }
-/* 每一階往上墊高，形成階梯 */
-.mstep { padding-bottom: calc((4 - var(--i)) * clamp(16px, 2.4vh, 30px)); }
+/* 每一階往上墊高，形成往右上爬升的階梯（L1 最低、L5 最高） */
+.mstep { padding-bottom: calc(var(--i) * clamp(18px, 2.8vh, 34px)); }
 .mstep-card {
   position: relative; padding: 24px 20px 22px; border-radius: 18px; text-align: center;
   background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07);
@@ -998,7 +998,6 @@ h1, h2, h3, h4 {
   border-radius: 4px 4px 0 0;
   background: linear-gradient(180deg, rgba(10, 10, 10, 0.09), rgba(10, 10, 10, 0.03));
 }
-.mstep { }
 @media (prefers-reduced-motion: reduce) { .mstep-card { animation: none; } }
 
 /* ---- 1. 企業合作夥伴：不透明深色面板，無動畫背景 ---- */
