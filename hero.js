@@ -18,7 +18,7 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const mobile = innerWidth < 760;
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));  // 2 倍在 retina 上等於算 4 倍畫素，太重
 renderer.setSize(innerWidth, innerHeight);
 renderer.setClearColor(BG, 1);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -323,7 +323,7 @@ halo.rotation.x = Math.PI / 2.1;
 group.add(halo);
 
 // ---------- post: afterimage smear + SMAA anti-aliasing (clean edges) ----------
-const dpr = Math.min(devicePixelRatio, 2);
+const dpr = Math.min(devicePixelRatio, 1.5);
 const composer = new EffectComposer(renderer);
 composer.setPixelRatio(dpr);
 composer.addPass(new RenderPass(scene, camera));
@@ -386,12 +386,36 @@ addEventListener("resize", () => {
   updateProgress();
 });
 
+// ---------- 只在畫布真的看得到時才算圖 ----------
+// 場景是 42k 顆粒子 + 三道 post-processing，整頁大部分區塊都是不透明的 .plate，
+// 蓋住畫布時繼續全速渲染只是白白吃 GPU（捲到中段會卡）。這裡只在
+// 透明區段（Hero / 最後 CTA）進入視窗時才渲染。
+const transparentSecs = ["top", "contact"].map((id) => document.getElementById(id)).filter(Boolean);
+let canvasVisible = true;
+function recomputeVisibility() {
+  const vh = innerHeight;
+  canvasVisible = transparentSecs.some((el) => {
+    const r = el.getBoundingClientRect();
+    return r.bottom > -120 && r.top < vh + 120;
+  });
+}
+recomputeVisibility();
+let visTick = false;
+addEventListener("scroll", () => {
+  if (visTick) return;
+  visTick = true;
+  requestAnimationFrame(() => { visTick = false; recomputeVisibility(); });
+}, { passive: true });
+addEventListener("resize", recomputeVisibility);
+
 // ---------- render loop ----------
 const clock = new THREE.Clock();
 let lastP = 0;
 function tick() {
   const dt = Math.min(clock.getDelta(), 0.05);
   const t = clock.elapsedTime;
+
+  if (!canvasVisible || document.hidden) { requestAnimationFrame(tick); return; }
 
   progress += (targetProgress - progress) * 0.08;
   mouse.x += (mTarget.x - mouse.x) * 0.05;
