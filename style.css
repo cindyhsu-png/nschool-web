@@ -992,7 +992,7 @@ h1, h2, h3, h4 {
 /* ---- 五道核心壁壘：繞圈 ---- */
 .orbit {
   position: relative; margin: clamp(80px, 12vh, 140px) auto 0;
-  width: min(100%, 940px); aspect-ratio: 1 / 0.78;
+  width: min(100%, 940px); aspect-ratio: 1 / 0.82;
 }
 .orbit-ring { position: absolute; inset: 8% 14%; pointer-events: none; }
 .orbit-ring .ring {
