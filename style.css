@@ -1115,22 +1115,33 @@ h1, h2, h3, h4 {
   transform: translate(-50%, -50%);
   animation: csSpin var(--dur) linear infinite;
 }
+/* 軌道本身也畫出來：淺色底上只有小點會像灰塵，有軌道才有結構感 */
+.cs-ring::before, .cs-ring::after {
+  content: ""; position: absolute; border-radius: 50%;
+  border: 1px solid rgba(124, 58, 237, 0.14);
+}
+.cs-ring::before { inset: 26%; }
+.cs-ring::after { inset: 40%; border-style: dashed; border-color: rgba(124, 58, 237, 0.16); }
 .cs-ring2 { animation-direction: reverse; }
+.cs-ring2::before { inset: 33%; border-color: rgba(224, 64, 154, 0.14); }
+.cs-ring2::after { inset: 46%; border-color: rgba(224, 64, 154, 0.13); }
 .cs-ring3 { width: min(170vw, 2200px); }
+.cs-ring3::before { inset: 30%; border-color: rgba(79, 70, 229, 0.12); }
+.cs-ring3::after { inset: 44%; border-color: rgba(79, 70, 229, 0.11); }
 @keyframes csSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 .cs-d {
   position: absolute; left: 50%; top: 50%; width: var(--s); height: var(--s);
   margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); border-radius: 50%;
-  background: rgba(124, 58, 237, 0.75);
-  box-shadow: 0 0 10px rgba(196, 76, 240, 0.9);
+  background: #7c3aed;
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1), 0 0 14px rgba(196, 76, 240, 0.85);
   transform: rotate(var(--a)) translateX(var(--r));
 }
-.cs-ring2 .cs-d { background: rgba(224, 64, 154, 0.7); box-shadow: 0 0 10px rgba(224, 64, 154, 0.85); }
-.cs-ring3 .cs-d { background: rgba(79, 70, 229, 0.65); box-shadow: 0 0 9px rgba(79, 70, 229, 0.8); }
-/* 邊緣淡出，避免粒子貼著區塊邊界被切斷 */
+.cs-ring2 .cs-d { background: #e0409a; box-shadow: 0 0 0 4px rgba(224, 64, 154, 0.1), 0 0 14px rgba(224, 64, 154, 0.8); }
+.cs-ring3 .cs-d { background: #4f46e5; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1), 0 0 12px rgba(79, 70, 229, 0.75); }
+/* 邊緣淡出，避免軌道貼著區塊邊界被硬切 */
 .cs-bg {
-  -webkit-mask-image: radial-gradient(86% 82% at 50% 50%, #000 55%, transparent 100%);
-  mask-image: radial-gradient(86% 82% at 50% 50%, #000 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(88% 84% at 50% 50%, #000 52%, transparent 100%);
+  mask-image: radial-gradient(88% 84% at 50% 50%, #000 52%, transparent 100%);
 }
 @media (prefers-reduced-motion: reduce) { .cs-ring { animation: none; } }
 @media (max-width: 760px) { .cs-ring3 { display: none; } }
