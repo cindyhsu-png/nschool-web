@@ -942,118 +942,151 @@ h1, h2, h3, h4 {
 .core-sec .h-section { margin: 16px 0 12px; }
 .core-sec .sec-lead { max-width: none; }
 
-/* ---- 五個等級：起伏往上的走勢線 ---- */
-.chartmap {
-  position: relative; margin-top: clamp(44px, 6vh, 72px);
-  height: clamp(300px, 38vh, 420px);
-  border-radius: 24px; overflow: hidden;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.18)),
-    repeating-linear-gradient(0deg, rgba(10,10,10,0.055) 0 1px, transparent 1px 56px),
-    repeating-linear-gradient(90deg, rgba(10,10,10,0.045) 0 1px, transparent 1px 72px);
-  border: 1px solid rgba(10, 10, 10, 0.08);
-}
-.cm-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.cm-candles .ck { opacity: 0.16; }
-.cm-candles .ck.up { fill: #e8413f; }
-.cm-candles .ck.dn { fill: #13a06a; }
-.cm-area { fill: url(#cmFill); stroke: none; }
-.cm-line {
-  fill: none; stroke: url(#cmLine); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
-  stroke-dasharray: 2400; stroke-dashoffset: 2400;
-}
-.chartmap.drawn .cm-line { transition: stroke-dashoffset 2.1s cubic-bezier(.3,.9,.3,1); stroke-dashoffset: 0; }
-
-.cm-levels { position: absolute; inset: 0; list-style: none; margin: 0; padding: 0; }
-.lvl { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%); }
-.lvl-dot {
-  display: block; width: 15px; height: 15px; border-radius: 50%; margin: 0 auto;
-  background: var(--c); border: 3px solid #fff;
-  box-shadow: 0 0 0 2px var(--c), 0 4px 14px rgba(16, 12, 28, 0.28);
-}
-.lvl-tag {
-  position: absolute; left: 50%; top: 24px; transform: translateX(-50%);
-  display: block; text-align: center; white-space: nowrap; line-height: 1.35;
-}
-.lvl-tag b {
-  display: block; font-family: var(--font-display); font-size: 12.5px;
-  letter-spacing: 0.1em; color: var(--c);
-}
-.lvl-tag i {
-  display: block; font-style: normal; font-family: var(--font-mono);
-  font-size: 10.5px; color: var(--muted-2); margin-top: 2px;
-}
-.lvl:nth-child(n) .lvl-tag { font-size: 14px; font-weight: 600; }
-/* 最後一顆標籤改放左側，避免超出畫布 */
-.lvl:last-child .lvl-tag { left: auto; right: 0; transform: none; text-align: right; }
-.lvl:first-child .lvl-tag { left: 0; transform: none; text-align: left; }
-
-/* ---- 五道核心壁壘：繞圈 ---- */
-.orbit {
-  position: relative; margin: clamp(80px, 12vh, 140px) auto 0;
-  width: min(100%, 940px); aspect-ratio: 1 / 0.82;
-}
-.orbit-ring { position: absolute; inset: 8% 14%; pointer-events: none; }
-.orbit-ring .ring {
-  position: absolute; inset: 0; border-radius: 50%;
-  border: 1px dashed rgba(124, 58, 237, 0.32);
-  animation: ringSpin 42s linear infinite;
-}
-.orbit-ring .r2 {
-  inset: 11%; border-style: solid; border-color: rgba(124, 58, 237, 0.14);
-  animation-duration: 30s; animation-direction: reverse;
-}
-@keyframes ringSpin { to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .orbit-ring .ring { animation: none; } }
-
-.orbit-hub {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  width: min(38%, 260px); aspect-ratio: 1; border-radius: 50%;
-  display: grid; place-content: center; text-align: center; gap: 6px; padding: 18px;
-  background: radial-gradient(120% 120% at 30% 20%, #2a2140, #14111f 70%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 24px 60px rgba(16, 12, 28, 0.28);
-  color: #fff;
-}
-.hub-en { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
-.orbit-hub strong { font-family: var(--font-display); font-size: clamp(19px, 2vw, 26px); line-height: 1.25; letter-spacing: -0.01em; }
-.hub-note { font-size: 11.5px; line-height: 1.5; color: rgba(255, 255, 255, 0.6); }
-
-.orb-node {
-  position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%);
-  width: min(30%, 236px); padding: 20px 20px 22px; border-radius: 18px;
-  background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07);
-  box-shadow: 0 12px 34px rgba(16, 12, 28, 0.09);
-  text-align: center;
-  transition: box-shadow 0.4s var(--ease), border-color 0.4s ease;
-}
-.orb-node::before {
-  content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px;
-  margin: -5px 0 0 -5px; border-radius: 50%; background: var(--accent); opacity: 0;
-}
-.orb-node:hover { box-shadow: 0 22px 54px rgba(16, 12, 28, 0.17); border-color: rgba(124, 58, 237, 0.4); }
-.orb-ic {
-  width: 48px; height: 48px; margin: 0 auto 12px; border-radius: 15px;
-  display: grid; place-items: center; color: #fff; background: var(--grad);
-}
-.orb-ic svg { width: 25px; height: 25px; }
-.orb-node h3 { font-size: clamp(16px, 1.4vw, 19px); letter-spacing: -0.01em; }
-.orb-en { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2); margin-top: 4px; }
-.orb-txt { margin-top: 9px; font-size: 12.5px; line-height: 1.65; color: var(--muted); }
-
-/* ---- RWD：窄螢幕改回單純網格，圈圈收起來 ---- */
-@media (max-width: 900px) {
-  .orbit { aspect-ratio: auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-  .orbit-ring, .orbit-hub { display: none; }
-  .orb-node { position: static; transform: none; width: auto; }
-  .chartmap { height: 300px; }
-  .lvl-tag { font-size: 12px; }
-  .lvl-tag i { display: none; }
-}
-@media (max-width: 560px) {
-  .orbit { grid-template-columns: 1fr; }
   .chartmap { height: 250px; }
   .lvl-tag b { font-size: 11px; }
   .lvl-tag { font-size: 11px; }
+}
+
+/* ============================================================
+   v2.8 — 一條電流線路貫穿：五個等級 → 五道核心壁壘
+   （沒有背景板，只有線路；3D 徽章走 CSS transform，不再開 WebGL）
+   ============================================================ */
+.circuit { margin-top: clamp(46px, 6vh, 76px); }
+
+/* ---- 等級線路 ---- */
+.ct-track { position: relative; height: clamp(260px, 32vh, 360px); }
+.ct-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+.ct-base {
+  fill: none; stroke: rgba(10, 10, 10, 0.13); stroke-width: 2;
+  stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke;
+}
+.ct-live {
+  fill: none; stroke: url(#ctGrad); stroke-width: 3;
+  stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 100; stroke-dashoffset: 100;
+}
+.circuit.lit .ct-live {
+  transition: stroke-dashoffset 2.8s cubic-bezier(.35,.85,.35,1) .15s;
+  stroke-dashoffset: 0;
+}
+
+.ct-levels { position: absolute; inset: 0; list-style: none; margin: 0; padding: 0; }
+.lv { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%); }
+.lv-dot {
+  display: block; width: 16px; height: 16px; border-radius: 50%; margin: 0 auto;
+  background: rgba(10, 10, 10, 0.14);
+  transition: background 0.5s ease, box-shadow 0.6s ease, transform 0.5s var(--ease);
+  transition-delay: var(--d);
+}
+.circuit.lit .lv-dot {
+  background: var(--c); transform: scale(1.12);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent),
+              0 0 22px color-mix(in srgb, var(--c) 65%, transparent);
+}
+.lv-txt {
+  position: absolute; left: 50%; top: 26px; transform: translateX(-50%);
+  display: block; text-align: center; white-space: nowrap;
+  font-size: 14px; font-weight: 600; line-height: 1.4;
+  opacity: 0.3; transition: opacity 0.6s ease; transition-delay: var(--d);
+}
+.circuit.lit .lv-txt { opacity: 1; }
+.lv-txt b { display: block; font-family: var(--font-display); font-size: 12.5px; letter-spacing: 0.1em; color: var(--c); }
+.lv-txt i { display: block; font-style: normal; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted-2); margin-top: 2px; }
+.lv:first-child .lv-txt { left: 0; transform: none; text-align: left; }
+.lv:last-child .lv-txt { left: auto; right: 0; transform: none; text-align: right; }
+
+/* ---- 線路往下延伸，接到產品重點 ---- */
+.ct-bridge {
+  position: relative; width: 2px; height: clamp(56px, 8vh, 92px); margin: 26px auto 0;
+  background: linear-gradient(180deg, #e08c00, rgba(124, 58, 237, 0.35));
+}
+.ct-drop {
+  position: absolute; left: 50%; top: 0; width: 7px; height: 7px; margin-left: -3.5px;
+  border-radius: 50%; background: #fff; box-shadow: 0 0 10px 2px rgba(196, 76, 240, 0.9);
+  animation: ctDrop 2.6s var(--ease) infinite;
+}
+@keyframes ctDrop { 0% { top: 0; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+.ct-lead {
+  margin: 22px auto 0; text-align: center; font-size: clamp(15px, 1.3vw, 19px);
+  font-weight: 500; color: rgba(10, 10, 10, 0.72); max-width: none;
+}
+
+/* ---- 五道核心壁壘：接在同一條線路上 ---- */
+.cw-rail {
+  position: relative; height: 1px; margin: clamp(34px, 5vh, 52px) 0 0;
+  background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.3) 12%, rgba(124, 58, 237, 0.3) 88%, transparent);
+}
+.cw-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; margin-top: 0; }
+.cw {
+  position: relative; padding: 34px 20px 26px; text-align: center;
+  border-radius: 20px; background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07);
+  box-shadow: 0 12px 32px rgba(16, 12, 28, 0.07);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.cw:hover { transform: translateY(-6px); box-shadow: 0 24px 56px rgba(16, 12, 28, 0.16); }
+/* 從上方軌道垂下來的接點 */
+.cw-tap {
+  position: absolute; left: 50%; top: -18px; width: 2px; height: 18px; margin-left: -1px;
+  background: rgba(124, 58, 237, 0.34);
+}
+.cw-tap::after {
+  content: ""; position: absolute; left: 50%; top: -3px; width: 7px; height: 7px; margin-left: -3.5px;
+  border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.16);
+}
+
+/* ---- 3D 旋轉徽章（六角，CSS 3D，無 WebGL）---- */
+.badge3d {
+  position: relative; width: 74px; height: 74px; margin: 0 auto 16px;
+  transform-style: preserve-3d; perspective: 420px;
+}
+.bd-face {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  backface-visibility: hidden;
+  animation: bdSpin 11s linear infinite;
+  transform-style: preserve-3d;
+}
+.bd-face.front { background: linear-gradient(145deg, #9b3df2, #6d28d9 46%, #c44cf0); color: #fff; }
+.bd-face.back {
+  background: linear-gradient(145deg, #e0409a, #7c3aed 55%, #4f46e5); color: #fff;
+  animation-name: bdSpinBack;
+}
+.bd-face svg { width: 32px; height: 32px; }
+@keyframes bdSpin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+@keyframes bdSpinBack { from { transform: rotateY(180deg); } to { transform: rotateY(540deg); } }
+/* 徽章外的星環軌道 */
+.bd-ring {
+  position: absolute; inset: -13px; border-radius: 50%;
+  border: 1px dashed rgba(124, 58, 237, 0.35);
+  animation: bdRing 16s linear infinite;
+}
+.cw:nth-child(2) .bd-face, .cw:nth-child(2) .bd-ring { animation-delay: -1.6s; }
+.cw:nth-child(3) .bd-face, .cw:nth-child(3) .bd-ring { animation-delay: -3.2s; }
+.cw:nth-child(4) .bd-face, .cw:nth-child(4) .bd-ring { animation-delay: -4.8s; }
+.cw:nth-child(5) .bd-face, .cw:nth-child(5) .bd-ring { animation-delay: -6.4s; }
+@keyframes bdRing { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .bd-face, .bd-ring, .ct-drop { animation: none; }
+  .bd-face.back { display: none; }
+}
+
+.cw-en { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-2); }
+.cw h3 { margin-top: 5px; font-size: clamp(16px, 1.35vw, 19px); letter-spacing: -0.01em; }
+.cw-txt { margin-top: 10px; font-size: 12.5px; line-height: 1.7; color: var(--muted); }
+
+/* ---- RWD ---- */
+@media (max-width: 1000px) {
+  .cw-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .cw-rail { display: none; }
+  .cw-tap { display: none; }
+  .ct-track { height: 260px; }
+  .lv-txt { font-size: 12px; }
+  .lv-txt i { display: none; }
+}
+@media (max-width: 560px) {
+  .cw-grid { grid-template-columns: 1fr; }
+  .ct-track { height: 230px; }
+  .lv-txt b { font-size: 11px; }
+  .lv-txt { font-size: 11px; }
+  .badge3d { width: 62px; height: 62px; }
 }

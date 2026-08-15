@@ -221,6 +221,17 @@
     });
   }
 
+  // ---------- 學習地圖線路：捲到就一段一段亮起來（只跑一次） ----------
+  (function circuit() {
+    const el = document.getElementById("circuit");
+    if (!el) return;
+    if (reduce) { el.classList.add("lit"); return; }
+    const io = new IntersectionObserver((ents) => {
+      ents.forEach((e) => { if (e.isIntersecting) { el.classList.add("lit"); io.disconnect(); } });
+    }, { threshold: 0.25 });
+    io.observe(el);
+  })();
+
   // ---------- header：往下捲動時收起，往上捲或回到頂端時再出現 ----------
   (function stickyNav() {
     const nav = document.querySelector(".nav");
