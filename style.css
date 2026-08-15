@@ -942,11 +942,6 @@ h1, h2, h3, h4 {
 .core-sec .h-section { margin: 16px 0 12px; }
 .core-sec .sec-lead { max-width: none; }
 
-  .chartmap { height: 250px; }
-  .lvl-tag b { font-size: 11px; }
-  .lvl-tag { font-size: 11px; }
-}
-
 /* ============================================================
    v2.8 — 一條電流線路貫穿：五個等級 → 五道核心壁壘
    （沒有背景板，只有線路；3D 徽章走 CSS transform，不再開 WebGL）
@@ -998,7 +993,6 @@ h1, h2, h3, h4 {
   84%  { left: 70%; }
   90%  { left: 70%; }
   100% { left: 90%; opacity: 1; }
-}
 }
 
 .flow-nodes { position: absolute; left: 0; right: 0; top: 26px; list-style: none; margin: 0; padding: 0; }
