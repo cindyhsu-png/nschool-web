@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=36" />
+  <link rel="stylesheet" href="style.css?v=37" />
   <script type="importmap">
   {
     "imports": {
@@ -51,11 +51,11 @@
   <nav class="rail" id="rail" aria-label="區塊導覽">
     <span class="rail-line" aria-hidden="true"><i class="rail-fill" id="railFill"></i></span>
     <a href="#top" data-sec="top"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">首頁</span></a>
-    <a href="#method" data-sec="method"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">為什麼選擇</span></a>
+    <a href="#method" data-sec="method"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">學習地圖</span></a>
     <a href="#pillars" data-sec="pillars"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">課程主題</span></a>
-    <a href="#approach" data-sec="approach"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">學習地圖</span></a>
-    <a href="#courses" data-sec="courses"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">文章專欄</span></a>
     <a href="#faculty" data-sec="faculty"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">顧問師資</span></a>
+    <a href="#voices" data-sec="voices"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">學員成果</span></a>
+    <a href="#courses" data-sec="courses"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">文章專區</span></a>
     <a href="#contact" data-sec="contact"><span class="rail-dot" aria-hidden="true"></span><span class="rail-txt">預約諮詢</span></a>
   </nav>
 
@@ -68,7 +68,7 @@
         <div class="actions">
           <a class="btn btn-grad" href="#pillars">開始學習路徑</a>
           <!-- TODO 專屬表單連結待提供：拿到後把這個 button 換回 <a href="..."> 即可 -->
-          <button type="button" class="btn ghost btn-pending" aria-disabled="true">一對一諮詢預約</button>
+          <button type="button" class="btn btn-solid btn-pending" aria-disabled="true">一對一諮詢預約 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></button>
         </div>
         <div class="hero-stats">
           <div class="hstat"><div class="num" data-count="2000" data-suffix="+">0</div><div class="lab">累積學員 <i>Students</i></div></div>
@@ -102,53 +102,57 @@
         <h2 class="h-section">「想學投資」變成「真的會投資」</h2>
         <p class="sec-lead">投資不是天分，是一項可以被拆解、被練習、被驗收的技能。</p>
 
-        <!-- 五個等級：點到點的電流線路，捲到就一段一段亮起來 -->
-        <div class="circuit" id="circuit">
-          <div class="ct-track">
-            <svg class="ct-svg" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-              <defs>
-                <linearGradient id="ctGrad" x1="0" y1="1" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#4f46e5"/><stop offset="30%" stop-color="#7c3aed"/>
-                  <stop offset="58%" stop-color="#a855f7"/><stop offset="82%" stop-color="#e0409a"/>
-                  <stop offset="100%" stop-color="#e08c00"/>
-                </linearGradient>
-              </defs>
-              <path class="ct-base" d="M60,246 C120,262 210,214 280,192" pathLength="1"/>
-              <path class="ct-base" d="M280,192 C345,170 420,192 500,138" pathLength="1"/>
-              <path class="ct-base" d="M500,138 C565,84 645,140 720,81" pathLength="1"/>
-              <path class="ct-base" d="M720,81 C785,22 870,80 940,24" pathLength="1"/>
-              <path class="ct-glow" style="--s:0" d="M60,246 C120,262 210,214 280,192" pathLength="1"/>
-              <path class="ct-live" style="--s:0" d="M60,246 C120,262 210,214 280,192" pathLength="1"/>
-              <path class="ct-glow" style="--s:1" d="M280,192 C345,170 420,192 500,138" pathLength="1"/>
-              <path class="ct-live" style="--s:1" d="M280,192 C345,170 420,192 500,138" pathLength="1"/>
-              <path class="ct-glow" style="--s:2" d="M500,138 C565,84 645,140 720,81" pathLength="1"/>
-              <path class="ct-live" style="--s:2" d="M500,138 C565,84 645,140 720,81" pathLength="1"/>
-              <path class="ct-glow" style="--s:3" d="M720,81 C785,22 870,80 940,24" pathLength="1"/>
-              <path class="ct-live" style="--s:3" d="M720,81 C785,22 870,80 940,24" pathLength="1"/>
-            </svg>
-            <ol class="ct-levels">
-            <li class="lv" style="--c:#4f46e5;--x:6%;--y:82%;--d:0.00s">
-              <span class="lv-dot"></span>
-              <span class="lv-txt"><b>L1</b>財經啟蒙<i>第 1–3 月</i></span>
-            </li>
-            <li class="lv" style="--c:#7c3aed;--x:28%;--y:64%;--d:0.45s">
-              <span class="lv-dot"></span>
-              <span class="lv-txt"><b>L2</b>市場啟蒙<i>第 4–7 月</i></span>
-            </li>
-            <li class="lv" style="--c:#a855f7;--x:50%;--y:46%;--d:0.90s">
-              <span class="lv-dot"></span>
-              <span class="lv-txt"><b>L3</b>進階實戰<i>第 8 月起</i></span>
-            </li>
-            <li class="lv" style="--c:#e0409a;--x:72%;--y:27%;--d:1.35s">
-              <span class="lv-dot"></span>
-              <span class="lv-txt"><b>L4</b>交易系統<i>進階持續</i></span>
-            </li>
-            <li class="lv" style="--c:#e08c00;--x:94%;--y:8%;--d:1.80s">
-              <span class="lv-dot"></span>
-              <span class="lv-txt"><b>L5</b>穩定獲利<i>長期修練</i></span>
-            </li>
+        <!-- 五個等級：細軌 + 進度填色 + 脈衝點，一站一站推進 -->
+        <div class="flow">
+          <div class="flow-stage">
+            <div class="flow-rail" aria-hidden="true">
+              <i class="flow-fill"></i>
+              <i class="flow-pulse"></i>
+            </div>
+            <ol class="flow-nodes">
+              <li class="fl-node" style="--c:#7c3aed;--x:10%;--d:0.00s">
+                <span class="fl-dot" aria-hidden="true"></span>
+                <span class="fl-info">
+                  <span class="fl-code">L1 · STAGE 01</span>
+                  <span class="fl-name">財經啟蒙</span>
+                  <span class="fl-time">第 1–3 月</span>
+                </span>
+              </li>
+              <li class="fl-node" style="--c:#8b3ff0;--x:30%;--d:1.05s">
+                <span class="fl-dot" aria-hidden="true"></span>
+                <span class="fl-info">
+                  <span class="fl-code">L2 · STAGE 02</span>
+                  <span class="fl-name">市場啟蒙</span>
+                  <span class="fl-time">第 4–7 月</span>
+                </span>
+              </li>
+              <li class="fl-node" style="--c:#a855f7;--x:50%;--d:2.10s">
+                <span class="fl-dot" aria-hidden="true"></span>
+                <span class="fl-info">
+                  <span class="fl-code">L3 · STAGE 03</span>
+                  <span class="fl-name">進階實戰</span>
+                  <span class="fl-time">第 8 月起</span>
+                </span>
+              </li>
+              <li class="fl-node" style="--c:#e0409a;--x:70%;--d:3.15s">
+                <span class="fl-dot" aria-hidden="true"></span>
+                <span class="fl-info">
+                  <span class="fl-code">L4 · STAGE 04</span>
+                  <span class="fl-name">交易系統</span>
+                  <span class="fl-time">進階持續</span>
+                </span>
+              </li>
+              <li class="fl-node" style="--c:#e08c00;--x:90%;--d:4.20s">
+                <span class="fl-dot" aria-hidden="true"></span>
+                <span class="fl-info">
+                  <span class="fl-code">L5 · STAGE 05</span>
+                  <span class="fl-name">穩定獲利</span>
+                  <span class="fl-time">長期修練</span>
+                </span>
+              </li>
             </ol>
           </div>
+        </div>
 
           <!-- 線路往下延伸，把「走到哪一階」接到「我們幫你扛什麼」 -->
           <div class="ct-bridge" aria-hidden="true"><span class="ct-drop"></span></div>
@@ -537,6 +541,6 @@
   </div>
 
   <script type="module" src="hero.js?v=8"></script>
-  <script src="main.js?v=25"></script>
+  <script src="main.js?v=26"></script>
 </body>
 </html>

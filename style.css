@@ -953,58 +953,90 @@ h1, h2, h3, h4 {
    ============================================================ */
 .circuit { margin-top: clamp(46px, 6vh, 76px); }
 
-/* ---- 等級線路：一段一段跑電流（點亮 → 文字 → 電流跑到下一階） ---- */
-/* 節奏：每階 1.15s；點亮 → +0.28s 文字 → +0.55s 電流跑 0.75s */
-.ct-track { position: relative; height: clamp(260px, 32vh, 360px); }
-.ct-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
-.ct-base {
-  fill: none; stroke: rgba(10, 10, 10, 0.11); stroke-width: 2;
-  stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke;
+/* ---- 等級動線：細軌 + 進度填色 + 脈衝點（比照 nova 的 flag-rail 做法）----
+   刻意用 1px 髮絲線，不用粗漸層描邊；填色只動 scaleX、脈衝點只動 translateX，
+   都是 GPU 合成，順便把上半部的高度壓下來。 */
+.flow { margin-top: clamp(30px, 4vh, 48px); }
+.flow-stage { position: relative; padding: 26px 0 116px; }
+.flow-rail {
+  position: relative; height: 1px; margin: 0 0 0;
+  background: rgba(10, 10, 10, 0.14);
 }
-.ct-live, .ct-glow {
-  fill: none; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke;
-  stroke-dasharray: 1; stroke-dashoffset: 1;
+.flow-fill {
+  position: absolute; inset: 0; transform-origin: left center; transform: scaleX(0);
+  background: linear-gradient(90deg, #7c3aed, #a855f7 46%, #e0409a 78%, #e08c00);
 }
-.ct-live { stroke: url(#ctGrad); stroke-width: 3; }
-.ct-glow { stroke: url(#ctGrad); stroke-width: 9; opacity: 0.18; }
-.circuit.lit .ct-live, .circuit.lit .ct-glow {
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 0.75s cubic-bezier(.4,.7,.4,1);
-  transition-delay: calc(var(--s) * 1.15s + 0.55s);
+.flow-pulse {
+  position: absolute; top: 50%; left: 0; width: 7px; height: 7px; border-radius: 50%;
+  margin-top: -3.5px; margin-left: -3.5px; opacity: 0;
+  background: #fff; box-shadow: 0 0 12px 3px rgba(196, 76, 240, 0.85);
+}
+/* 節奏：抵達節點 → 停一下（節點亮、文字浮現）→ 再推進到下一站 */
+.circuit.lit .flow-fill { animation: flowFill 6.2s cubic-bezier(.4,.7,.4,1) forwards; }
+.circuit.lit .flow-pulse { animation: flowPulse 6.2s cubic-bezier(.4,.7,.4,1) forwards; }
+@keyframes flowFill {
+  0%   { transform: scaleX(0); }
+  10%  { transform: scaleX(0.10); }
+  27%  { transform: scaleX(0.10); }
+  37%  { transform: scaleX(0.30); }
+  54%  { transform: scaleX(0.30); }
+  64%  { transform: scaleX(0.50); }
+  74%  { transform: scaleX(0.50); }
+  84%  { transform: scaleX(0.70); }
+  90%  { transform: scaleX(0.70); }
+  100% { transform: scaleX(0.90); }
+}
+@keyframes flowPulse {
+  0%   { left: 0%;   opacity: 0; }
+  6%   { opacity: 1; }
+  10%  { left: 10%; }
+  27%  { left: 10%; }
+  37%  { left: 30%; }
+  54%  { left: 30%; }
+  64%  { left: 50%; }
+  74%  { left: 50%; }
+  84%  { left: 70%; }
+  90%  { left: 70%; }
+  100% { left: 90%; opacity: 1; }
+}
 }
 
-.ct-levels { position: absolute; inset: 0; list-style: none; margin: 0; padding: 0; }
-.lv { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%); }
-.lv-dot {
-  display: block; width: 16px; height: 16px; border-radius: 50%; margin: 0 auto;
-  background: rgba(10, 10, 10, 0.14);
-  transition: background 0.45s ease, box-shadow 0.55s ease, transform 0.45s var(--ease);
+.flow-nodes { position: absolute; left: 0; right: 0; top: 26px; list-style: none; margin: 0; padding: 0; }
+.fl-node { position: absolute; left: var(--x); top: 0; transform: translateX(-50%); text-align: center; }
+.fl-dot {
+  display: block; width: 11px; height: 11px; margin: -5px auto 0; border-radius: 50%;
+  background: var(--bg); border: 1px solid rgba(10, 10, 10, 0.2);
+  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.5s ease, transform 0.4s var(--ease);
   transition-delay: var(--d);
 }
-.circuit.lit .lv-dot {
-  background: var(--c); transform: scale(1.14);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent),
-              0 0 24px color-mix(in srgb, var(--c) 70%, transparent);
+.circuit.lit .fl-dot {
+  background: var(--c); border-color: var(--c); transform: scale(1.2);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent),
+              0 0 18px color-mix(in srgb, var(--c) 60%, transparent);
 }
-.lv-txt {
-  position: absolute; left: 50%; top: 26px; transform: translate(-50%, 6px);
-  display: block; text-align: center; white-space: nowrap;
-  font-size: 14px; font-weight: 600; line-height: 1.4;
-  opacity: 0; transition: opacity 0.5s ease, transform 0.5s var(--ease);
-  transition-delay: calc(var(--d) + 0.28s);
+.fl-info {
+  display: block; margin-top: 16px; white-space: nowrap;
+  opacity: 0; transform: translateY(7px);
+  transition: opacity 0.5s ease, transform 0.5s var(--ease);
+  transition-delay: calc(var(--d) + 0.22s);
 }
-.circuit.lit .lv-txt { opacity: 1; transform: translate(-50%, 0); }
-.lv-txt b { display: block; font-family: var(--font-display); font-size: 12.5px; letter-spacing: 0.1em; color: var(--c); }
-.lv-txt i { display: block; font-style: normal; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted-2); margin-top: 2px; }
-.lv:first-child .lv-txt { left: 0; transform: translate(0, 6px); text-align: left; }
-.circuit.lit .lv:first-child .lv-txt { transform: translate(0, 0); }
-.lv:last-child .lv-txt { left: auto; right: 0; transform: translate(0, 6px); text-align: right; }
-.circuit.lit .lv:last-child .lv-txt { transform: translate(0, 0); }
+.circuit.lit .fl-info { opacity: 1; transform: none; }
+.fl-code {
+  display: block; font-family: var(--font-mono); font-size: 9.5px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--c);
+}
+.fl-name { display: block; margin-top: 7px; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.fl-time { display: block; margin-top: 3px; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted-2); }
+.fl-node:first-child .fl-info { transform-origin: left; }
+@media (prefers-reduced-motion: reduce) {
+  .circuit.lit .flow-fill { animation: none; transform: scaleX(0.9); }
+  .circuit.lit .flow-pulse { animation: none; opacity: 0; }
+}
 
 /* ---- 線路往下延伸，接到產品重點 ---- */
 .ct-bridge {
-  position: relative; width: 2px; height: clamp(56px, 8vh, 92px); margin: 26px auto 0;
-  background: linear-gradient(180deg, #e08c00, rgba(124, 58, 237, 0.35));
+  position: relative; width: 1px; height: clamp(48px, 6vh, 74px); margin: clamp(72px, 9vh, 104px) auto 0;
+  background: linear-gradient(180deg, #e08c00, rgba(124, 58, 237, 0.3));
 }
 .ct-drop {
   position: absolute; left: 50%; top: 0; width: 7px; height: 7px; margin-left: -3.5px;
@@ -1155,3 +1187,13 @@ h1, h2, h3, h4 {
   .cs-p { opacity: 0.4; }
 }
 @media (max-width: 760px) { .cs-p { display: none; } }
+
+/* 首頁次要 CTA：原本的半透明 ghost 在淺色 3D 背景上幾乎看不見 */
+.btn-solid {
+  background-color: #fff; color: var(--ink); font-weight: 600;
+  border: 1px solid rgba(10, 10, 10, 0.1);
+  box-shadow: 0 10px 28px rgba(16, 12, 28, 0.16);
+}
+.btn-solid .arrow { background: var(--accent); color: #fff; }
+.btn-pending { cursor: default; }
+.btn-pending:hover { transform: none; }
