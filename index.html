@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=34" />
+  <link rel="stylesheet" href="style.css?v=35" />
   <script type="importmap">
   {
     "imports": {
@@ -81,10 +81,26 @@
 
     <!-- LEARNING MAP：五個等級（股市走線）＋ 五道核心壁壘（旋轉圈） -->
     <section class="core-sec plate" id="method">
+      <div class="cs-bg" aria-hidden="true">
+        <span class="cs-p" style="--x:6%;--y:18%;--s:3px;--t:14s;--dl:-0s"></span>
+        <span class="cs-p" style="--x:14%;--y:62%;--s:2px;--t:18s;--dl:-3s"></span>
+        <span class="cs-p" style="--x:22%;--y:32%;--s:4px;--t:16s;--dl:-6s"></span>
+        <span class="cs-p" style="--x:31%;--y:78%;--s:2px;--t:20s;--dl:-2s"></span>
+        <span class="cs-p" style="--x:39%;--y:12%;--s:3px;--t:15s;--dl:-8s"></span>
+        <span class="cs-p" style="--x:47%;--y:54%;--s:2px;--t:19s;--dl:-4s"></span>
+        <span class="cs-p" style="--x:56%;--y:26%;--s:3px;--t:17s;--dl:-1s"></span>
+        <span class="cs-p" style="--x:64%;--y:70%;--s:2px;--t:21s;--dl:-7s"></span>
+        <span class="cs-p" style="--x:72%;--y:38%;--s:4px;--t:15s;--dl:-5s"></span>
+        <span class="cs-p" style="--x:80%;--y:16%;--s:2px;--t:18s;--dl:-9s"></span>
+        <span class="cs-p" style="--x:88%;--y:60%;--s:3px;--t:16s;--dl:-2s"></span>
+        <span class="cs-p" style="--x:94%;--y:34%;--s:2px;--t:20s;--dl:-6s"></span>
+        <span class="cs-p" style="--x:10%;--y:86%;--s:3px;--t:17s;--dl:-4s"></span>
+        <span class="cs-p" style="--x:50%;--y:88%;--s:2px;--t:19s;--dl:-8s"></span>
+      </div>
       <div class="wrap">
         <p class="eyebrow">學習地圖 <span>Learning Map</span></p>
         <h2 class="h-section">「想學投資」變成「真的會投資」</h2>
-        <p class="sec-lead">投資不是天分，是一項可以被拆解、被練習、被驗收的技能。從投資小白，一階一階走到系統化穩定獲利。</p>
+        <p class="sec-lead">投資不是天分，是一項可以被拆解、被練習、被驗收的技能。</p>
 
         <!-- 五個等級：點到點的電流線路，捲到就一段一段亮起來 -->
         <div class="circuit" id="circuit">
@@ -97,8 +113,18 @@
                   <stop offset="100%" stop-color="#e08c00"/>
                 </linearGradient>
               </defs>
-              <polyline class="ct-base" points="60,246 280,192 500,138 720,81 940,24" pathLength="100"/>
-              <polyline class="ct-live" points="60,246 280,192 500,138 720,81 940,24" pathLength="100"/>
+              <path class="ct-base" d="M60,246 C120,262 210,214 280,192" pathLength="1"/>
+              <path class="ct-base" d="M280,192 C345,170 420,192 500,138" pathLength="1"/>
+              <path class="ct-base" d="M500,138 C565,84 645,140 720,81" pathLength="1"/>
+              <path class="ct-base" d="M720,81 C785,22 870,80 940,24" pathLength="1"/>
+              <path class="ct-glow" style="--s:0" d="M60,246 C120,262 210,214 280,192" pathLength="1"/>
+              <path class="ct-live" style="--s:0" d="M60,246 C120,262 210,214 280,192" pathLength="1"/>
+              <path class="ct-glow" style="--s:1" d="M280,192 C345,170 420,192 500,138" pathLength="1"/>
+              <path class="ct-live" style="--s:1" d="M280,192 C345,170 420,192 500,138" pathLength="1"/>
+              <path class="ct-glow" style="--s:2" d="M500,138 C565,84 645,140 720,81" pathLength="1"/>
+              <path class="ct-live" style="--s:2" d="M500,138 C565,84 645,140 720,81" pathLength="1"/>
+              <path class="ct-glow" style="--s:3" d="M720,81 C785,22 870,80 940,24" pathLength="1"/>
+              <path class="ct-live" style="--s:3" d="M720,81 C785,22 870,80 940,24" pathLength="1"/>
             </svg>
             <ol class="ct-levels">
             <li class="lv" style="--c:#4f46e5;--x:6%;--y:82%;--d:0.00s">
@@ -126,12 +152,16 @@
 
           <!-- 線路往下延伸，把「走到哪一階」接到「我們幫你扛什麼」 -->
           <div class="ct-bridge" aria-hidden="true"><span class="ct-drop"></span></div>
-          <p class="ct-lead">這條路你不用自己走完 —— 五個等級的每一步，底下都有這五件事撐著。</p>
+          <p class="ct-lead">從投資小白，一階一階走到系統化穩定獲利。</p>
 
           <div class="cw-rail" aria-hidden="true"></div>
           <div class="cw-grid">
             <article class="cw" style="--d:0.00s">
               <span class="cw-tap" aria-hidden="true"></span>
+              <svg class="cw-spark" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <rect class="sp-a" x="1" y="1" width="98" height="98" rx="9" pathLength="100"/>
+                <rect class="sp-b" x="1" y="1" width="98" height="98" rx="9" pathLength="100"/>
+              </svg>
               <div class="badge3d" aria-hidden="true">
                 <span class="bd-ring"></span>
                 <span class="bd-face front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="4.5"/><path d="M4 27a8 8 0 0 1 16 0"/><circle cx="23" cy="13" r="3.5"/><path d="M20 27a6.5 6.5 0 0 1 8.5-6.2"/></svg></span>
@@ -143,6 +173,10 @@
             </article>
             <article class="cw" style="--d:0.12s">
               <span class="cw-tap" aria-hidden="true"></span>
+              <svg class="cw-spark" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <rect class="sp-a" x="1" y="1" width="98" height="98" rx="9" pathLength="100"/>
+                <rect class="sp-b" x="1" y="1" width="98" height="98" rx="9" pathLength="100"/>
+              </svg>
               <div class="badge3d" aria-hidden="true">
                 <span class="bd-ring"></span>
                 <span class="bd-face front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H15v22H6.5A2.5 2.5 0 0 1 4 24.5z"/><path d="M28 7.5A2.5 2.5 0 0 0 25.5 5H17v22h8.5a2.5 2.5 0 0 0 2.5-2.5z"/></svg></span>
@@ -154,6 +188,10 @@
             </article>
             <article class="cw" style="--d:0.24s">
               <span class="cw-tap" aria-hidden="true"></span>
+              <svg class="cw-spark" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <rect class="sp-a" x="1" y="1" width="98" height="98" rx="9" pathLength="100"/>
+                <rect class="sp-b" x="1" y="1" width="98" height="98" rx="9" pathLength="100"/>
+              </svg>
               <div class="badge3d" aria-hidden="true">
                 <span class="bd-ring"></span>
                 <span class="bd-face front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="20" height="24" rx="2.5"/><path d="M11 11h10M11 16h10M11 21h6"/></svg></span>
@@ -165,6 +203,10 @@
             </article>
             <article class="cw" style="--d:0.36s">
               <span class="cw-tap" aria-hidden="true"></span>
+              <svg class="cw-spark" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <rect class="sp-a" x="1" y="1" width="98" height="98" rx="9" pathLength="100"/>
+                <rect class="sp-b" x="1" y="1" width="98" height="98" rx="9" pathLength="100"/>
+              </svg>
               <div class="badge3d" aria-hidden="true">
                 <span class="bd-ring"></span>
                 <span class="bd-face front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="26" height="17" rx="2.5"/><path d="M11 28h10M16 23v5"/><path d="M8 17l4-4 3 2.5L23 10"/></svg></span>
@@ -176,6 +218,10 @@
             </article>
             <article class="cw" style="--d:0.48s">
               <span class="cw-tap" aria-hidden="true"></span>
+              <svg class="cw-spark" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <rect class="sp-a" x="1" y="1" width="98" height="98" rx="9" pathLength="100"/>
+                <rect class="sp-b" x="1" y="1" width="98" height="98" rx="9" pathLength="100"/>
+              </svg>
               <div class="badge3d" aria-hidden="true">
                 <span class="bd-ring"></span>
                 <span class="bd-face front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M27 18a4 4 0 0 1-4 4h-8l-6 4v-4H9a4 4 0 0 1-4-4V10a4 4 0 0 1 4-4h14a4 4 0 0 1 4 4z"/><path d="M11 12h10M11 16h6"/></svg></span>
@@ -491,6 +537,6 @@
   </div>
 
   <script type="module" src="hero.js?v=8"></script>
-  <script src="main.js?v=24"></script>
+  <script src="main.js?v=25"></script>
 </body>
 </html>

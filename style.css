@@ -953,21 +953,24 @@ h1, h2, h3, h4 {
    ============================================================ */
 .circuit { margin-top: clamp(46px, 6vh, 76px); }
 
-/* ---- 等級線路 ---- */
+/* ---- 等級線路：一段一段跑電流（點亮 → 文字 → 電流跑到下一階） ---- */
+/* 節奏：每階 1.15s；點亮 → +0.28s 文字 → +0.55s 電流跑 0.75s */
 .ct-track { position: relative; height: clamp(260px, 32vh, 360px); }
 .ct-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
 .ct-base {
-  fill: none; stroke: rgba(10, 10, 10, 0.13); stroke-width: 2;
+  fill: none; stroke: rgba(10, 10, 10, 0.11); stroke-width: 2;
   stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke;
 }
-.ct-live {
-  fill: none; stroke: url(#ctGrad); stroke-width: 3;
-  stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke;
-  stroke-dasharray: 100; stroke-dashoffset: 100;
+.ct-live, .ct-glow {
+  fill: none; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1; stroke-dashoffset: 1;
 }
-.circuit.lit .ct-live {
-  transition: stroke-dashoffset 2.8s cubic-bezier(.35,.85,.35,1) .15s;
+.ct-live { stroke: url(#ctGrad); stroke-width: 3; }
+.ct-glow { stroke: url(#ctGrad); stroke-width: 9; opacity: 0.18; }
+.circuit.lit .ct-live, .circuit.lit .ct-glow {
   stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.75s cubic-bezier(.4,.7,.4,1);
+  transition-delay: calc(var(--s) * 1.15s + 0.55s);
 }
 
 .ct-levels { position: absolute; inset: 0; list-style: none; margin: 0; padding: 0; }
@@ -975,25 +978,28 @@ h1, h2, h3, h4 {
 .lv-dot {
   display: block; width: 16px; height: 16px; border-radius: 50%; margin: 0 auto;
   background: rgba(10, 10, 10, 0.14);
-  transition: background 0.5s ease, box-shadow 0.6s ease, transform 0.5s var(--ease);
+  transition: background 0.45s ease, box-shadow 0.55s ease, transform 0.45s var(--ease);
   transition-delay: var(--d);
 }
 .circuit.lit .lv-dot {
-  background: var(--c); transform: scale(1.12);
+  background: var(--c); transform: scale(1.14);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent),
-              0 0 22px color-mix(in srgb, var(--c) 65%, transparent);
+              0 0 24px color-mix(in srgb, var(--c) 70%, transparent);
 }
 .lv-txt {
-  position: absolute; left: 50%; top: 26px; transform: translateX(-50%);
+  position: absolute; left: 50%; top: 26px; transform: translate(-50%, 6px);
   display: block; text-align: center; white-space: nowrap;
   font-size: 14px; font-weight: 600; line-height: 1.4;
-  opacity: 0.3; transition: opacity 0.6s ease; transition-delay: var(--d);
+  opacity: 0; transition: opacity 0.5s ease, transform 0.5s var(--ease);
+  transition-delay: calc(var(--d) + 0.28s);
 }
-.circuit.lit .lv-txt { opacity: 1; }
+.circuit.lit .lv-txt { opacity: 1; transform: translate(-50%, 0); }
 .lv-txt b { display: block; font-family: var(--font-display); font-size: 12.5px; letter-spacing: 0.1em; color: var(--c); }
 .lv-txt i { display: block; font-style: normal; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted-2); margin-top: 2px; }
-.lv:first-child .lv-txt { left: 0; transform: none; text-align: left; }
-.lv:last-child .lv-txt { left: auto; right: 0; transform: none; text-align: right; }
+.lv:first-child .lv-txt { left: 0; transform: translate(0, 6px); text-align: left; }
+.circuit.lit .lv:first-child .lv-txt { transform: translate(0, 0); }
+.lv:last-child .lv-txt { left: auto; right: 0; transform: translate(0, 6px); text-align: right; }
+.circuit.lit .lv:last-child .lv-txt { transform: translate(0, 0); }
 
 /* ---- 線路往下延伸，接到產品重點 ---- */
 .ct-bridge {
@@ -1033,6 +1039,20 @@ h1, h2, h3, h4 {
   content: ""; position: absolute; left: 50%; top: -3px; width: 7px; height: 7px; margin-left: -3.5px;
   border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.16);
 }
+/* 沿著方框邊線跑的粒子電流 */
+.cw { overflow: hidden; }
+.cw-spark { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.cw-spark rect {
+  fill: none; stroke: var(--accent); stroke-width: 2.4; vector-effect: non-scaling-stroke;
+  stroke-linecap: round; stroke-dasharray: 6 94;
+  animation: cwRun 5.2s linear infinite;
+}
+.cw-spark .sp-b { stroke: #ff6fd6; animation-delay: -2.6s; opacity: 0.8; }
+@keyframes cwRun { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+.cw:nth-child(2) .cw-spark rect { animation-duration: 5.8s; }
+.cw:nth-child(3) .cw-spark rect { animation-duration: 4.8s; }
+.cw:nth-child(4) .cw-spark rect { animation-duration: 6.2s; }
+.cw:nth-child(5) .cw-spark rect { animation-duration: 5.4s; }
 
 /* ---- 3D 旋轉徽章（六角，CSS 3D，無 WebGL）---- */
 .badge3d {
@@ -1100,3 +1120,39 @@ h1, h2, h3, h4 {
   .lv-txt { font-size: 11px; }
   .badge3d { width: 62px; height: 62px; }
 }
+
+/* ---- 第二區背景：稀疏粒子 + 兩道柔光（純漸層，不用 blur filter） ---- */
+.core-sec { position: relative; overflow: hidden; }
+.core-sec > .wrap { position: relative; z-index: 1; }
+.cs-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.cs-bg::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(52% 42% at 82% 12%, rgba(196, 76, 240, 0.13), transparent 68%),
+    radial-gradient(46% 40% at 12% 78%, rgba(79, 70, 229, 0.12), transparent 70%);
+}
+.cs-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(124, 58, 237, 0.18) 1px, transparent 1px);
+  background-size: 42px 42px;
+  -webkit-mask-image: radial-gradient(72% 60% at 50% 45%, #000, transparent 78%);
+  mask-image: radial-gradient(72% 60% at 50% 45%, #000, transparent 78%);
+  opacity: 0.55;
+}
+.cs-p {
+  position: absolute; left: var(--x); top: var(--y);
+  width: var(--s); height: var(--s); border-radius: 50%;
+  background: rgba(124, 58, 237, 0.55);
+  box-shadow: 0 0 8px rgba(196, 76, 240, 0.7);
+  animation: csDrift var(--t) ease-in-out infinite;
+  animation-delay: var(--dl);
+}
+@keyframes csDrift {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.25; }
+  50%      { transform: translate3d(14px, -26px, 0); opacity: 0.85; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cs-p, .cw-spark rect { animation: none; }
+  .cs-p { opacity: 0.4; }
+}
+@media (max-width: 760px) { .cs-p { display: none; } }
