@@ -1099,52 +1099,17 @@ h1, h2, h3, h4 {
   .badge3d { width: 62px; height: 62px; }
 }
 
-/* ---- 第二區背景：轉動的粒子環（只有 3 個容器在轉，點本身不動） ---- */
-.core-sec { position: relative; overflow: hidden; }
-.core-sec > .wrap { position: relative; z-index: 1; }
-.cs-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-.cs-bg::before {
-  content: ""; position: absolute; inset: 0;
+/* ---- 第二區背景：直接透出首頁那顆 WebGL 粒子球（不另外做假粒子） ----
+   .core-sec 不加 .plate，固定在底層的 #scene 就會透上來；
+   上面壓一層半透明的同色遮罩，讓粒子看得見、但深色文字仍然清楚。 */
+.core-sec { position: relative; }
+.core-scrim {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background:
-    radial-gradient(54% 44% at 80% 10%, rgba(196, 76, 240, 0.16), transparent 68%),
-    radial-gradient(48% 42% at 14% 82%, rgba(79, 70, 229, 0.15), transparent 70%),
-    radial-gradient(38% 34% at 50% 50%, rgba(255, 111, 214, 0.08), transparent 72%);
+    linear-gradient(180deg, var(--bg) 0%, rgba(223, 228, 229, 0.82) 12%,
+                    rgba(223, 228, 229, 0.74) 50%, rgba(223, 228, 229, 0.86) 88%, var(--bg) 100%);
 }
-.cs-ring {
-  position: absolute; left: 50%; top: 50%; width: min(150vw, 1900px); aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  animation: csSpin var(--dur) linear infinite;
-}
-/* 軌道本身也畫出來：淺色底上只有小點會像灰塵，有軌道才有結構感 */
-.cs-ring::before, .cs-ring::after {
-  content: ""; position: absolute; border-radius: 50%;
-  border: 1px solid rgba(124, 58, 237, 0.14);
-}
-.cs-ring::before { inset: 26%; }
-.cs-ring::after { inset: 40%; border-style: dashed; border-color: rgba(124, 58, 237, 0.16); }
-.cs-ring2 { animation-direction: reverse; }
-.cs-ring2::before { inset: 33%; border-color: rgba(224, 64, 154, 0.14); }
-.cs-ring2::after { inset: 46%; border-color: rgba(224, 64, 154, 0.13); }
-.cs-ring3 { width: min(170vw, 2200px); }
-.cs-ring3::before { inset: 30%; border-color: rgba(79, 70, 229, 0.12); }
-.cs-ring3::after { inset: 44%; border-color: rgba(79, 70, 229, 0.11); }
-@keyframes csSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
-.cs-d {
-  position: absolute; left: 50%; top: 50%; width: var(--s); height: var(--s);
-  margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); border-radius: 50%;
-  background: #7c3aed;
-  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1), 0 0 14px rgba(196, 76, 240, 0.85);
-  transform: rotate(var(--a)) translateX(var(--r));
-}
-.cs-ring2 .cs-d { background: #e0409a; box-shadow: 0 0 0 4px rgba(224, 64, 154, 0.1), 0 0 14px rgba(224, 64, 154, 0.8); }
-.cs-ring3 .cs-d { background: #4f46e5; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1), 0 0 12px rgba(79, 70, 229, 0.75); }
-/* 邊緣淡出，避免軌道貼著區塊邊界被硬切 */
-.cs-bg {
-  -webkit-mask-image: radial-gradient(88% 84% at 50% 50%, #000 52%, transparent 100%);
-  mask-image: radial-gradient(88% 84% at 50% 50%, #000 52%, transparent 100%);
-}
-@media (prefers-reduced-motion: reduce) { .cs-ring { animation: none; } }
-@media (max-width: 760px) { .cs-ring3 { display: none; } }
+.core-sec > .wrap { position: relative; z-index: 1; }
 
 /* 首頁次要 CTA：原本的半透明 ghost 在淺色 3D 背景上幾乎看不見 */
 .btn-solid {

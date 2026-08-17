@@ -390,7 +390,7 @@ addEventListener("resize", () => {
 // 場景是 42k 顆粒子 + 三道 post-processing，整頁大部分區塊都是不透明的 .plate，
 // 蓋住畫布時繼續全速渲染只是白白吃 GPU（捲到中段會卡）。這裡只在
 // 透明區段（Hero / 最後 CTA）進入視窗時才渲染。
-const transparentSecs = ["top", "contact"].map((id) => document.getElementById(id)).filter(Boolean);
+const transparentSecs = ["top", "method", "contact"].map((id) => document.getElementById(id)).filter(Boolean);
 let canvasVisible = true;
 function recomputeVisibility() {
   const vh = innerHeight;
