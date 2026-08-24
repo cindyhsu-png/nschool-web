@@ -241,8 +241,8 @@
     };
     setSound(false);
 
-    // 大按鈕＝使用者手勢，直接帶聲音從頭播
-    btn?.addEventListener("click", () => { setSound(true); v.currentTime = 0; play(); });
+    // 大按鈕只負責從頭播，聲音一律由喇叭鈕決定
+    btn?.addEventListener("click", () => { v.currentTime = 0; play(); });
     snd?.addEventListener("click", () => { setSound(v.muted); if (v.paused) play(); });
 
     if (reduce) return;                       // 使用者要求減少動態就不自動播
