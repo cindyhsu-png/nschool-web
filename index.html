@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=48" />
+  <link rel="stylesheet" href="style.css?v=49" />
   <script type="importmap">
   {
     "imports": {
@@ -43,7 +43,7 @@
   <!-- navigation -->
   <header class="nav">
     <a class="logo" href="#top" aria-label="nSchool 首頁">
-      <img src="img/nschool_mark.svg" alt="nSchool" />
+      <img src="img/nschool_logo_stack.png" alt="nSchool" />
     </a>
   </header>
 
@@ -86,7 +86,7 @@
       <div class="wrap">
         <p class="eyebrow">學習地圖 <span>Learning Map</span></p>
         <h2 class="h-section">「想學投資」變成「真的會投資」</h2>
-        <p class="sec-lead">投資不是天分，是一項可以被拆解、被練習、被驗收的技能。</p>
+        <p class="sec-lead">別再靠感覺進場。八個月打好基本功，五個等級一路練到能自己判斷 —— 你會很清楚現在在哪一級、下一步該練什麼。</p>
 
         <!-- 五個等級：細軌 + 進度填色 + 脈衝點，一站一站推進 -->
         <div class="circuit" id="circuit">
@@ -224,7 +224,7 @@
           </article>
           <article class="pil" style="--c:#a855f7">
             <span class="pil-no">03</span>
-            <div class="pil-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17.5" cy="10.5" r="2.5"/><path d="M15 20a5 5 0 0 1 6.5-4.8"/></svg></div>
+            <div class="pil-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.1"/><path d="M4 6v4.2c0 1.71 3.58 3.1 8 3.1s8-1.39 8-3.1V6"/><path d="M4 12.2v4.2c0 1.71 3.58 3.1 8 3.1s8-1.39 8-3.1v-4.2"/></svg></div>
             <p class="pil-en">Chips</p>
             <h3>籌碼面</h3>
             <ul>
@@ -235,7 +235,7 @@
           </article>
           <article class="pil" style="--c:#e0409a">
             <span class="pil-no">04</span>
-            <div class="pil-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 4"/></svg></div>
+            <div class="pil-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 12V3"/><path d="M12 12l7.8 4.5"/><path d="M12 12L4.2 16.5"/></svg></div>
             <p class="pil-en">ETF</p>
             <h3>ETF</h3>
             <ul>
@@ -246,7 +246,7 @@
           </article>
           <article class="pil" style="--c:#e08c00">
             <span class="pil-no">05</span>
-            <div class="pil-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.6-7-10a7 7 0 0 1 14 0c0 5.4-7 10-7 10z"/><circle cx="12" cy="11" r="2.5"/></svg></div>
+            <div class="pil-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.4v14.1"/><path d="M7.5 20.5h9"/><path d="M3.5 8h17"/><path d="M6.6 8 3.2 14.8h6.8z"/><path d="M17.4 8 14 14.8h6.8z"/><circle cx="12" cy="4.6" r="1.5"/></svg></div>
             <p class="pil-en">Mindset</p>
             <h3>投資觀念</h3>
             <ul>
@@ -267,31 +267,34 @@
         <h2 class="h-section">賠掉的是假錢，學到的是真的。</h2>
         <p class="sec-lead">學員專屬的模擬倉「模擬交易王」—— 用虛擬資金，但手續費、證交稅、保證金檢查全照真實規則算。先在這裡繳學費，再去市場拿成績。</p>
 
-        <div class="sim-shots">
-          <figure class="sim-shot">
-            <img src="img/sim/replay.jpg" alt="當下那一刻的判斷" loading="lazy" decoding="async" />
-            <figcaption>
-              <span class="sim-k">練習 01</span>
+        <div class="sim-stage">
+          <div class="sim-video">
+            <video id="simVideo" muted loop playsinline preload="none"
+                   poster="img/sim/poster.jpg" aria-label="模擬交易王 產品介紹">
+              <source src="img/sim/simutrade-intro.mp4" type="video/mp4" />
+            </video>
+            <button type="button" class="sim-play" id="simPlay" aria-label="播放產品介紹">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+              <span>看 60 秒介紹</span>
+            </button>
+          </div>
+          <ul class="sim-points">
+            <li>
+              <span class="sp-k">練習 01</span>
               <h3>當下那一刻的判斷</h3>
               <p>右邊還是一片空白，K 棒一根一根往前走 —— 要不要進場，你現在就得決定。</p>
-            </figcaption>
-          </figure>
-          <figure class="sim-shot">
-            <img src="img/sim/cost.jpg" alt="算得過來的手" loading="lazy" decoding="async" />
-            <figcaption>
-              <span class="sim-k">練習 02</span>
+            </li>
+            <li>
+              <span class="sp-k">練習 02</span>
               <h3>算得過來的手</h3>
               <p>手續費、證交稅、保證金全照真實規則算。短線賺的那點價差，常常不夠付摩擦。</p>
-            </figcaption>
-          </figure>
-          <figure class="sim-shot">
-            <img src="img/sim/score.jpg" alt="誠實的成績單" loading="lazy" decoding="async" />
-            <figcaption>
-              <span class="sim-k">練習 03</span>
+            </li>
+            <li>
+              <span class="sp-k">練習 03</span>
               <h3>誠實的成績單</h3>
               <p>S～F 評等，外加一條「什麼都不做」的對照 —— 你這一堆操作，有贏過躺著不動嗎。</p>
-            </figcaption>
-          </figure>
+            </li>
+          </ul>
         </div>
 
         <div class="sim-why">
@@ -514,7 +517,7 @@
     <div class="wrap">
       <div class="footer-grid">
         <div>
-          <a class="logo" href="#top"><img src="img/nschool_mark.svg" alt="nSchool" /></a>
+          <a class="logo" href="#top"><img src="img/nschool_logo_stack.png" alt="nSchool" /></a>
           <p class="footer-tag">先認知，再投資 ｜ 從理財新手到配置大師</p>
           <p class="footer-url">www.nschool.tw</p>
         </div>
@@ -557,6 +560,6 @@
   </div>
 
   <script type="module" src="hero.js?v=9"></script>
-  <script src="main.js?v=27"></script>
+  <script src="main.js?v=28"></script>
 </body>
 </html>

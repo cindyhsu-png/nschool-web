@@ -1157,25 +1157,47 @@ h1, h2, h3, h4 {
 /* ---- 模擬工具系統 ---- */
 .sim { padding: clamp(80px, 12vh, 150px) 0; }
 .sim .h-section { margin: 16px 0 12px; }
-.sim-shots {
+.sim-stage {
   margin-top: clamp(40px, 6vh, 66px);
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+  display: grid; grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  gap: clamp(26px, 3.4vw, 56px); align-items: center;
 }
-.sim-shot {
-  margin: 0; border-radius: var(--radius-lg); overflow: hidden;
-  background: #0f0d16; border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 50px rgba(16, 12, 28, 0.2);
-  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+.sim-video {
+  position: relative; border-radius: 26px; overflow: hidden;
+  background: #0d0b12; border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 30px 70px rgba(16, 12, 28, 0.28);
+  aspect-ratio: 1080 / 1920; max-height: 620px; margin-inline: auto; width: 100%;
 }
-.sim-shot:hover { transform: translateY(-6px); box-shadow: 0 30px 70px rgba(16, 12, 28, 0.3); }
-.sim-shot img { width: 100%; height: auto; display: block; }
-.sim-shot figcaption { padding: 22px 24px 26px; color: #fff; }
-.sim-k {
+.sim-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sim-play {
+  position: absolute; inset: auto 0 0 0; margin: 0 auto 22px; width: max-content;
+  display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
+  padding: 12px 20px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(16, 12, 28, 0.62); color: #fff; font-size: 14px; font-weight: 500;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: background 0.3s ease, transform 0.3s var(--ease), opacity 0.3s ease;
+}
+.sim-play svg { width: 17px; height: 17px; }
+.sim-play:hover { background: var(--accent); transform: translateY(-2px); }
+.sim-video.playing .sim-play { opacity: 0; pointer-events: none; }
+.sim-video.playing:hover .sim-play { opacity: 1; pointer-events: auto; }
+
+.sim-points { list-style: none; display: grid; gap: 14px; }
+.sim-points li {
+  position: relative; padding: 22px 24px 22px 26px;
+  border-radius: var(--radius-lg); background: var(--white);
+  border: 1px solid rgba(10, 10, 10, 0.07); border-left: 3px solid var(--accent);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.sim-points li:nth-child(2) { border-left-color: #e0409a; }
+.sim-points li:nth-child(3) { border-left-color: #e08c00; }
+.sim-points li:hover { transform: translateX(4px); box-shadow: 0 18px 44px rgba(16, 12, 28, 0.12); }
+.sp-k {
   display: block; font-family: var(--font-mono); font-size: 10.5px;
-  letter-spacing: 0.2em; text-transform: uppercase; color: #7aa2ff;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-2);
 }
-.sim-shot h3 { margin-top: 9px; font-size: clamp(18px, 1.6vw, 22px); letter-spacing: -0.01em; }
-.sim-shot p { margin-top: 9px; font-size: 13.5px; line-height: 1.75; color: rgba(255, 255, 255, 0.62); }
+.sim-points h3 { margin-top: 8px; font-size: clamp(19px, 1.8vw, 24px); letter-spacing: -0.02em; }
+.sim-points p { margin-top: 9px; font-size: 14px; line-height: 1.8; color: var(--muted); }
 
 .sim-why {
   margin-top: clamp(40px, 5vh, 60px);
@@ -1233,13 +1255,9 @@ h1, h2, h3, h4 {
 }
 
 @media (max-width: 900px) {
-  .sim-shots { grid-template-columns: 1fr 1fr; }
-  .sim-shots .sim-shot:last-child { grid-column: 1 / -1; }
   .sim-why { grid-template-columns: 1fr; }
 }
 @media (max-width: 620px) {
-  .sim-shots { grid-template-columns: 1fr; }
-  .sim-shots .sim-shot:last-child { grid-column: auto; }
 }
 
 /* ---- 課程主題：每個主題自己的色系、大編號、漸層圖示 ---- */
@@ -1294,4 +1312,23 @@ h1, h2, h3, h4 {
 .sim-hook-n {
   margin-top: 14px; font-family: var(--font-mono); font-size: 11.5px;
   letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.5);
+}
+
+/* 模擬倉 CTA：連結還沒放，但要有 hover 回饋（不能像壞掉的按鈕） */
+.sim-cta { cursor: pointer; }
+.sim-cta.btn-pending:hover {
+  color: #fff; background-size: 240% 100%;
+  transform: translateY(-3px);
+  box-shadow: 0 26px 64px rgba(124, 58, 237, 0.6);
+}
+.sim-cta.btn-pending:hover .arrow { background: #fff; color: var(--accent); transform: translateX(3px); }
+
+/* 直式品牌標：方形偏高，尺寸要比橫式再大 */
+.logo img { height: 58px; width: auto; }
+.footer .logo img { height: 66px; }
+@media (max-width: 760px) { .logo img { height: 44px; } }
+
+@media (max-width: 900px) {
+  .sim-stage { grid-template-columns: 1fr; }
+  .sim-video { max-height: 520px; max-width: 320px; }
 }

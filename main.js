@@ -221,6 +221,28 @@
     });
   }
 
+  // ---------- 模擬倉介紹影片：捲進視窗才載入播放，離開就暫停 ----------
+  (function simVideo() {
+    const v = document.getElementById("simVideo");
+    const box = v && v.closest(".sim-video");
+    const btn = document.getElementById("simPlay");
+    if (!v || !box) return;
+    let loaded = false;
+    const play = () => {
+      if (!loaded) { v.preload = "auto"; v.load(); loaded = true; }
+      v.play().then(() => box.classList.add("playing")).catch(() => {});
+    };
+    btn?.addEventListener("click", () => (v.paused ? play() : (v.pause(), box.classList.remove("playing"))));
+    if (reduce) return;                       // 使用者要求減少動態就不自動播
+    const io = new IntersectionObserver((ents) => {
+      ents.forEach((e) => {
+        if (e.isIntersecting) play();
+        else if (!v.paused) { v.pause(); box.classList.remove("playing"); }
+      });
+    }, { threshold: 0.35 });
+    io.observe(box);
+  })();
+
   // ---------- 學習地圖線路：捲到就一段一段亮起來（只跑一次） ----------
   (function circuit() {
     const el = document.getElementById("circuit");
