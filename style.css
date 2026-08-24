@@ -1332,3 +1332,20 @@ h1, h2, h3, h4 {
   .sim-stage { grid-template-columns: 1fr; }
   .sim-video { max-height: 520px; max-width: 320px; }
 }
+
+/* 影片聲音開關（自動播放一定是靜音的，要出聲得由使用者點） */
+.sim-sound {
+  position: absolute; top: 16px; right: 16px; z-index: 2;
+  width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+  display: grid; place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(16, 12, 28, 0.62); color: #fff;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: background 0.3s ease, transform 0.3s var(--ease), border-color 0.3s ease;
+}
+.sim-sound:hover { background: var(--accent); border-color: var(--accent); transform: scale(1.06); }
+.sim-sound svg { width: 20px; height: 20px; }
+.sim-sound .ic-on { display: none; }
+.sim-video.sound-on .sim-sound .ic-on { display: block; }
+.sim-video.sound-on .sim-sound .ic-off { display: none; }
+.sim-video.sound-on .sim-sound { background: var(--accent); border-color: var(--accent); }

@@ -226,13 +226,25 @@
     const v = document.getElementById("simVideo");
     const box = v && v.closest(".sim-video");
     const btn = document.getElementById("simPlay");
+    const snd = document.getElementById("simSound");
     if (!v || !box) return;
     let loaded = false;
-    const play = () => {
-      if (!loaded) { v.preload = "auto"; v.load(); loaded = true; }
-      v.play().then(() => box.classList.add("playing")).catch(() => {});
+    // 瀏覽器只允許「靜音」自動播放；要出聲一定得由使用者的點擊觸發。
+    // 所以捲進畫面先靜音播，另外給一顆喇叭鈕讓使用者自己開聲音。
+    const load = () => { if (!loaded) { v.preload = "auto"; v.load(); loaded = true; } };
+    const play = () => { load(); v.play().then(() => box.classList.add("playing")).catch(() => {}); };
+    const setSound = (on) => {
+      v.muted = !on;
+      box.classList.toggle("sound-on", on);
+      snd?.setAttribute("aria-pressed", String(on));
+      snd?.setAttribute("aria-label", on ? "關閉聲音" : "開啟聲音");
     };
-    btn?.addEventListener("click", () => (v.paused ? play() : (v.pause(), box.classList.remove("playing"))));
+    setSound(false);
+
+    // 大按鈕＝使用者手勢，直接帶聲音從頭播
+    btn?.addEventListener("click", () => { setSound(true); v.currentTime = 0; play(); });
+    snd?.addEventListener("click", () => { setSound(v.muted); if (v.paused) play(); });
+
     if (reduce) return;                       // 使用者要求減少動態就不自動播
     const io = new IntersectionObserver((ents) => {
       ents.forEach((e) => {

@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=49" />
+  <link rel="stylesheet" href="style.css?v=50" />
   <script type="importmap">
   {
     "imports": {
@@ -197,7 +197,7 @@
         <h2 class="h-section">股市投資四聯手，加上 ETF。</h2>
         <div class="sec-head">
           <div class="lt">
-            <p class="sec-lead">五大主題各自成課、彼此銜接，理論打底、實作驗收。</p>
+            <p class="sec-lead">同一檔股票，五個面向會給你五種答案 —— 五面都看得懂，你才不用再聽誰說了算。</p>
           </div>
           <button type="button" class="btn" id="trialBtn">試看課程 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></button>
         </div>
@@ -275,9 +275,13 @@
                    poster="img/sim/poster.jpg" aria-label="模擬交易王 產品介紹">
               <source src="img/sim/simutrade-intro.mp4" type="video/mp4" />
             </video>
-            <button type="button" class="sim-play" id="simPlay" aria-label="播放產品介紹">
+            <button type="button" class="sim-play" id="simPlay" aria-label="播放產品介紹（含聲音）">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
               <span>看 60 秒介紹</span>
+            </button>
+            <button type="button" class="sim-sound" id="simSound" aria-label="開啟聲音" aria-pressed="false">
+              <svg class="ic-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19z"/><path d="m16.5 9.5 5 5M21.5 9.5l-5 5"/></svg>
+              <svg class="ic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19z"/><path d="M15.5 8.8a4.5 4.5 0 0 1 0 6.4"/><path d="M18.4 6a8.5 8.5 0 0 1 0 12"/></svg>
             </button>
           </div>
           <ul class="sim-points">
@@ -562,6 +566,6 @@
   </div>
 
   <script type="module" src="hero.js?v=9"></script>
-  <script src="main.js?v=28"></script>
+  <script src="main.js?v=29"></script>
 </body>
 </html>
