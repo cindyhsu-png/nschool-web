@@ -22,7 +22,7 @@ renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));  // 2 倍在 retina 上
 renderer.setSize(innerWidth, innerHeight);
 renderer.setClearColor(BG, 1);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+renderer.toneMappingExposure = 0.97;   // 調低：整顆球不要那麼搶眼
 
 const scene = new THREE.Scene();
 
@@ -141,6 +141,8 @@ for (let i = 0; i < COUNT; i++) {
   else col.copy(cMag).lerp(cViolet, (t - 0.72) / 0.28);
   // sprinkle deeper violet for depth
   if (Math.random() < 0.18) col.lerp(cDeep, Math.random() * 0.5);
+  // 整體往頁面底色靠攏一點，降飽和 → 球體融入背景而不是跳出來
+  col.lerp(BG, 0.2);
   pColors[i * 3] = col.r;
   pColors[i * 3 + 1] = col.g;
   pColors[i * 3 + 2] = col.b;
@@ -157,7 +159,7 @@ const orbMat = new THREE.ShaderMaterial({
   uniforms: {
     uTime: { value: 0 },
     uPR: { value: Math.min(devicePixelRatio, 2) },
-    uSize: { value: mobile ? 26 : 34 },
+    uSize: { value: mobile ? 22 : 28 },        // 調小：粒子顆粒感收斂
   },
   transparent: true,
   depthWrite: false,
@@ -176,9 +178,9 @@ const orbMat = new THREE.ShaderMaterial({
       // gentle per-particle wobble + breathing pulse
       p.x += sin(uTime * 0.8 + aSeed * 12.0) * 0.03;
       p.y += cos(uTime * 0.7 + aSeed * 9.0) * 0.03;
-      float pulse = 1.0 + 0.045 * sin(uTime * 0.9 + length(position) * 5.0);
+      float pulse = 1.0 + 0.028 * sin(uTime * 0.9 + length(position) * 5.0);
       p *= pulse;
-      vGlow = 0.6 + 0.4 * sin(uTime * 1.6 + aSeed * 20.0);
+      vGlow = 0.78 + 0.22 * sin(uTime * 1.2 + aSeed * 20.0);
       vec4 mv = modelViewMatrix * vec4(p, 1.0);
       gl_Position = projectionMatrix * mv;
       gl_PointSize = aScale * uSize * uPR / -mv.z;
@@ -191,8 +193,8 @@ const orbMat = new THREE.ShaderMaterial({
       float d = length(uv);
       if (d > 0.5) discard;
       float a = smoothstep(0.5, 0.0, d);
-      a = pow(a, 1.6);
-      vec3 c = vColor + vColor * vGlow * 0.5;   // subtle self-illumination shimmer
+      a = pow(a, 2.1) * 0.74;                  // 調柔：邊緣更軟、整體更透
+      vec3 c = vColor + vColor * vGlow * 0.2;  // 自體發光減弱，少一點螢光感
       gl_FragColor = vec4(c, a);
     }
   `,
@@ -269,16 +271,16 @@ function makeGlow() {
 }
 const aura = new THREE.Sprite(new THREE.SpriteMaterial({
   map: makeGlow(), transparent: true, depthWrite: false, depthTest: false,
-  blending: THREE.AdditiveBlending, opacity: 1,
+  blending: THREE.AdditiveBlending, opacity: 0.5,   // 調淡：背後光暈
 }));
 aura.renderOrder = -1;
 scene.add(aura);
 
 // brand-colour rim lights to drive the iridescent rainbow highlights
-const magLight = new THREE.DirectionalLight(0xff3ecb, 2.2);
+const magLight = new THREE.DirectionalLight(0xff3ecb, 1.45);
 magLight.position.set(4, 2, 2);
 scene.add(magLight);
-const cyLight = new THREE.DirectionalLight(0x6aa8ff, 1.8);
+const cyLight = new THREE.DirectionalLight(0x6aa8ff, 1.25);
 cyLight.position.set(-3, -2, 3);
 scene.add(cyLight);
 
@@ -327,7 +329,7 @@ const dpr = Math.min(devicePixelRatio, 1.5);
 const composer = new EffectComposer(renderer);
 composer.setPixelRatio(dpr);
 composer.addPass(new RenderPass(scene, camera));
-const afterimage = new AfterimagePass(0.82);
+const afterimage = new AfterimagePass(0.70);   // 殘影拖尾減少，畫面安靜一點
 composer.addPass(afterimage);
 const smaa = new SMAAPass(innerWidth * dpr, innerHeight * dpr);
 composer.addPass(smaa);
