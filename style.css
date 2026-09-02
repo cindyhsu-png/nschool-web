@@ -1499,3 +1499,9 @@ h1, h2, h3, h4 {
   .member .tags { font-size: 12px; }
   .member .role { font-size: 12px; }
 }
+
+/* 師資卡在手機太窄，專長標籤常常被擠到第二行只剩兩個字：把卡片放寬一點 */
+@media (max-width: 760px) {
+  .team-track .member { flex: 0 0 212px; }
+  .member .tags { font-size: 11.5px; }
+}
