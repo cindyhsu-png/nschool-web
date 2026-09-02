@@ -577,398 +577,112 @@ h1, h2, h3, h4 {
 /* .app-note 仍用於「課程主題」的註記 */
 .app-note { margin-top: 22px; font-family: var(--font-mono); font-size: 12.5px; color: var(--muted-2); letter-spacing: 0.02em; }
 
-
-/* ---- 7. 顧問師資改版（11 位，資訊卡）---- */
-.team-track .member { flex: 0 0 calc((100% - 48px) / 3); }
-.member {
-  background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07); border-radius: var(--radius-lg);
-  padding: 20px 20px 24px; display: flex; flex-direction: column;
-  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
-}
-.member:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(16, 12, 28, 0.12); }
-.member .ph { aspect-ratio: 1 / 1; border-radius: var(--radius); margin-bottom: 16px; }
-.member b { font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
-.member .tags {
-  display: block; margin-top: 8px; font-size: 13px; font-weight: 500; color: var(--accent);
-  letter-spacing: 0.01em; line-height: 1.5;
-}
-.member .roles { list-style: none; margin: 14px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(10, 10, 10, 0.08); display: flex; flex-direction: column; gap: 5px; }
-.member .roles li { position: relative; padding-left: 14px; font-size: 13.5px; color: rgba(10, 10, 10, 0.68); line-height: 1.55; }
-.member .roles li::before { content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
-.member .quote {
-  margin-top: auto; padding-top: 16px; font-size: 13px; line-height: 1.65; color: var(--muted);
-  font-style: normal;
-}
-.member .quote em { font-style: normal; display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
-.team-count { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted-2); letter-spacing: 0.04em; margin-top: 18px; }
-
-/* ---- RWD ---- */
-@media (max-width: 1100px) {
-  .rm-track, .pil-grid { grid-template-columns: repeat(2, 1fr); }
-  .app-grid { grid-template-columns: repeat(2, 1fr); }
-  .rm-notes, .trio-grid { grid-template-columns: 1fr; }
-  .team-track .member { flex: 0 0 calc((100% - 24px) / 2); }
-}
-@media (max-width: 760px) {
-  .rm-track, .pil-grid, .app-grid { grid-template-columns: 1fr; }
-  .team-track .member { flex: 0 0 100%; }
-}
-
-/* 淺色 3D 背景上的英文副標：0.5 透明度會糊掉，拉高對比 */
-.hero .hero-en span,
-.hero-caption .en,
-.studio .eyebrow.light span,
-.clients .eyebrow.light span { opacity: 0.82; }
-.studio .eyebrow.light,
-.clients .eyebrow.light { font-weight: 500; }
-
-/* ============================================================
-   v2.2 追加 — 左側欄導覽、學習旅程節點、師資自動輪播、關鍵數據縮小
-   ============================================================ */
-
-/* ---- 1. 左側欄導覽（線 + 圓點）---- */
-.nav-pill { display: none; }
-.rail {
-  position: fixed; left: clamp(14px, 2.2vw, 34px); top: 50%; transform: translateY(-50%);
-  z-index: 55; display: flex; flex-direction: column; gap: clamp(14px, 2.4vh, 26px);
-  padding: 6px 0 6px 0;
-}
-.rail-line {
-  position: absolute; left: 5px; top: 12px; bottom: 12px; width: 2px;
-  background: rgba(255, 255, 255, 0.4); border-radius: 2px; overflow: hidden;
-  box-shadow: 0 0 0 1px rgba(16, 12, 28, 0.06);
-}
-.rail-fill {
-  position: absolute; inset: 0 0 auto; height: 0%;
-  background: var(--grad); border-radius: 2px;
-  transition: height 0.35s var(--ease);
-}
-.rail a {
-  position: relative; display: flex; align-items: center; gap: 12px;
-  color: inherit; text-decoration: none;
-}
-.rail-dot {
-  position: relative; z-index: 1; flex: 0 0 auto;
-  width: 12px; height: 12px; border-radius: 50%;
-  background: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 0 0 1px rgba(16, 12, 28, 0.14), 0 2px 8px rgba(16, 12, 28, 0.18);
-  transition: background 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
-}
-.rail-txt {
-  font-size: 13px; font-weight: 500; letter-spacing: 0.01em;
-  color: rgba(20, 17, 28, 0.62);
-  opacity: 0; transform: translateX(-6px);
-  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), color 0.3s ease;
-  white-space: nowrap;
-}
-.rail:hover .rail-txt { opacity: 1; transform: none; }
-.rail a:hover .rail-dot { transform: scale(1.25); background: #fff; }
-.rail a:hover .rail-txt { color: var(--ink); }
-.rail a.on .rail-dot {
-  background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.18), 0 2px 10px rgba(124, 58, 237, 0.4);
-}
-.rail a.on .rail-txt { opacity: 1; transform: none; color: var(--ink); font-weight: 600; }
-/* 深色／低對比背景區段時，標籤自動轉白 */
-.rail.on-dark .rail-txt { color: rgba(255, 255, 255, 0.8); text-shadow: var(--sh-white-sm); }
-.rail.on-dark a:hover .rail-txt, .rail.on-dark a.on .rail-txt { color: #fff; }
-
-/* ---- 2. 企業合作夥伴標題 ---- */
-.clients-head h2 { font-size: clamp(30px, 4vw, 52px); }
-
-/* ---- 4. 顧問師資：說明一列、自動輪播、卡片兩行 ---- */
-.team-lead { color: var(--muted); font-size: clamp(15px, 1.2vw, 18px); margin: 0 0 clamp(30px, 4vh, 46px); max-width: none; }
-.team-grid { display: block; }
-.team-carousel { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); }
-.team-track { display: flex; gap: 20px; width: max-content; animation: teamMarquee 60s linear infinite; transition: none; will-change: transform; }
-.team-carousel:hover .team-track { animation-play-state: paused; }
-@keyframes teamMarquee { to { transform: translateX(calc(-50% - 10px)); } }
-@media (prefers-reduced-motion: reduce) { .team-track { animation: none; } }
-.team-track .member { flex: 0 0 clamp(210px, 17vw, 250px); }
-.member { padding: 16px 16px 20px; gap: 0; }
-.member .ph { aspect-ratio: 1 / 1; margin-bottom: 14px; }
-.member b { font-size: 18px; }
-.member .tags { margin-top: 6px; font-size: 12.5px; line-height: 1.45; }
-.member .role {
-  display: block; margin-top: 6px; font-size: 12.5px; line-height: 1.5;
-  color: var(--muted); overflow: hidden; display: -webkit-box;
-  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-}
-
-/* ---- 5. 關鍵數據：整體縮小 ---- */
-.stats { padding: clamp(56px, 8vh, 92px) 0; min-height: 0; }
-.stats .sec-head { margin-bottom: clamp(30px, 4vh, 46px); }
-.stats h2 { font-size: clamp(24px, 2.6vw, 38px); }
-.stats-grid { gap: 26px 24px; }
-.stats .num { font-size: clamp(30px, 3.4vw, 52px); }
-.stats .lab { font-size: 13px; }
-
-/* ---- 6. 頁尾重要聲明：桌機一行 ---- */
-/* 一行顯示：字級由 main.js 依實際寬度自動縮到剛好放得下（不截字）；
-   縮到下限仍放不下時（窄螢幕）自動換行。 */
-.footer-disclaimer {
-  max-width: none; font-size: 11.5px; line-height: 1.6; white-space: nowrap;
-}
-.footer-disclaimer.wrapped { white-space: normal; font-size: 12px; }
-
-/* ---- RWD ---- */
-@media (max-width: 960px) {
-  .rail { gap: 14px; }
-  .rail-txt { display: none; }
-  .team-track .member { flex: 0 0 200px; }
-}
-@media (max-width: 760px) {
-  .rail { left: 10px; gap: 12px; }
-  .rail-dot { width: 10px; height: 10px; }
-  .rail-line { left: 4px; }
-  .jn { height: 220px; }
-  .jn-lv { font-size: 20px; }
-  .jn-name { font-size: 11.5px; }
-  .team-track .member { flex: 0 0 180px; }
-  .stats-grid { gap: 20px 16px; }
-}
-
-/* 左側欄佔位：內容整體往右讓出 rail 的空間（避免壓到標題） */
-@media (min-width: 961px) {
-  .wrap { padding-left: calc(var(--pad) + 58px); }
-  .nav { padding-left: calc(var(--pad) + 58px); }
-}
-/* 圓點在淺色 3D 背景上要夠明顯 */
-.rail-dot {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 0 0 1.5px rgba(16, 12, 28, 0.28), 0 2px 8px rgba(16, 12, 28, 0.22);
-}
-.rail-line { background: rgba(16, 12, 28, 0.16); box-shadow: none; }
-
-/* ============================================================
-   v2.4 追加 — 企業合作夥伴縮小並移入內文區、CTA 單行
-   ============================================================ */
-.clients-sm { padding: clamp(46px, 6vh, 76px) 0; }
-.clients-sm .clients-head { justify-content: center; margin-bottom: 26px; }
-.clients-sm .clients-head h2 {
-  text-align: center; color: var(--ink); text-shadow: none;
-  font-size: clamp(22px, 2.2vw, 32px);
-}
-
-/* 課程主題的「試看課程」按鈕 */
-.pillars .sec-head { align-items: end; margin-bottom: 0; }
-.pillars .sec-head .lt { max-width: 60ch; }
-.pillars .sec-lead { margin-top: 0; }
-.pillars .pil-grid { margin-top: clamp(34px, 4.5vh, 48px); }
-
-/* 最後一區標題維持一行：字級隨視窗寬度縮放，確保 22 字不換行 */
-.cta h2 { max-width: none; white-space: nowrap; font-size: min(calc(4.1vw - 6px), 50px); }
-@media (max-width: 760px) {
-  .cta h2 { white-space: normal; font-size: clamp(26px, 7vw, 38px); max-width: 16ch; margin-inline: auto; }
-}
-
-/* logo：原本的方形堆疊標（n 標 + School），方形所以要比橫式再高一點 */
-.logo img { height: 48px; width: auto; }
-.footer .logo img { height: 54px; }
-@media (max-width: 560px) { .logo img { height: 38px; } }
-
-/* ============================================================
-   v2.5 追加 — 首頁數據、header 捲動隱藏、透明夥伴區、放大課程主題、學員成果改版
-   ============================================================ */
-
-/* ---- 6. header：只留 logo，往下捲動時收起 ---- */
-.nav { justify-content: flex-start; transition: transform 0.4s var(--ease), opacity 0.3s ease; }
-.nav.hidden { transform: translateY(calc(-1 * var(--nav-h))); opacity: 0; pointer-events: none; }
-
-/* ---- 5+7. 首頁關鍵數據（Hero 內） ---- */
-.hero .actions { margin-top: 30px; }
-.hero-stats {
-  display: flex; flex-wrap: wrap; gap: clamp(26px, 4vw, 64px);
-  margin-top: clamp(38px, 6vh, 66px);
-}
-.hstat .num {
-  font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; line-height: 1;
-  font-size: clamp(30px, 3.4vw, 50px); color: #fff; text-shadow: var(--sh-white);
-}
-.hstat .lab {
-  margin-top: 8px; font-size: 13.5px; color: rgba(255, 255, 255, 0.86);
-  text-shadow: var(--sh-white-sm);
-}
-.hstat .lab i { font-style: normal; font-family: var(--font-en); opacity: 0.55; margin-left: 5px; letter-spacing: 0.04em; }
-
-/* ---- 1. 企業合作夥伴：透明底、白色 logo ---- */
-.clients-sm .clients-head h2 { color: #fff; text-shadow: var(--sh-white); }
-
-/* ---- 3. 最後一區：兩行 + 更大更明顯的 CTA ---- */
-.cta h2 { white-space: normal; font-size: clamp(30px, 4.4vw, 66px); max-width: none; }
-.btn-xl {
-  font-size: clamp(17px, 1.5vw, 21px); font-weight: 600;
-  padding: 20px 32px; border-radius: 14px; gap: 14px;
-  background-image: var(--grad); background-size: 100% 100%; color: #fff;
-  box-shadow: 0 18px 48px rgba(124, 58, 237, 0.4);
-}
-.btn-xl .arrow { width: 30px; height: 30px; background: rgba(255, 255, 255, 0.22); }
-.btn-xl .arrow svg { width: 15px; height: 15px; }
-.btn-xl:hover { transform: translateY(-3px); box-shadow: 0 24px 62px rgba(124, 58, 237, 0.52); background-size: 160% 100%; }
-.btn-xl:hover .arrow { background: #fff; color: var(--accent); }
-.cta .btn { margin-top: 40px; }
-
-/* ---- 4. 課程主題：主題放大、內文精簡 ---- */
-.pillars .sec-lead { white-space: nowrap; max-width: none; }
-.pil { padding: 30px 24px 32px; gap: 10px; }
-.pil h3 { font-size: clamp(24px, 2.3vw, 32px); letter-spacing: -0.02em; }
-.pil-ic { width: 44px; height: 44px; }
-.pil-ic svg { width: 23px; height: 23px; }
-.pil li { font-size: 14px; }
-
-/* ---- 10. 學員成果：卡片牆，段落連續不斷行 ---- */
-.voices { padding: clamp(80px, 12vh, 150px) 0; }
-.voices .h-section { margin: 16px 0 10px; }
-.v-grid {
-  margin-top: clamp(40px, 6vh, 64px);
-  columns: 3; column-gap: 20px;
-}
-.v-card {
-  position: relative; break-inside: avoid; margin-bottom: 20px;
-  padding: 30px 28px 26px; border-radius: var(--radius-lg);
-  background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07);
-  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
-}
-.v-card:nth-child(3n+2) { background: var(--card); }
-.v-card:hover { transform: translateY(-5px); box-shadow: 0 20px 54px rgba(16, 12, 28, 0.13); }
-.v-mark {
-  display: block; font-family: var(--font-display); font-size: 54px; line-height: 0.6;
-  color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text;
-  margin-bottom: 12px;
-}
-.v-text {
-  font-size: 15px; line-height: 1.85; color: rgba(10, 10, 10, 0.78);
-  text-align: justify; text-justify: inter-character; word-break: normal; overflow-wrap: break-word;
-}
-.v-who { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(10, 10, 10, 0.1); }
-.v-course {
-  display: inline-block; font-size: 12px; font-weight: 600; color: #fff;
-  background: var(--accent); border-radius: 999px; padding: 4px 12px; margin-bottom: 8px;
-}
-.v-who-name { display: block; font-size: 13.5px; color: var(--muted); }
-
-/* ---- RWD ---- */
-@media (max-width: 1100px) {
-  .v-grid { columns: 2; }
-  .pillars .sec-lead { white-space: normal; }
-}
-@media (max-width: 760px) {
-  .v-grid { columns: 1; }
-  .hero-stats { gap: 22px 32px; }
-  .hstat .num { font-size: 26px; }
-  .hstat .lab { font-size: 12px; }
-  .cta .btn { margin-top: 28px; }
-}
-
-/* ============================================================
-   v2.6 追加 — 核心價值＋學習地圖大區、質感夥伴區、文字不早斷行
-   ============================================================ */
-
-/* ---- 5. 敘述文字：填滿整行才換行（不要提早斷） ---- */
-.lead, .sec-lead, .team-lead, .mapx .sec-lead { max-width: none; }
-.core-txt, .mstep-card p, .v-text { max-width: none; }
-
-/* ---- 2. 尚未提供連結的 CTA ---- */
-/* 待放連結的 CTA：hover 維持靜止外觀。
-   舊寫法沿用自半透明 ghost 樣式，會把文字轉白、又把漸層縮成 0%，
-   結果變成白底白字整顆看不到 —— 改成各自維持自己的靜止狀態。 */
-.btn-pending { cursor: default; }
-.btn-pending:hover { transform: none; }
-.btn-solid.btn-pending:hover {
-  color: var(--ink); background-size: 0% 100%;
-  box-shadow: 0 10px 28px rgba(16, 12, 28, 0.16);
-}
-.btn-solid.btn-pending:hover .arrow { background: var(--accent); color: #fff; transform: none; }
-.sim-cta.btn-pending:hover {
-  color: #fff; background-size: 100% 100%;
-  box-shadow: 0 18px 46px rgba(124, 58, 237, 0.45);
-}
-.sim-cta.btn-pending:hover .arrow { background: rgba(255, 255, 255, 0.22); color: #fff; transform: none; }
-
-/* ---- 企業合作夥伴：深底卡片，hover 時像燙金卡掃過一道光 ---- */
+/* ---- 企業合作夥伴：做成 banner —— 紫底放射光 + 紙花 + 燙金 hover ---- */
 .clients-sm { padding: clamp(64px, 9vh, 110px) 0; }
 .clients-sm .clients-head { justify-content: center; margin-bottom: clamp(28px, 3.6vh, 44px); }
 .clients-sm .clients-head h2 {
   text-align: center; color: var(--ink); text-shadow: none;
   font-size: clamp(26px, 3vw, 40px);
 }
-.cb-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+.cb-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
 .cobrand {
-  position: relative; isolation: isolate; overflow: hidden; display: block;
-  padding: clamp(34px, 4vw, 52px) clamp(26px, 3vw, 44px) clamp(26px, 3vw, 36px);
-  border-radius: 22px;
+  position: relative; isolation: isolate; overflow: hidden; display: flex;
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: clamp(18px, 2.2vw, 26px);
+  min-height: clamp(230px, 22vw, 290px);
+  padding: clamp(30px, 3.4vw, 44px) clamp(24px, 3vw, 40px);
+  border-radius: 24px; text-align: center;
   background:
-    radial-gradient(120% 140% at 12% 0%, #2b2340 0%, #191524 52%, #14111d 100%);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow: 0 18px 44px rgba(16, 12, 28, 0.22);
-  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s ease;
+    radial-gradient(88% 120% at 50% 0%, #7b4bd6 0%, #5b2fb0 42%, #3f2088 76%, #33196f 100%);
+  box-shadow: 0 20px 50px rgba(48, 24, 104, 0.3);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
 }
-.cobrand:hover {
-  transform: translateY(-6px);
-  border-color: rgba(226, 190, 122, 0.55);
-  box-shadow: 0 30px 70px rgba(16, 12, 28, 0.34), 0 0 0 1px rgba(226, 190, 122, 0.18);
+.cobrand:hover { transform: translateY(-6px); box-shadow: 0 34px 78px rgba(48, 24, 104, 0.42); }
+.cobrand > * { position: relative; z-index: 2; }
+
+/* 中心放射光束 */
+.cb-rays {
+  position: absolute; left: 50%; top: -46%; z-index: 0;
+  width: 148%; aspect-ratio: 1; transform: translateX(-50%);
+  background: repeating-conic-gradient(from 0deg at 50% 50%,
+    rgba(255, 255, 255, 0.085) 0deg 5deg, transparent 5deg 13deg);
+  -webkit-mask-image: radial-gradient(closest-side, #000 12%, transparent 78%);
+  mask-image: radial-gradient(closest-side, #000 12%, transparent 78%);
+  animation: cbSpin 90s linear infinite;
 }
-/* 燙金掃光：hover 時一道金色斜光掃過卡面 */
+@keyframes cbSpin { to { transform: translateX(-50%) rotate(360deg); } }
+
+/* 紙花 */
+.cb-confetti { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.cf {
+  position: absolute; left: var(--x); top: var(--y);
+  width: 11px; height: 15px; border-radius: 2px;
+  transform: rotate(var(--r)) scale(var(--s));
+  opacity: 0.85;
+}
+.cf-a { background: #f0c04a; }
+.cf-b { background: #c9a6ff; }
+.cf-c { background: #ffffff; opacity: 0.5; }
+
+/* 燙金掃光 */
 .cb-sheen {
-  position: absolute; inset: -40% -60%; z-index: 0; pointer-events: none;
+  position: absolute; inset: -40% -60%; z-index: 3; pointer-events: none;
   background: linear-gradient(105deg,
-    transparent 38%,
-    rgba(255, 228, 168, 0.14) 46%,
-    rgba(255, 236, 190, 0.55) 50%,
-    rgba(255, 228, 168, 0.14) 54%,
-    transparent 62%);
-  transform: translateX(-70%);
-  opacity: 0;
+    transparent 38%, rgba(255, 228, 168, 0.16) 46%,
+    rgba(255, 240, 200, 0.6) 50%, rgba(255, 228, 168, 0.16) 54%, transparent 62%);
+  transform: translateX(-70%); opacity: 0;
   transition: opacity 0.25s ease;
 }
-.cobrand:hover .cb-sheen {
-  opacity: 1;
-  animation: cbSheen 1.15s cubic-bezier(.32,.6,.36,1);
-}
-@keyframes cbSheen {
-  from { transform: translateX(-70%); }
-  to   { transform: translateX(70%); }
-}
-/* 金色細邊，平常很淡，hover 才亮起來 */
+.cobrand:hover .cb-sheen { opacity: 1; animation: cbSheen 1.15s cubic-bezier(.32,.6,.36,1); }
+@keyframes cbSheen { from { transform: translateX(-70%); } to { transform: translateX(70%); } }
+/* hover 時亮起的金色細邊 */
 .cobrand::after {
-  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  border-radius: inherit;
-  background: linear-gradient(140deg,
-    rgba(226, 190, 122, 0.35), transparent 34%, transparent 66%, rgba(226, 190, 122, 0.28));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-  padding: 1px; opacity: 0; transition: opacity 0.45s ease;
+  content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  border-radius: inherit; border: 1px solid rgba(233, 213, 168, 0.75);
+  opacity: 0; transition: opacity 0.45s ease;
 }
 .cobrand:hover::after { opacity: 1; }
-.cobrand > * { position: relative; z-index: 1; }
 
-.cb-logos { display: flex; align-items: center; gap: clamp(16px, 2.2vw, 30px); }
+.cb-tag {
+  display: inline-block; font-size: 12.5px; font-weight: 600; letter-spacing: 0.14em;
+  color: #fff; padding: 7px 20px; border-radius: 999px;
+  background: rgba(20, 14, 40, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.cb-logos {
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(18px, 2.6vw, 34px); flex-wrap: wrap;
+}
 .cb-logos img { width: auto; object-fit: contain; }
-.cb-logos img[data-brand="capital"] { height: clamp(48px, 5vw, 64px); }
-.cb-logos img[data-brand="pocket"] { height: clamp(26px, 2.8vw, 36px); }
-.cb-me { height: clamp(28px, 3vw, 40px); }
-.cb-x { font-size: 20px; color: rgba(255, 255, 255, 0.3); font-weight: 300; }
+.cb-me { height: clamp(34px, 3.4vw, 46px); }
+.cb-logos img[data-brand="capital"] { height: clamp(56px, 5.6vw, 74px); }
+.cb-logos img[data-brand="pocket"] { height: clamp(30px, 3.2vw, 42px); }
+.cb-x { font-size: 22px; color: rgba(255, 255, 255, 0.45); font-weight: 300; }
 
 .cb-go {
-  display: inline-flex; align-items: center; gap: 10px;
-  margin-top: clamp(26px, 3.2vw, 40px);
-  font-size: 15px; font-weight: 600; letter-spacing: 0.01em;
-  color: #e9d5a8;
-  transition: color 0.35s ease;
+  display: inline-flex; align-items: center; gap: 11px;
+  padding: 12px 14px 12px 24px; border-radius: 999px;
+  font-size: 15.5px; font-weight: 600;
+  color: #3a2178; background: #fff;
+  box-shadow: 0 10px 26px rgba(30, 14, 70, 0.28);
+  transition: background 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
 }
 .cb-go .arrow {
   width: 28px; height: 28px; border-radius: 50%;
-  background: rgba(226, 190, 122, 0.16); color: #e9d5a8;
-  border: 1px solid rgba(226, 190, 122, 0.42);
-  display: grid; place-items: center;
+  background: #6d28d9; color: #fff; display: grid; place-items: center;
   transition: transform 0.4s var(--ease), background 0.35s ease, color 0.35s ease;
 }
 .cb-go .arrow svg { width: 13px; height: 13px; }
-.cobrand:hover .cb-go { color: #fff3d8; }
-.cobrand:hover .cb-go .arrow { transform: translateX(4px); background: #e2be7a; color: #1b1626; border-color: #e2be7a; }
+.cobrand:hover .cb-go {
+  background: linear-gradient(120deg, #f6e2b4, #e2be7a);
+  color: #2b1c05; box-shadow: 0 14px 34px rgba(226, 190, 122, 0.5);
+}
+.cobrand:hover .cb-go .arrow { transform: translateX(4px); background: #2b1c05; color: #f6e2b4; }
 
 @media (prefers-reduced-motion: reduce) {
+  .cb-rays { animation: none; }
   .cobrand:hover .cb-sheen { animation: none; }
 }
 @media (max-width: 860px) { .cb-grid { grid-template-columns: 1fr; } }
@@ -1068,7 +782,6 @@ h1, h2, h3, h4 {
 .rail.on-dark .rail-txt { color: rgba(255, 255, 255, 0.8); text-shadow: var(--sh-white-sm); }
 .rail.on-dark a:hover .rail-txt, .rail.on-dark a.on .rail-txt { color: #fff; }
 
-/* ---- 2. 企業合作夥伴標題 ---- */
 .clients-head h2 { font-size: clamp(30px, 4vw, 52px); }
 
 /* ---- 4. 顧問師資：說明一列、自動輪播、卡片兩行 ---- */
@@ -1138,12 +851,6 @@ h1, h2, h3, h4 {
 /* ============================================================
    v2.4 追加 — 企業合作夥伴縮小並移入內文區、CTA 單行
    ============================================================ */
-.clients-sm { padding: clamp(46px, 6vh, 76px) 0; }
-.clients-sm .clients-head { justify-content: center; margin-bottom: 26px; }
-.clients-sm .clients-head h2 {
-  text-align: center; color: var(--ink); text-shadow: none;
-  font-size: clamp(22px, 2.2vw, 32px);
-}
 
 /* 課程主題的「試看課程」按鈕 */
 .pillars .sec-head { align-items: end; margin-bottom: 0; }
@@ -1185,9 +892,6 @@ h1, h2, h3, h4 {
   text-shadow: var(--sh-white-sm);
 }
 .hstat .lab i { font-style: normal; font-family: var(--font-en); opacity: 0.55; margin-left: 5px; letter-spacing: 0.04em; }
-
-/* ---- 1. 企業合作夥伴：透明底、白色 logo ---- */
-.clients-sm .clients-head h2 { color: #fff; text-shadow: var(--sh-white); }
 
 /* ---- 3. 最後一區：兩行 + 更大更明顯的 CTA ---- */
 .cta h2 { white-space: normal; font-size: clamp(30px, 4.4vw, 66px); max-width: none; }
@@ -1280,13 +984,606 @@ h1, h2, h3, h4 {
 }
 .sim-cta.btn-pending:hover .arrow { background: rgba(255, 255, 255, 0.22); color: #fff; transform: none; }
 
-/* ---- 企業合作夥伴：兩張可點擊的合作 banner（走官網視覺，不用彩色卡通稿） ---- */
-.clients-sm { padding: clamp(64px, 9vh, 110px) 0; }
-.clients-sm .clients-head { justify-content: center; margin-bottom: 14px; }
-.clients-sm .clients-head h2 {
-  text-align: center; color: var(--ink); text-shadow: none;
-  font-size: clamp(26px, 3vw, 40px);
+/* ---- 7. 顧問師資改版（11 位，資訊卡）---- */
+.team-track .member { flex: 0 0 calc((100% - 48px) / 3); }
+.member {
+  background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07); border-radius: var(--radius-lg);
+  padding: 20px 20px 24px; display: flex; flex-direction: column;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
+.member:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(16, 12, 28, 0.12); }
+.member .ph { aspect-ratio: 1 / 1; border-radius: var(--radius); margin-bottom: 16px; }
+.member b { font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
+.member .tags {
+  display: block; margin-top: 8px; font-size: 13px; font-weight: 500; color: var(--accent);
+  letter-spacing: 0.01em; line-height: 1.5;
+}
+.member .roles { list-style: none; margin: 14px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(10, 10, 10, 0.08); display: flex; flex-direction: column; gap: 5px; }
+.member .roles li { position: relative; padding-left: 14px; font-size: 13.5px; color: rgba(10, 10, 10, 0.68); line-height: 1.55; }
+.member .roles li::before { content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
+.member .quote {
+  margin-top: auto; padding-top: 16px; font-size: 13px; line-height: 1.65; color: var(--muted);
+  font-style: normal;
+}
+.member .quote em { font-style: normal; display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+.team-count { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted-2); letter-spacing: 0.04em; margin-top: 18px; }
+
+/* ---- RWD ---- */
+@media (max-width: 1100px) {
+  .rm-track, .pil-grid { grid-template-columns: repeat(2, 1fr); }
+  .app-grid { grid-template-columns: repeat(2, 1fr); }
+  .rm-notes, .trio-grid { grid-template-columns: 1fr; }
+  .team-track .member { flex: 0 0 calc((100% - 24px) / 2); }
+}
+@media (max-width: 760px) {
+  .rm-track, .pil-grid, .app-grid { grid-template-columns: 1fr; }
+  .team-track .member { flex: 0 0 100%; }
+}
+
+/* 淺色 3D 背景上的英文副標：0.5 透明度會糊掉，拉高對比 */
+.hero .hero-en span,
+.hero-caption .en,
+.studio .eyebrow.light span,
+.clients .eyebrow.light span { opacity: 0.82; }
+.studio .eyebrow.light,
+.clients .eyebrow.light { font-weight: 500; }
+
+/* ============================================================
+   v2.2 追加 — 左側欄導覽、學習旅程節點、師資自動輪播、關鍵數據縮小
+   ============================================================ */
+
+/* ---- 1. 左側欄導覽（線 + 圓點）---- */
+.nav-pill { display: none; }
+.rail {
+  position: fixed; left: clamp(14px, 2.2vw, 34px); top: 50%; transform: translateY(-50%);
+  z-index: 55; display: flex; flex-direction: column; gap: clamp(14px, 2.4vh, 26px);
+  padding: 6px 0 6px 0;
+}
+.rail-line {
+  position: absolute; left: 5px; top: 12px; bottom: 12px; width: 2px;
+  background: rgba(255, 255, 255, 0.4); border-radius: 2px; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(16, 12, 28, 0.06);
+}
+.rail-fill {
+  position: absolute; inset: 0 0 auto; height: 0%;
+  background: var(--grad); border-radius: 2px;
+  transition: height 0.35s var(--ease);
+}
+.rail a {
+  position: relative; display: flex; align-items: center; gap: 12px;
+  color: inherit; text-decoration: none;
+}
+.rail-dot {
+  position: relative; z-index: 1; flex: 0 0 auto;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 1px rgba(16, 12, 28, 0.14), 0 2px 8px rgba(16, 12, 28, 0.18);
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.rail-txt {
+  font-size: 13px; font-weight: 500; letter-spacing: 0.01em;
+  color: rgba(20, 17, 28, 0.62);
+  opacity: 0; transform: translateX(-6px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), color 0.3s ease;
+  white-space: nowrap;
+}
+.rail:hover .rail-txt { opacity: 1; transform: none; }
+.rail a:hover .rail-dot { transform: scale(1.25); background: #fff; }
+.rail a:hover .rail-txt { color: var(--ink); }
+.rail a.on .rail-dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.18), 0 2px 10px rgba(124, 58, 237, 0.4);
+}
+.rail a.on .rail-txt { opacity: 1; transform: none; color: var(--ink); font-weight: 600; }
+/* 深色／低對比背景區段時，標籤自動轉白 */
+.rail.on-dark .rail-txt { color: rgba(255, 255, 255, 0.8); text-shadow: var(--sh-white-sm); }
+.rail.on-dark a:hover .rail-txt, .rail.on-dark a.on .rail-txt { color: #fff; }
+
+.clients-head h2 { font-size: clamp(30px, 4vw, 52px); }
+
+/* ---- 4. 顧問師資：說明一列、自動輪播、卡片兩行 ---- */
+.team-lead { color: var(--muted); font-size: clamp(15px, 1.2vw, 18px); margin: 0 0 clamp(30px, 4vh, 46px); max-width: none; }
+.team-grid { display: block; }
+.team-carousel { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); }
+.team-track { display: flex; gap: 20px; width: max-content; animation: teamMarquee 60s linear infinite; transition: none; will-change: transform; }
+.team-carousel:hover .team-track { animation-play-state: paused; }
+@keyframes teamMarquee { to { transform: translateX(calc(-50% - 10px)); } }
+@media (prefers-reduced-motion: reduce) { .team-track { animation: none; } }
+.team-track .member { flex: 0 0 clamp(210px, 17vw, 250px); }
+.member { padding: 16px 16px 20px; gap: 0; }
+.member .ph { aspect-ratio: 1 / 1; margin-bottom: 14px; }
+.member b { font-size: 18px; }
+.member .tags { margin-top: 6px; font-size: 12.5px; line-height: 1.45; }
+.member .role {
+  display: block; margin-top: 6px; font-size: 12.5px; line-height: 1.5;
+  color: var(--muted); overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+
+/* ---- 5. 關鍵數據：整體縮小 ---- */
+.stats { padding: clamp(56px, 8vh, 92px) 0; min-height: 0; }
+.stats .sec-head { margin-bottom: clamp(30px, 4vh, 46px); }
+.stats h2 { font-size: clamp(24px, 2.6vw, 38px); }
+.stats-grid { gap: 26px 24px; }
+.stats .num { font-size: clamp(30px, 3.4vw, 52px); }
+.stats .lab { font-size: 13px; }
+
+/* ---- 6. 頁尾重要聲明：桌機一行 ---- */
+/* 一行顯示：字級由 main.js 依實際寬度自動縮到剛好放得下（不截字）；
+   縮到下限仍放不下時（窄螢幕）自動換行。 */
+.footer-disclaimer {
+  max-width: none; font-size: 11.5px; line-height: 1.6; white-space: nowrap;
+}
+.footer-disclaimer.wrapped { white-space: normal; font-size: 12px; }
+
+/* ---- RWD ---- */
+@media (max-width: 960px) {
+  .rail { gap: 14px; }
+  .rail-txt { display: none; }
+  .team-track .member { flex: 0 0 200px; }
+}
+@media (max-width: 760px) {
+  .rail { left: 10px; gap: 12px; }
+  .rail-dot { width: 10px; height: 10px; }
+  .rail-line { left: 4px; }
+  .jn { height: 220px; }
+  .jn-lv { font-size: 20px; }
+  .jn-name { font-size: 11.5px; }
+  .team-track .member { flex: 0 0 180px; }
+  .stats-grid { gap: 20px 16px; }
+}
+
+/* 左側欄佔位：內容整體往右讓出 rail 的空間（避免壓到標題） */
+@media (min-width: 961px) {
+  .wrap { padding-left: calc(var(--pad) + 58px); }
+  .nav { padding-left: calc(var(--pad) + 58px); }
+}
+/* 圓點在淺色 3D 背景上要夠明顯 */
+.rail-dot {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 1.5px rgba(16, 12, 28, 0.28), 0 2px 8px rgba(16, 12, 28, 0.22);
+}
+.rail-line { background: rgba(16, 12, 28, 0.16); box-shadow: none; }
+
+/* ============================================================
+   v2.4 追加 — 企業合作夥伴縮小並移入內文區、CTA 單行
+   ============================================================ */
+
+/* 課程主題的「試看課程」按鈕 */
+.pillars .sec-head { align-items: end; margin-bottom: 0; }
+.pillars .sec-head .lt { max-width: 60ch; }
+.pillars .sec-lead { margin-top: 0; }
+.pillars .pil-grid { margin-top: clamp(34px, 4.5vh, 48px); }
+
+/* 最後一區標題維持一行：字級隨視窗寬度縮放，確保 22 字不換行 */
+.cta h2 { max-width: none; white-space: nowrap; font-size: min(calc(4.1vw - 6px), 50px); }
+@media (max-width: 760px) {
+  .cta h2 { white-space: normal; font-size: clamp(26px, 7vw, 38px); max-width: 16ch; margin-inline: auto; }
+}
+
+/* logo：原本的方形堆疊標（n 標 + School），方形所以要比橫式再高一點 */
+.logo img { height: 48px; width: auto; }
+.footer .logo img { height: 54px; }
+@media (max-width: 560px) { .logo img { height: 38px; } }
+
+/* ============================================================
+   v2.5 追加 — 首頁數據、header 捲動隱藏、透明夥伴區、放大課程主題、學員成果改版
+   ============================================================ */
+
+/* ---- 6. header：只留 logo，往下捲動時收起 ---- */
+.nav { justify-content: flex-start; transition: transform 0.4s var(--ease), opacity 0.3s ease; }
+.nav.hidden { transform: translateY(calc(-1 * var(--nav-h))); opacity: 0; pointer-events: none; }
+
+/* ---- 5+7. 首頁關鍵數據（Hero 內） ---- */
+.hero .actions { margin-top: 30px; }
+.hero-stats {
+  display: flex; flex-wrap: wrap; gap: clamp(26px, 4vw, 64px);
+  margin-top: clamp(38px, 6vh, 66px);
+}
+.hstat .num {
+  font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  font-size: clamp(30px, 3.4vw, 50px); color: #fff; text-shadow: var(--sh-white);
+}
+.hstat .lab {
+  margin-top: 8px; font-size: 13.5px; color: rgba(255, 255, 255, 0.86);
+  text-shadow: var(--sh-white-sm);
+}
+.hstat .lab i { font-style: normal; font-family: var(--font-en); opacity: 0.55; margin-left: 5px; letter-spacing: 0.04em; }
+
+/* ---- 3. 最後一區：兩行 + 更大更明顯的 CTA ---- */
+.cta h2 { white-space: normal; font-size: clamp(30px, 4.4vw, 66px); max-width: none; }
+.btn-xl {
+  font-size: clamp(17px, 1.5vw, 21px); font-weight: 600;
+  padding: 20px 32px; border-radius: 14px; gap: 14px;
+  background-image: var(--grad); background-size: 100% 100%; color: #fff;
+  box-shadow: 0 18px 48px rgba(124, 58, 237, 0.4);
+}
+.btn-xl .arrow { width: 30px; height: 30px; background: rgba(255, 255, 255, 0.22); }
+.btn-xl .arrow svg { width: 15px; height: 15px; }
+.btn-xl:hover { transform: translateY(-3px); box-shadow: 0 24px 62px rgba(124, 58, 237, 0.52); background-size: 160% 100%; }
+.btn-xl:hover .arrow { background: #fff; color: var(--accent); }
+.cta .btn { margin-top: 40px; }
+
+/* ---- 4. 課程主題：主題放大、內文精簡 ---- */
+.pillars .sec-lead { white-space: nowrap; max-width: none; }
+.pil { padding: 30px 24px 32px; gap: 10px; }
+.pil h3 { font-size: clamp(24px, 2.3vw, 32px); letter-spacing: -0.02em; }
+.pil-ic { width: 44px; height: 44px; }
+.pil-ic svg { width: 23px; height: 23px; }
+.pil li { font-size: 14px; }
+
+/* ---- 10. 學員成果：卡片牆，段落連續不斷行 ---- */
+.voices { padding: clamp(80px, 12vh, 150px) 0; }
+.voices .h-section { margin: 16px 0 10px; }
+.v-grid {
+  margin-top: clamp(40px, 6vh, 64px);
+  columns: 3; column-gap: 20px;
+}
+.v-card {
+  position: relative; break-inside: avoid; margin-bottom: 20px;
+  padding: 30px 28px 26px; border-radius: var(--radius-lg);
+  background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.v-card:nth-child(3n+2) { background: var(--card); }
+.v-card:hover { transform: translateY(-5px); box-shadow: 0 20px 54px rgba(16, 12, 28, 0.13); }
+.v-mark {
+  display: block; font-family: var(--font-display); font-size: 54px; line-height: 0.6;
+  color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text;
+  margin-bottom: 12px;
+}
+.v-text {
+  font-size: 15px; line-height: 1.85; color: rgba(10, 10, 10, 0.78);
+  text-align: justify; text-justify: inter-character; word-break: normal; overflow-wrap: break-word;
+}
+.v-who { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(10, 10, 10, 0.1); }
+.v-course {
+  display: inline-block; font-size: 12px; font-weight: 600; color: #fff;
+  background: var(--accent); border-radius: 999px; padding: 4px 12px; margin-bottom: 8px;
+}
+.v-who-name { display: block; font-size: 13.5px; color: var(--muted); }
+
+/* ---- RWD ---- */
+@media (max-width: 1100px) {
+  .v-grid { columns: 2; }
+  .pillars .sec-lead { white-space: normal; }
+}
+@media (max-width: 760px) {
+  .v-grid { columns: 1; }
+  .hero-stats { gap: 22px 32px; }
+  .hstat .num { font-size: 26px; }
+  .hstat .lab { font-size: 12px; }
+  .cta .btn { margin-top: 28px; }
+}
+
+/* ============================================================
+   v2.6 追加 — 核心價值＋學習地圖大區、質感夥伴區、文字不早斷行
+   ============================================================ */
+
+/* ---- 5. 敘述文字：填滿整行才換行（不要提早斷） ---- */
+.lead, .sec-lead, .team-lead, .mapx .sec-lead { max-width: none; }
+.core-txt, .mstep-card p, .v-text { max-width: none; }
+
+/* ---- 2. 尚未提供連結的 CTA ---- */
+/* 待放連結的 CTA：hover 維持靜止外觀。
+   舊寫法沿用自半透明 ghost 樣式，會把文字轉白、又把漸層縮成 0%，
+   結果變成白底白字整顆看不到 —— 改成各自維持自己的靜止狀態。 */
+.btn-pending { cursor: default; }
+.btn-pending:hover { transform: none; }
+.btn-solid.btn-pending:hover {
+  color: var(--ink); background-size: 0% 100%;
+  box-shadow: 0 10px 28px rgba(16, 12, 28, 0.16);
+}
+.btn-solid.btn-pending:hover .arrow { background: var(--accent); color: #fff; transform: none; }
+.sim-cta.btn-pending:hover {
+  color: #fff; background-size: 100% 100%;
+  box-shadow: 0 18px 46px rgba(124, 58, 237, 0.45);
+}
+.sim-cta.btn-pending:hover .arrow { background: rgba(255, 255, 255, 0.22); color: #fff; transform: none; }
+
+/* 燙金掃光：hover 時一道金色斜光掃過卡面 */
+/* 金色細邊，平常很淡，hover 才亮起來 */
+
+@media (prefers-reduced-motion: reduce) {
+}
+@media (max-width: 860px) { .cb-grid { grid-template-columns: 1fr; } }
+
+/* ---- 7. 顧問師資改版（11 位，資訊卡）---- */
+.team-track .member { flex: 0 0 calc((100% - 48px) / 3); }
+.member {
+  background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07); border-radius: var(--radius-lg);
+  padding: 20px 20px 24px; display: flex; flex-direction: column;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.member:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(16, 12, 28, 0.12); }
+.member .ph { aspect-ratio: 1 / 1; border-radius: var(--radius); margin-bottom: 16px; }
+.member b { font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
+.member .tags {
+  display: block; margin-top: 8px; font-size: 13px; font-weight: 500; color: var(--accent);
+  letter-spacing: 0.01em; line-height: 1.5;
+}
+.member .roles { list-style: none; margin: 14px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(10, 10, 10, 0.08); display: flex; flex-direction: column; gap: 5px; }
+.member .roles li { position: relative; padding-left: 14px; font-size: 13.5px; color: rgba(10, 10, 10, 0.68); line-height: 1.55; }
+.member .roles li::before { content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
+.member .quote {
+  margin-top: auto; padding-top: 16px; font-size: 13px; line-height: 1.65; color: var(--muted);
+  font-style: normal;
+}
+.member .quote em { font-style: normal; display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+.team-count { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted-2); letter-spacing: 0.04em; margin-top: 18px; }
+
+/* ---- RWD ---- */
+@media (max-width: 1100px) {
+  .rm-track, .pil-grid { grid-template-columns: repeat(2, 1fr); }
+  .app-grid { grid-template-columns: repeat(2, 1fr); }
+  .rm-notes, .trio-grid { grid-template-columns: 1fr; }
+  .team-track .member { flex: 0 0 calc((100% - 24px) / 2); }
+}
+@media (max-width: 760px) {
+  .rm-track, .pil-grid, .app-grid { grid-template-columns: 1fr; }
+  .team-track .member { flex: 0 0 100%; }
+}
+
+/* 淺色 3D 背景上的英文副標：0.5 透明度會糊掉，拉高對比 */
+.hero .hero-en span,
+.hero-caption .en,
+.studio .eyebrow.light span,
+.clients .eyebrow.light span { opacity: 0.82; }
+.studio .eyebrow.light,
+.clients .eyebrow.light { font-weight: 500; }
+
+/* ============================================================
+   v2.2 追加 — 左側欄導覽、學習旅程節點、師資自動輪播、關鍵數據縮小
+   ============================================================ */
+
+/* ---- 1. 左側欄導覽（線 + 圓點）---- */
+.nav-pill { display: none; }
+.rail {
+  position: fixed; left: clamp(14px, 2.2vw, 34px); top: 50%; transform: translateY(-50%);
+  z-index: 55; display: flex; flex-direction: column; gap: clamp(14px, 2.4vh, 26px);
+  padding: 6px 0 6px 0;
+}
+.rail-line {
+  position: absolute; left: 5px; top: 12px; bottom: 12px; width: 2px;
+  background: rgba(255, 255, 255, 0.4); border-radius: 2px; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(16, 12, 28, 0.06);
+}
+.rail-fill {
+  position: absolute; inset: 0 0 auto; height: 0%;
+  background: var(--grad); border-radius: 2px;
+  transition: height 0.35s var(--ease);
+}
+.rail a {
+  position: relative; display: flex; align-items: center; gap: 12px;
+  color: inherit; text-decoration: none;
+}
+.rail-dot {
+  position: relative; z-index: 1; flex: 0 0 auto;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 1px rgba(16, 12, 28, 0.14), 0 2px 8px rgba(16, 12, 28, 0.18);
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.rail-txt {
+  font-size: 13px; font-weight: 500; letter-spacing: 0.01em;
+  color: rgba(20, 17, 28, 0.62);
+  opacity: 0; transform: translateX(-6px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), color 0.3s ease;
+  white-space: nowrap;
+}
+.rail:hover .rail-txt { opacity: 1; transform: none; }
+.rail a:hover .rail-dot { transform: scale(1.25); background: #fff; }
+.rail a:hover .rail-txt { color: var(--ink); }
+.rail a.on .rail-dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.18), 0 2px 10px rgba(124, 58, 237, 0.4);
+}
+.rail a.on .rail-txt { opacity: 1; transform: none; color: var(--ink); font-weight: 600; }
+/* 深色／低對比背景區段時，標籤自動轉白 */
+.rail.on-dark .rail-txt { color: rgba(255, 255, 255, 0.8); text-shadow: var(--sh-white-sm); }
+.rail.on-dark a:hover .rail-txt, .rail.on-dark a.on .rail-txt { color: #fff; }
+
+.clients-head h2 { font-size: clamp(30px, 4vw, 52px); }
+
+/* ---- 4. 顧問師資：說明一列、自動輪播、卡片兩行 ---- */
+.team-lead { color: var(--muted); font-size: clamp(15px, 1.2vw, 18px); margin: 0 0 clamp(30px, 4vh, 46px); max-width: none; }
+.team-grid { display: block; }
+.team-carousel { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); }
+.team-track { display: flex; gap: 20px; width: max-content; animation: teamMarquee 60s linear infinite; transition: none; will-change: transform; }
+.team-carousel:hover .team-track { animation-play-state: paused; }
+@keyframes teamMarquee { to { transform: translateX(calc(-50% - 10px)); } }
+@media (prefers-reduced-motion: reduce) { .team-track { animation: none; } }
+.team-track .member { flex: 0 0 clamp(210px, 17vw, 250px); }
+.member { padding: 16px 16px 20px; gap: 0; }
+.member .ph { aspect-ratio: 1 / 1; margin-bottom: 14px; }
+.member b { font-size: 18px; }
+.member .tags { margin-top: 6px; font-size: 12.5px; line-height: 1.45; }
+.member .role {
+  display: block; margin-top: 6px; font-size: 12.5px; line-height: 1.5;
+  color: var(--muted); overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+
+/* ---- 5. 關鍵數據：整體縮小 ---- */
+.stats { padding: clamp(56px, 8vh, 92px) 0; min-height: 0; }
+.stats .sec-head { margin-bottom: clamp(30px, 4vh, 46px); }
+.stats h2 { font-size: clamp(24px, 2.6vw, 38px); }
+.stats-grid { gap: 26px 24px; }
+.stats .num { font-size: clamp(30px, 3.4vw, 52px); }
+.stats .lab { font-size: 13px; }
+
+/* ---- 6. 頁尾重要聲明：桌機一行 ---- */
+/* 一行顯示：字級由 main.js 依實際寬度自動縮到剛好放得下（不截字）；
+   縮到下限仍放不下時（窄螢幕）自動換行。 */
+.footer-disclaimer {
+  max-width: none; font-size: 11.5px; line-height: 1.6; white-space: nowrap;
+}
+.footer-disclaimer.wrapped { white-space: normal; font-size: 12px; }
+
+/* ---- RWD ---- */
+@media (max-width: 960px) {
+  .rail { gap: 14px; }
+  .rail-txt { display: none; }
+  .team-track .member { flex: 0 0 200px; }
+}
+@media (max-width: 760px) {
+  .rail { left: 10px; gap: 12px; }
+  .rail-dot { width: 10px; height: 10px; }
+  .rail-line { left: 4px; }
+  .jn { height: 220px; }
+  .jn-lv { font-size: 20px; }
+  .jn-name { font-size: 11.5px; }
+  .team-track .member { flex: 0 0 180px; }
+  .stats-grid { gap: 20px 16px; }
+}
+
+/* 左側欄佔位：內容整體往右讓出 rail 的空間（避免壓到標題） */
+@media (min-width: 961px) {
+  .wrap { padding-left: calc(var(--pad) + 58px); }
+  .nav { padding-left: calc(var(--pad) + 58px); }
+}
+/* 圓點在淺色 3D 背景上要夠明顯 */
+.rail-dot {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 1.5px rgba(16, 12, 28, 0.28), 0 2px 8px rgba(16, 12, 28, 0.22);
+}
+.rail-line { background: rgba(16, 12, 28, 0.16); box-shadow: none; }
+
+/* ============================================================
+   v2.4 追加 — 企業合作夥伴縮小並移入內文區、CTA 單行
+   ============================================================ */
+
+/* 課程主題的「試看課程」按鈕 */
+.pillars .sec-head { align-items: end; margin-bottom: 0; }
+.pillars .sec-head .lt { max-width: 60ch; }
+.pillars .sec-lead { margin-top: 0; }
+.pillars .pil-grid { margin-top: clamp(34px, 4.5vh, 48px); }
+
+/* 最後一區標題維持一行：字級隨視窗寬度縮放，確保 22 字不換行 */
+.cta h2 { max-width: none; white-space: nowrap; font-size: min(calc(4.1vw - 6px), 50px); }
+@media (max-width: 760px) {
+  .cta h2 { white-space: normal; font-size: clamp(26px, 7vw, 38px); max-width: 16ch; margin-inline: auto; }
+}
+
+/* logo：原本的方形堆疊標（n 標 + School），方形所以要比橫式再高一點 */
+.logo img { height: 48px; width: auto; }
+.footer .logo img { height: 54px; }
+@media (max-width: 560px) { .logo img { height: 38px; } }
+
+/* ============================================================
+   v2.5 追加 — 首頁數據、header 捲動隱藏、透明夥伴區、放大課程主題、學員成果改版
+   ============================================================ */
+
+/* ---- 6. header：只留 logo，往下捲動時收起 ---- */
+.nav { justify-content: flex-start; transition: transform 0.4s var(--ease), opacity 0.3s ease; }
+.nav.hidden { transform: translateY(calc(-1 * var(--nav-h))); opacity: 0; pointer-events: none; }
+
+/* ---- 5+7. 首頁關鍵數據（Hero 內） ---- */
+.hero .actions { margin-top: 30px; }
+.hero-stats {
+  display: flex; flex-wrap: wrap; gap: clamp(26px, 4vw, 64px);
+  margin-top: clamp(38px, 6vh, 66px);
+}
+.hstat .num {
+  font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  font-size: clamp(30px, 3.4vw, 50px); color: #fff; text-shadow: var(--sh-white);
+}
+.hstat .lab {
+  margin-top: 8px; font-size: 13.5px; color: rgba(255, 255, 255, 0.86);
+  text-shadow: var(--sh-white-sm);
+}
+.hstat .lab i { font-style: normal; font-family: var(--font-en); opacity: 0.55; margin-left: 5px; letter-spacing: 0.04em; }
+
+/* ---- 3. 最後一區：兩行 + 更大更明顯的 CTA ---- */
+.cta h2 { white-space: normal; font-size: clamp(30px, 4.4vw, 66px); max-width: none; }
+.btn-xl {
+  font-size: clamp(17px, 1.5vw, 21px); font-weight: 600;
+  padding: 20px 32px; border-radius: 14px; gap: 14px;
+  background-image: var(--grad); background-size: 100% 100%; color: #fff;
+  box-shadow: 0 18px 48px rgba(124, 58, 237, 0.4);
+}
+.btn-xl .arrow { width: 30px; height: 30px; background: rgba(255, 255, 255, 0.22); }
+.btn-xl .arrow svg { width: 15px; height: 15px; }
+.btn-xl:hover { transform: translateY(-3px); box-shadow: 0 24px 62px rgba(124, 58, 237, 0.52); background-size: 160% 100%; }
+.btn-xl:hover .arrow { background: #fff; color: var(--accent); }
+.cta .btn { margin-top: 40px; }
+
+/* ---- 4. 課程主題：主題放大、內文精簡 ---- */
+.pillars .sec-lead { white-space: nowrap; max-width: none; }
+.pil { padding: 30px 24px 32px; gap: 10px; }
+.pil h3 { font-size: clamp(24px, 2.3vw, 32px); letter-spacing: -0.02em; }
+.pil-ic { width: 44px; height: 44px; }
+.pil-ic svg { width: 23px; height: 23px; }
+.pil li { font-size: 14px; }
+
+/* ---- 10. 學員成果：卡片牆，段落連續不斷行 ---- */
+.voices { padding: clamp(80px, 12vh, 150px) 0; }
+.voices .h-section { margin: 16px 0 10px; }
+.v-grid {
+  margin-top: clamp(40px, 6vh, 64px);
+  columns: 3; column-gap: 20px;
+}
+.v-card {
+  position: relative; break-inside: avoid; margin-bottom: 20px;
+  padding: 30px 28px 26px; border-radius: var(--radius-lg);
+  background: var(--white); border: 1px solid rgba(10, 10, 10, 0.07);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.v-card:nth-child(3n+2) { background: var(--card); }
+.v-card:hover { transform: translateY(-5px); box-shadow: 0 20px 54px rgba(16, 12, 28, 0.13); }
+.v-mark {
+  display: block; font-family: var(--font-display); font-size: 54px; line-height: 0.6;
+  color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text;
+  margin-bottom: 12px;
+}
+.v-text {
+  font-size: 15px; line-height: 1.85; color: rgba(10, 10, 10, 0.78);
+  text-align: justify; text-justify: inter-character; word-break: normal; overflow-wrap: break-word;
+}
+.v-who { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(10, 10, 10, 0.1); }
+.v-course {
+  display: inline-block; font-size: 12px; font-weight: 600; color: #fff;
+  background: var(--accent); border-radius: 999px; padding: 4px 12px; margin-bottom: 8px;
+}
+.v-who-name { display: block; font-size: 13.5px; color: var(--muted); }
+
+/* ---- RWD ---- */
+@media (max-width: 1100px) {
+  .v-grid { columns: 2; }
+  .pillars .sec-lead { white-space: normal; }
+}
+@media (max-width: 760px) {
+  .v-grid { columns: 1; }
+  .hero-stats { gap: 22px 32px; }
+  .hstat .num { font-size: 26px; }
+  .hstat .lab { font-size: 12px; }
+  .cta .btn { margin-top: 28px; }
+}
+
+/* ============================================================
+   v2.6 追加 — 核心價值＋學習地圖大區、質感夥伴區、文字不早斷行
+   ============================================================ */
+
+/* ---- 5. 敘述文字：填滿整行才換行（不要提早斷） ---- */
+.lead, .sec-lead, .team-lead, .mapx .sec-lead { max-width: none; }
+.core-txt, .mstep-card p, .v-text { max-width: none; }
+
+/* ---- 2. 尚未提供連結的 CTA ---- */
+/* 待放連結的 CTA：hover 維持靜止外觀。
+   舊寫法沿用自半透明 ghost 樣式，會把文字轉白、又把漸層縮成 0%，
+   結果變成白底白字整顆看不到 —— 改成各自維持自己的靜止狀態。 */
+.btn-pending { cursor: default; }
+.btn-pending:hover { transform: none; }
+.btn-solid.btn-pending:hover {
+  color: var(--ink); background-size: 0% 100%;
+  box-shadow: 0 10px 28px rgba(16, 12, 28, 0.16);
+}
+.btn-solid.btn-pending:hover .arrow { background: var(--accent); color: #fff; transform: none; }
+.sim-cta.btn-pending:hover {
+  color: #fff; background-size: 100% 100%;
+  box-shadow: 0 18px 46px rgba(124, 58, 237, 0.45);
+}
+.sim-cta.btn-pending:hover .arrow { background: rgba(255, 255, 255, 0.22); color: #fff; transform: none; }
 
 @media (max-width: 860px) { .cb-grid { grid-template-columns: 1fr; } }
 
@@ -1385,7 +1682,6 @@ h1, h2, h3, h4 {
 .rail.on-dark .rail-txt { color: rgba(255, 255, 255, 0.8); text-shadow: var(--sh-white-sm); }
 .rail.on-dark a:hover .rail-txt, .rail.on-dark a.on .rail-txt { color: #fff; }
 
-/* ---- 2. 企業合作夥伴標題 ---- */
 .clients-head h2 { font-size: clamp(30px, 4vw, 52px); }
 
 /* ---- 4. 顧問師資：說明一列、自動輪播、卡片兩行 ---- */
@@ -1455,12 +1751,6 @@ h1, h2, h3, h4 {
 /* ============================================================
    v2.4 追加 — 企業合作夥伴縮小並移入內文區、CTA 單行
    ============================================================ */
-.clients-sm { padding: clamp(46px, 6vh, 76px) 0; }
-.clients-sm .clients-head { justify-content: center; margin-bottom: 26px; }
-.clients-sm .clients-head h2 {
-  text-align: center; color: var(--ink); text-shadow: none;
-  font-size: clamp(22px, 2.2vw, 32px);
-}
 
 /* 課程主題的「試看課程」按鈕 */
 .pillars .sec-head { align-items: end; margin-bottom: 0; }
@@ -1502,9 +1792,6 @@ h1, h2, h3, h4 {
   text-shadow: var(--sh-white-sm);
 }
 .hstat .lab i { font-style: normal; font-family: var(--font-en); opacity: 0.55; margin-left: 5px; letter-spacing: 0.04em; }
-
-/* ---- 1. 企業合作夥伴：透明底、白色 logo ---- */
-.clients-sm .clients-head h2 { color: #fff; text-shadow: var(--sh-white); }
 
 /* ---- 3. 最後一區：兩行 + 更大更明顯的 CTA ---- */
 .cta h2 { white-space: normal; font-size: clamp(30px, 4.4vw, 66px); max-width: none; }
@@ -1596,11 +1883,6 @@ h1, h2, h3, h4 {
   box-shadow: 0 18px 46px rgba(124, 58, 237, 0.45);
 }
 .sim-cta.btn-pending:hover .arrow { background: rgba(255, 255, 255, 0.22); color: #fff; transform: none; }
-
-/* ---- 1. 企業合作夥伴：不透明深色面板，無動畫背景 ---- */
-.clients-sm { padding: clamp(70px, 10vh, 120px) 0; }
-.clients-sm .clients-head { justify-content: center; margin-bottom: 30px; }
-.clients-sm .clients-head h2 { color: var(--ink); text-shadow: none; }
 
 /* ---- RWD ---- */
 @media (max-width: 1100px) {
@@ -2011,7 +2293,6 @@ h1, h2, h3, h4 {
 .sim-video.sound-on .sim-sound .ic-on { display: block; }
 .sim-video.sound-on .sim-sound .ic-off { display: none; }
 .sim-video.sound-on .sim-sound { background: var(--accent); border-color: var(--accent); }
-
 
 /* 手機上 L1 的標籤會被左邊界切掉 2px：把鉤子那行縮一級就放得下 */
 @media (max-width: 560px) {
