@@ -1523,3 +1523,14 @@ h1, h2, h3, h4 {
     margin-top: 18px; padding-top: 18px; font-size: 11px;
   }
 }
+
+/* 最底的 Kolable 平台頁尾是行內樣式（含 margin-left），
+   手機上會被擠成「聲明條／款」，需要覆寫成可換行的排列 */
+@media (max-width: 760px) {
+  .kolable-footer { font-size: 11.5px !important; padding: 12px 14px !important; line-height: 1.7 !important; }
+  .kolable-footer p {
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+    gap: 2px 14px;
+  }
+  .kolable-footer a { margin-left: 0 !important; white-space: nowrap; }
+}
