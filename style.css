@@ -1668,3 +1668,8 @@ h1, h2, h3, h4 {
 .sim-video.sound-on .sim-sound .ic-on { display: block; }
 .sim-video.sound-on .sim-sound .ic-off { display: none; }
 .sim-video.sound-on .sim-sound { background: var(--accent); border-color: var(--accent); }
+
+/* 群益是「圖標在上、字在下」的直式標，用同一個高度會被壓得看不清楚 */
+.cb-logos img[data-brand="capital"] { height: clamp(46px, 4.8vw, 62px); }
+.cb-logos img[data-brand="pocket"] { height: clamp(26px, 2.7vw, 34px); }
+.cb-logos { min-height: clamp(46px, 4.8vw, 62px); }
