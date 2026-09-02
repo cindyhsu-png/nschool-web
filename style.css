@@ -1486,3 +1486,16 @@ h1, h2, h3, h4 {
   }
   .logo img { height: 38px; }
 }
+
+/* 手機內文也會留孤字（末行只剩 1–2 個字）：
+   標題用 balance 平均分行，內文用 pretty 避免末行落單。 */
+@media (max-width: 760px) {
+  .sec-lead, .team-lead, .v-text, .sim-hook-d, .cw-txt, .pil li,
+  .sim-points p, .sim-why-h p, .sim-why-list .wd, .member .tags,
+  .member .role, .cb-lead, .footer-disclaimer, .hero-caption, .lead {
+    text-wrap: pretty;
+  }
+  /* 師資卡窄，專長標籤字級再收一點才不會一行只剩一個字 */
+  .member .tags { font-size: 12px; }
+  .member .role { font-size: 12px; }
+}
