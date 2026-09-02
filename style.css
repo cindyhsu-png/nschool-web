@@ -1427,7 +1427,10 @@ h1, h2, h3, h4 {
       transparent 62%,
       rgba(18, 12, 38, 0.34) 100%);
 }
-.hero .wrap, .hero-caption { position: relative; z-index: 1; }
+/* 只把層級提到遮罩之上，不要動 position ——
+   .hero-caption 原本是 absolute 定位在右下角，改成 relative 會讓它掉回文件流、擠掉 hero 版面 */
+.hero .wrap { position: relative; z-index: 1; }
+.hero-caption { z-index: 1; }
 /* 手機是直式堆疊、文字滿版，遮罩要更均勻一點 */
 @media (max-width: 760px) {
   .hero-scrim {
