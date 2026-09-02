@@ -275,6 +275,7 @@
       ticking = false;
       const y = scrollY;
       // 頂端一律顯示；往下超過門檻才收起，往上就拉回來
+      nav.classList.toggle("solid", y > 60);   // 捲動後給導覽一層底，logo 才不會壓在內文上
       if (y < 80) nav.classList.remove("hidden");
       else if (y > last + 6) nav.classList.add("hidden");
       else if (y < last - 6) nav.classList.remove("hidden");

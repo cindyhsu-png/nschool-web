@@ -1444,3 +1444,45 @@ h1, h2, h3, h4 {
 
 /* 左側欄圓點在手機上會壓到內文，只留桌機 */
 @media (max-width: 960px) { .rail { display: none; } }
+
+/* ============================================================
+   v3.6 — 手機版：學習地圖改直式、修掉孤字斷行、導覽不壓內文
+   ============================================================ */
+@media (max-width: 760px) {
+  /* ---- 學習地圖：橫式五個節點在 375px 一定會互相重疊，改直式時間軸 ---- */
+  .flow-stage { padding: 0; }
+  .flow-rail { display: none; }
+  .flow-nodes {
+    position: relative; inset: auto; top: auto; left: auto; right: auto;
+    display: grid; gap: 22px; padding-left: 30px;
+  }
+  .flow-nodes::before {
+    content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px;
+    width: 2px; border-radius: 2px;
+    background: linear-gradient(180deg, #7c3aed, #a855f7 45%, #e0409a 76%, #e08c00);
+    opacity: 0.32;
+  }
+  .fl-node {
+    position: relative; left: auto; top: auto; transform: none; text-align: left;
+  }
+  .fl-dot { position: absolute; left: -30px; top: 5px; margin: 0; width: 12px; height: 12px; }
+  .fl-info { margin-top: 0; white-space: normal; }
+  .fl-name { font-size: 16px; }
+  .fl-time { font-size: 13px; }
+
+  /* ---- 標題不要留孤字（「拿成／績。」這種）---- */
+  .h-section, .display, .sim-hook-t, .sim-why-h h3, .cta h2, .clients-head h2, .team-lead {
+    text-wrap: balance;
+  }
+  .h-section { font-size: clamp(25px, 7vw, 32px); }
+  .sim-hook-t { font-size: clamp(19px, 5.4vw, 25px); }
+  .sim-hook-d { font-size: 13px; }
+  .sec-lead, .team-lead { font-size: 14px; }
+
+  /* ---- 固定導覽的 logo 會壓在內文上，捲動後給它一層底 ---- */
+  .nav.solid {
+    background: linear-gradient(180deg, rgba(223, 228, 229, 0.96) 62%, rgba(223, 228, 229, 0));
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  }
+  .logo img { height: 38px; }
+}
