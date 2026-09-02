@@ -1673,3 +1673,9 @@ h1, h2, h3, h4 {
 .cb-logos img[data-brand="capital"] { height: clamp(46px, 4.8vw, 62px); }
 .cb-logos img[data-brand="pocket"] { height: clamp(26px, 2.7vw, 34px); }
 .cb-logos { min-height: clamp(46px, 4.8vw, 62px); }
+
+/* 手機上 L1 的標籤會被左邊界切掉 2px：把鉤子那行縮一級就放得下 */
+@media (max-width: 560px) {
+  .fl-time { font-size: 11px; }
+  .fl-name { font-size: 13.5px; }
+}
