@@ -1287,40 +1287,6 @@ h1, h2, h3, h4 {
   text-align: center; color: var(--ink); text-shadow: none;
   font-size: clamp(26px, 3vw, 40px);
 }
-.cb-grid {
-  margin-top: clamp(32px, 4.4vh, 50px);
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px;
-}
-.cobrand {
-  position: relative; overflow: hidden; display: block;
-  padding: clamp(26px, 3.2vw, 40px) clamp(24px, 3vw, 38px) clamp(22px, 2.6vw, 32px);
-  border-radius: 24px; background: var(--white);
-  border: 1px solid rgba(10, 10, 10, 0.08);
-  box-shadow: 0 14px 38px rgba(16, 12, 28, 0.08);
-  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease), border-color 0.45s ease;
-}
-.cobrand::before {
-  content: ""; position: absolute; inset: auto -18% -55% auto; width: 340px; height: 340px;
-  border-radius: 50%; background: var(--grad-soft); opacity: 0.75;
-  transition: opacity 0.5s ease, transform 0.6s var(--ease);
-}
-.cobrand:hover { transform: translateY(-6px); border-color: rgba(124, 58, 237, 0.35); box-shadow: 0 28px 64px rgba(124, 58, 237, 0.2); }
-.cobrand:hover::before { opacity: 1; transform: scale(1.12); }
-.cobrand > * { position: relative; z-index: 1; }
-.cb-logos { display: flex; align-items: center; gap: clamp(14px, 2vw, 26px); margin-top: 22px; }
-.cb-logos img { height: clamp(28px, 3vw, 38px); width: auto; object-fit: contain; }
-.cb-logos .cb-you { max-width: 46%; }
-.cb-x { font-size: 20px; color: var(--muted-2); font-weight: 300; }
-.cb-go {
-  display: inline-flex; align-items: center; gap: 10px; margin-top: clamp(18px, 2.2vw, 26px);
-  font-size: 15px; font-weight: 600; color: var(--accent);
-}
-.cb-go .arrow {
-  width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff;
-  display: grid; place-items: center; transition: transform 0.4s var(--ease);
-}
-.cb-go .arrow svg { width: 13px; height: 13px; }
-.cobrand:hover .cb-go .arrow { transform: translateX(4px); }
 
 @media (max-width: 860px) { .cb-grid { grid-template-columns: 1fr; } }
 
@@ -2046,10 +2012,6 @@ h1, h2, h3, h4 {
 .sim-video.sound-on .sim-sound .ic-off { display: none; }
 .sim-video.sound-on .sim-sound { background: var(--accent); border-color: var(--accent); }
 
-/* 群益是「圖標在上、字在下」的直式標，用同一個高度會被壓得看不清楚 */
-.cb-logos img[data-brand="capital"] { height: clamp(46px, 4.8vw, 62px); }
-.cb-logos img[data-brand="pocket"] { height: clamp(26px, 2.7vw, 34px); }
-.cb-logos { min-height: clamp(46px, 4.8vw, 62px); }
 
 /* 手機上 L1 的標籤會被左邊界切掉 2px：把鉤子那行縮一級就放得下 */
 @media (max-width: 560px) {
