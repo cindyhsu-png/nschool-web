@@ -614,7 +614,12 @@ h1, h2, h3, h4 {
 @keyframes cbSpin { to { transform: translateX(-50%) rotate(360deg); } }
 
 /* 紙花 */
-.cb-confetti { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+/* 紙花只留在四周，中間讓給 logo 與 CTA */
+.cb-confetti {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  -webkit-mask-image: radial-gradient(64% 58% at 50% 50%, transparent 0 58%, #000 92%);
+  mask-image: radial-gradient(64% 58% at 50% 50%, transparent 0 58%, #000 92%);
+}
 .cf {
   position: absolute; left: var(--x); top: var(--y);
   width: 11px; height: 15px; border-radius: 2px;
