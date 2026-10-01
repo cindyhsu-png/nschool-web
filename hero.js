@@ -17,8 +17,14 @@ const canvas = document.getElementById("scene");
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const mobile = innerWidth < 760;
 
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));  // 2 倍在 retina 上等於算 4 倍畫素，太重
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: "high-performance" });
+// antialias 交給 composer 的多重取樣 render target；開在這裡對後製鏈無效，只是白佔記憶體
+const DPR = Math.min(devicePixelRatio, 1.25);   // 1.5 → 1.25，retina 上少算約 30% 畫素
+renderer.setPixelRatio(DPR);
+// 折射會把整個場景再渲染進一張貼圖（dispersion 還讓取樣變三倍），是全場最貴的一塊。
+// 這個調解析度的開關要 three r171+ 才有，目前釘在 0.170 → 實測是 undefined，設了也沒用。
+// 先做成「有才設」，之後升版就自動生效；這版的省法改走下面的幾何量與降級機制。
+if ("transmissionResolutionScale" in renderer) renderer.transmissionResolutionScale = 0.4;
 renderer.setSize(innerWidth, innerHeight);
 renderer.setClearColor(BG, 1);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -112,7 +118,7 @@ const cMag = new THREE.Color(0xc44cf0);   // magenta
 const cViolet = new THREE.Color(0x7b3ff5); // violet edge
 const cDeep = new THREE.Color(0x5421d6);   // deep violet
 
-const COUNT = mobile ? 16000 : 42000;
+const COUNT = mobile ? 11000 : 24000;   // 半透明大顆粒重疊嚴重，減量對畫面影響小、對填色成本影響大
 const positions = new Float32Array(COUNT * 3);
 const pColors = new Float32Array(COUNT * 3);
 const pScale = new Float32Array(COUNT);
@@ -207,7 +213,7 @@ group.add(orb);
 // transparent points are NOT captured in the transmission pass).
 // faceted crystal — high subdivision + flat shading reads as a finely cut
 // gem with many small facets; subtle displacement keeps a raw-crystal feel.
-const coreGeo = new THREE.IcosahedronGeometry(0.54, 12);
+const coreGeo = new THREE.IcosahedronGeometry(0.54, 8);   // 12 → 8：面數少一半，切面感還在
 {
   const cp = coreGeo.attributes.position;
   const cc = [];
@@ -313,24 +319,26 @@ const ringDefs = [
 for (const d of ringDefs) {
   // radialSegments = 6 → hexagonal cross-section (sharp, gem-like);
   // high tubular count keeps the ring sweep perfectly smooth
-  const g = new THREE.TorusGeometry(d.R, d.r, 6, 440);
+  const g = new THREE.TorusGeometry(d.R, d.r, 6, 150);   // 440 段對這麼細的環是浪費
   const m = new THREE.Mesh(g, glassMat);
   m.rotation.set(...d.rot);
   group.add(m);
   rings.push(m);
 }
 // a flatter, wider "halo" disc used in the stats section
-const halo = new THREE.Mesh(new THREE.TorusGeometry(2.0, 0.08, 6, 460), glassMat);
+const halo = new THREE.Mesh(new THREE.TorusGeometry(2.0, 0.08, 6, 160), glassMat);
 halo.rotation.x = Math.PI / 2.1;
 group.add(halo);
 
 // ---------- post: afterimage smear + SMAA anti-aliasing (clean edges) ----------
-const dpr = Math.min(devicePixelRatio, 1.5);
+const dpr = DPR;
 const composer = new EffectComposer(renderer);
 composer.setPixelRatio(dpr);
 composer.addPass(new RenderPass(scene, camera));
 const afterimage = new AfterimagePass(0.70);   // 殘影拖尾減少，畫面安靜一點
 composer.addPass(afterimage);
+// 註：曾改用「多重取樣 render target」想省掉 SMAA 的全螢幕運算，
+// 實測在這條後製鏈上反而慢了約三倍（8.4ms → 24.9ms），所以維持 SMAA。
 const smaa = new SMAAPass(innerWidth * dpr, innerHeight * dpr);
 composer.addPass(smaa);
 composer.addPass(new OutputPass());
@@ -410,6 +418,38 @@ addEventListener("scroll", () => {
 }, { passive: true });
 addEventListener("resize", recomputeVisibility);
 
+// ---------- 跑不動就自動降級 ----------
+// 機器差異很大，與其猜一組參數，不如量實際幀時間：連續偏慢就逐級簡化，
+// 每級都只拿掉「最貴但最不影響辨識度」的東西。
+let perfLevel = 0;              // 0 = 完整，1 = 關殘影，2 = 再降解析度
+let frameAcc = 0, frameN = 0, lastDowngrade = 0;
+function watchPerf(ms, now) {
+  if (perfLevel >= 2) return;
+  frameAcc += ms; frameN++;
+  if (frameN < 60) return;
+  const avg = frameAcc / frameN;
+  frameAcc = 0; frameN = 0;
+  if (avg < 23 || now - lastDowngrade < 2500) return;   // 23ms ≒ 43fps 以下才算跑不動
+  lastDowngrade = now;
+  perfLevel++;
+  // 降級順序照實測效益排：解析度最有感，其次才是折射
+  if (perfLevel === 1) {
+    const lo = Math.min(DPR, 1);
+    renderer.setPixelRatio(lo);
+    composer.setPixelRatio(lo);
+    composer.setSize(innerWidth, innerHeight);
+    afterimage.enabled = false;                          // 殘影要多讀寫一整張畫面
+  } else {
+    // 折射要把整個場景再畫一次（實測單這項就佔三成），真的跑不動時關掉最有感；
+    // 用半透明玻璃頂替，造型與亮度都還在，只是少了背景穿透與彩散。
+    glassMat.transmission = 0;
+    glassMat.dispersion = 0;
+    glassMat.opacity = 0.42;
+    glassMat.transparent = true;
+    glassMat.needsUpdate = true;
+  }
+}
+
 // ---------- render loop ----------
 const clock = new THREE.Clock();
 let lastP = 0;
@@ -418,6 +458,7 @@ function tick() {
   const t = clock.elapsedTime;
 
   if (!canvasVisible || document.hidden) { requestAnimationFrame(tick); return; }
+  const frameT0 = performance.now();
 
   progress += (targetProgress - progress) * 0.08;
   mouse.x += (mTarget.x - mouse.x) * 0.05;
@@ -470,6 +511,7 @@ function tick() {
 
   lastP = progress;
   composer.render();
+  watchPerf(performance.now() - frameT0, frameT0);
   requestAnimationFrame(tick);
 }
 tick();

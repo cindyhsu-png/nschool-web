@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=67" />
+  <link rel="stylesheet" href="style.css?v=68" />
   <script type="importmap">
   {
     "imports": {
@@ -278,6 +278,9 @@
             <button type="button" class="sim-play" id="simPlay" aria-label="從頭播放產品介紹">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
               <span>看 60 秒介紹</span>
+            </button>
+            <button type="button" class="sim-expand" id="simExpand" aria-label="放大觀看影片">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg>
             </button>
             <button type="button" class="sim-sound" id="simSound" aria-label="開啟聲音" aria-pressed="false">
               <svg class="ic-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19z"/><path d="m16.5 9.5 5 5M21.5 9.5l-5 5"/></svg>
@@ -599,6 +602,15 @@
     <p style="margin:0">Copyright &copy; 2026 nSchool All rights reserved<a href="https://nschool.tw/statement-of-terms" target="_blank" rel="noopener" style="color:#595959;margin-left:24px;text-decoration:none">聲明條款</a><a href="https://nschool.tw/terms-tech" target="_blank" rel="noopener" style="color:#595959;margin-left:16px;text-decoration:none">服務使用約款</a></p>
   </footer>
 
+
+  <!-- 影片放大檢視 -->
+  <div class="vbox" id="simLightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="模擬交易王 產品介紹">
+    <div class="vbox-backdrop" data-vclose></div>
+    <div class="vbox-panel">
+      <button type="button" class="vbox-close" data-vclose aria-label="關閉">&#10005;</button>
+      <video id="simLightboxVideo" controls playsinline preload="none" poster="img/sim/poster.jpg"></video>
+    </div>
+  </div>
   <!-- TRIAL COURSE MODAL -->
   <div class="modal" id="trialModal" aria-hidden="true">
     <div class="modal-backdrop" data-close></div>
@@ -615,8 +627,8 @@
     </div>
   </div>
 
-  <script type="module" src="hero.js?v=10"></script>
-  <script src="main.js?v=31"></script>
+  <script type="module" src="hero.js?v=12"></script>
+  <script src="main.js?v=32"></script>
 <script defer src="assets/analytics.js"></script>
 </body>
 </html>

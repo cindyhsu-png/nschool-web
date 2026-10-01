@@ -245,6 +245,40 @@
     btn?.addEventListener("click", () => { v.currentTime = 0; play(); });
     snd?.addEventListener("click", () => { setSound(v.muted); if (v.paused) play(); });
 
+    // ---- 放大檢視：另開一個帶控制列的播放器，從目前進度接著播 ----
+    (function lightbox() {
+      const box = document.getElementById("simLightbox");
+      const big = document.getElementById("simLightboxVideo");
+      const openBtn = document.getElementById("simExpand");
+      if (!box || !big || !openBtn) return;
+      const SRC = v.querySelector("source")?.src || "";
+      let lastFocus = null;
+
+      const open = () => {
+        lastFocus = document.activeElement;
+        if (!big.src) big.src = SRC;            // 開啟時才掛 src，首次載入不會多抓一次影片
+        const at = v.currentTime || 0;
+        v.pause(); box.classList.add("open"); box.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        const start = () => { try { big.currentTime = at; } catch (e) {} big.play().catch(() => {}); };
+        if (big.readyState >= 1) start();
+        else big.addEventListener("loadedmetadata", start, { once: true });
+        box.querySelector(".vbox-close")?.focus();
+      };
+      const close = () => {
+        box.classList.remove("open"); box.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        const at = big.currentTime || 0;
+        big.pause();
+        try { v.currentTime = at; } catch (e) {}   // 關掉後小視窗接著放
+        play();
+        lastFocus?.focus();
+      };
+      openBtn.addEventListener("click", open);
+      box.querySelectorAll("[data-vclose]").forEach((el) => el.addEventListener("click", close));
+      addEventListener("keydown", (e) => { if (e.key === "Escape" && box.classList.contains("open")) close(); });
+    })();
+
     if (reduce) return;                       // 使用者要求減少動態就不自動播
     const io = new IntersectionObserver((ents) => {
       ents.forEach((e) => {
