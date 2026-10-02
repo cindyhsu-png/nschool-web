@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=69" />
-  <link rel="stylesheet" href="learning-map.css?v=6" />
+  <link rel="stylesheet" href="learning-map.css?v=7" />
 </head>
 <body class="lm-body">
 
@@ -40,6 +40,14 @@
         <h1 class="lm-title">從投資小白，走到<span class="gtext">系統化穩定獲利</span></h1>
         <p class="lm-lead">一條清楚的 <b>5 級進化路徑</b>，<b>核心課表</b>打好完整基本功，再進入交易系統與長期修練<i class="lead-sep">，</i><br>你會很清楚，現在的自己在哪一級、下一步會變成什麼樣的人。</p>
       </section>
+
+      <!-- 分頁籤：學習地圖（學什麼）／訓練循環（怎麼練） -->
+      <div class="lm-tabs" role="tablist" aria-label="學習地圖分頁">
+        <button type="button" role="tab" id="tab-map" aria-controls="panel-map" aria-selected="true" data-tab="map">學習地圖</button>
+        <button type="button" role="tab" id="tab-loop" aria-controls="panel-loop" aria-selected="false" data-tab="loop">訓練循環</button>
+      </div>
+
+      <div id="panel-map" role="tabpanel" aria-labelledby="tab-map" class="lm-panel is-on">
 
       <!-- 成長曲線 -->
       <section class="ascent" aria-label="你的成長曲線">
@@ -199,6 +207,15 @@
         </div>
       </section>
 
+      </div><!-- /panel-map -->
+
+      <div id="panel-loop" role="tabpanel" aria-labelledby="tab-loop" class="lm-panel" hidden>
+        <!-- 這份是獨立檔案：它自己帶了一整套深色樣式，還重新定義了 --ink / --muted
+             這些跟官網同名的變數，直接內嵌會互相蓋掉，所以用 iframe 隔開。
+             同源，所以高度可以直接量內容再貼合，不會出現內捲軸。 -->
+        <iframe id="loopFrame" src="training-loop.html" title="訓練循環" loading="lazy" scrolling="no"></iframe>
+      </div>
+
       <div class="lm-cta">
         <a class="btn btn-grad" href="index.html#pillars">看課程主題</a>
         <a class="btn btn-solid" href="https://nschool.tw/meets/us" target="_blank" rel="noopener">一對一諮詢預約 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></a>
@@ -233,5 +250,6 @@
   </footer>
 
   <script src="assets/analytics.js" defer></script>
+  <script src="learning-map.js?v=1" defer></script>
 </body>
 </html>

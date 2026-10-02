@@ -1632,4 +1632,4 @@ h1, h2, h3, h4 {
 
 /* 首頁學習地圖區 → 完整學習地圖頁的入口。
    原本做成底線文字連結，在這個深底大標下面幾乎看不見，改成實體按鈕。 */
-.sec-more { margin-top: 26px; }
+.sec-more { margin-top: clamp(34px, 4.5vw, 56px); }

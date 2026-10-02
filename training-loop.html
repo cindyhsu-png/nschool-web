@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="zh-TW"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>投資怎麼被練出來｜nSchool 財經學院</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--purple:#956DD3;--purple2:#b294e8;--purpled:#6b45b5;--gold:#f5c451;--goldd:#e0a92e;
+  --ink:#fff;--ink2:#e5ddf5;--muted:#b3a8d0;--line:rgba(255,255,255,.16);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans TC',system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;
+  line-height:1.6;overflow-x:hidden;
+  background:radial-gradient(130% 90% at 82% 0%, #6f4bc0 0%, #533a9c 36%, #3a2a6e 64%, #241a44 100%);}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px;}
+.stars{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.65;background:
+  radial-gradient(2px 2px at 14% 20%,rgba(255,255,255,.7),transparent 60%),
+  radial-gradient(1.6px 1.6px at 76% 12%,rgba(255,255,255,.5),transparent 60%),
+  radial-gradient(1.6px 1.6px at 58% 68%,rgba(255,255,255,.45),transparent 60%),
+  radial-gradient(1.4px 1.4px at 30% 60%,rgba(255,255,255,.4),transparent 60%),
+  radial-gradient(1.5px 1.5px at 88% 46%,rgba(255,255,255,.4),transparent 60%);}
+
+header{padding:22px 0;}
+header .wrap{display:flex;align-items:center;justify-content:space-between;}
+.brand{display:flex;align-items:center;gap:12px;}
+.logomark{width:46px;height:46px;border-radius:12px;background:linear-gradient(150deg,#fff,#e9dbff);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(40,20,90,.3);}
+.logomark svg{width:27px;height:27px;}
+.bname{font-size:20px;font-weight:900;}.bname small{display:block;font-size:12px;color:var(--muted);letter-spacing:.12em;font-weight:700;}
+.htag{font-size:14px;font-weight:900;color:#4a3300;background:linear-gradient(90deg,var(--gold),#ffd772);padding:9px 16px;border-radius:999px;}
+
+.hero{text-align:center;padding:20px 0 6px;}
+.hero .eye{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:900;color:var(--gold);
+  letter-spacing:.08em;border:1px solid rgba(245,196,81,.4);border-radius:999px;padding:8px 16px;background:rgba(245,196,81,.08);}
+.hero h1{margin-top:16px;font-size:clamp(28px,5vw,46px);font-weight:900;line-height:1.16;}
+.hero h1 .g{color:var(--gold);}
+.hero p{margin-top:12px;font-size:clamp(15px,2.1vw,19px);color:var(--ink2);font-weight:700;max-width:600px;margin-left:auto;margin-right:auto;}
+
+.stagebox{display:flex;gap:26px;align-items:center;margin:22px 0 10px;flex-wrap:wrap;}
+.ringwrap{flex:1 1 420px;position:relative;width:100%;max-width:500px;aspect-ratio:1;margin:0 auto;
+  container-type:inline-size;}
+.ringwrap svg.ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+.node{position:absolute;width:23cqw;aspect-ratio:1;transform:translate(-50%,-50%);
+  border-radius:50%;border:2px solid var(--line);background:rgba(40,26,78,.7);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:2px;
+  transition:border-color .16s, background .16s, box-shadow .16s;padding:4px;}
+.node:hover{border-color:rgba(245,196,81,.55);}
+.node.on{border-color:var(--gold);background:linear-gradient(150deg,rgba(245,196,81,.24),rgba(40,26,78,.85));
+  box-shadow:0 0 0 5px rgba(245,196,81,.16),0 14px 30px rgba(20,10,50,.4);}
+.node .nn{font-size:2.3cqw;font-weight:900;color:var(--gold);letter-spacing:.1em;}
+.node .nic{width:6cqw;height:6cqw;}
+.node .nic svg{width:100%;height:100%;fill:none;stroke:var(--gold);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+.node .nl{font-size:3.25cqw;font-weight:900;line-height:1.15;}
+
+.core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 40% 34%,rgba(245,196,81,.22),rgba(30,18,60,.6));
+  border:1px solid rgba(245,196,81,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px;}
+.core .k{font-size:2.4cqw;font-weight:900;color:var(--muted);letter-spacing:.12em;}
+.core .b{font-size:5cqw;font-weight:900;line-height:1.2;margin-top:4px;}
+.core .b em{color:var(--gold);font-style:normal;}
+.core .s{font-size:2.4cqw;font-weight:800;color:var(--gold);margin-top:5px;}
+
+.detail{flex:1 1 340px;min-width:0;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:20px;
+  padding:26px 28px;min-height:300px;}
+.detail .dstep{font-size:14px;font-weight:900;color:var(--gold);letter-spacing:.1em;}
+.detail .dh{display:flex;align-items:center;gap:13px;margin-top:8px;}
+.detail .dic{width:48px;height:48px;border-radius:12px;background:rgba(245,196,81,.16);flex:none;display:flex;align-items:center;justify-content:center;}
+.detail .dic svg{width:27px;height:27px;fill:none;stroke:var(--gold);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+.detail h2{font-size:clamp(24px,3.6vw,32px);font-weight:900;}
+.detail .row{margin-top:18px;}
+.detail .row .rk{font-size:13px;font-weight:900;color:var(--muted);letter-spacing:.08em;margin-bottom:5px;}
+.detail .row .rv{font-size:clamp(16px,2.2vw,19px);font-weight:800;color:var(--ink);line-height:1.5;}
+.detail .row.skill .rv{color:var(--gold);}
+.detail .row .rv b{color:var(--gold);}
+.detail .nav{display:flex;gap:10px;margin-top:22px;}
+.detail .nav button{flex:1;font-family:inherit;font-size:15px;font-weight:900;cursor:pointer;padding:12px;border-radius:12px;
+  border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink2);transition:all .14s;}
+.detail .nav button:hover{border-color:var(--gold);color:#fff;}
+.detail .nav .next{background:linear-gradient(90deg,var(--gold),#ffd772);color:#4a3300;border:none;}
+
+.dots{display:flex;justify-content:center;gap:10px;margin:24px 0 6px;flex-wrap:wrap;}
+.dots .dot{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:900;color:var(--muted);cursor:pointer;
+  border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 8px;transition:all .14s;background:rgba(255,255,255,.03);}
+.dots .dot .b{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.08);color:var(--muted);
+  font-size:11px;display:flex;align-items:center;justify-content:center;}
+.dots .dot:hover{border-color:rgba(245,196,81,.5);color:var(--ink2);}
+.dots .dot.on{border-color:var(--gold);color:#fff;background:rgba(245,196,81,.12);}
+.dots .dot.on .b{background:linear-gradient(150deg,var(--gold),#ffd772);color:#4a3300;}
+.loopnote{margin:16px 0 10px;text-align:center;font-size:clamp(15px,2.3vw,20px);font-weight:900;color:#fff;}
+.loopnote b{color:var(--gold);}
+footer{text-align:center;padding:16px 0 40px;font-size:13px;color:var(--muted);font-weight:600;}
+footer b{color:var(--gold);}
+
+@media(max-width:760px){ .stagebox{flex-direction:column;} .ringwrap{max-width:440px;} }
+
+  /* ---- 以下為嵌入用調整：這份檔案是學習地圖頁「訓練循環」分頁的內容 ---- */
+  html,body{background:transparent;}
+  .embedwrap{background:radial-gradient(130% 90% at 82% 0%, #6f4bc0 0%, #533a9c 36%, #3a2a6e 64%, #241a44 100%);
+    padding-bottom:34px;}
+  .hero.embedded{padding-top:34px;}
+</style></head><body>
+<div class="embedwrap"><div class="stars"></div>
+
+<section class="hero embedded"><div class="wrap">
+  <span class="eye">● 訓練循環 · The Training Loop</span>
+  <h1>投資的判斷力，<br>是這樣<span class="g">一圈一圈練出來</span>的</h1>
+  <p>不是聽完課就會。真正的判斷力與反應力，來自這個<b>不斷重複的循環</b>——點任一環節，看它在你身上發生什麼。</p>
+</div></section>
+
+<div class="wrap">
+  <div class="stagebox">
+    <div class="ringwrap" id="ringwrap">
+      <svg class="ring" viewBox="0 0 100 100" id="ringsvg"></svg>
+      <div class="core">
+        <div class="k">越轉越強</div>
+        <div class="b">練成<br><em>判斷力</em> × <em>反應力</em></div>
+        <div class="s">↻ 一圈一圈</div>
+      </div>
+    </div>
+    <div class="detail" id="detail"></div>
+  </div>
+  <div class="dots" id="dots"></div>
+  <div class="loopnote">關鍵不在「上完課」——在你<b>轉了幾圈</b>。每一圈，判斷力和反應力就厚一層。</div>
+</div>
+
+<script>
+const IC = {
+ absorb:'<path d="M4 5h7v15H5a1 1 0 01-1-1z"/><path d="M20 5h-7v15h6a1 1 0 001-1z"/>',
+ note:'<path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h6M9 16h4"/><path d="M17.5 13.5l2 2-4 4H13v-2.5z"/>',
+ teach:'<path d="M4 5h16v10H9l-4 4V15H4z"/><path d="M12 8v3M12 12.5v.01"/>',
+ sim:'<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>',
+ apply:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',
+ review:'<path d="M4 12a8 8 0 0113-5.7l3 2.7"/><path d="M20 5v4h-4"/><circle cx="11" cy="13" r="4"/><path d="M17 19l-3-3"/>',
+ journal:'<rect x="4" y="3" width="15" height="18" rx="2"/><path d="M8 3v18M11 8h5M11 12h5M11 16h3"/>',
+};
+const STAGES = [
+ {id:'absorb',n:'01',label:'知識吸收',icon:IC.absorb,
+  do:'上課、讀盤、學一套有邏輯的方法——先把「看得懂」的底建起來。',
+  skill:'建立正確的認知地圖',
+  help:'業師系統化教學，把市場拆成基本／籌碼／技術三面，好懂、好學。'},
+ {id:'note',n:'02',label:'筆記抄寫',icon:IC.note,
+  do:'用<b>自己的話</b>動手整理成筆記——不是複製貼上，是重新組織。',
+  skill:'把「聽過」變成「內化」',
+  help:'給你筆記框架，抄寫本身就是內化的第一層練習。'},
+ {id:'teach',n:'03',label:'能講出對應知識',icon:IC.teach,
+  do:'講得出來，才代表你真的懂；講不出來，就是還沒懂。',
+  skill:'檢驗理解、補上盲點',
+  help:'助教與同儕互相講解，教學相長，卡住的地方馬上補。'},
+ {id:'sim',n:'04',label:'模擬倉',icon:IC.sim,
+  do:'在虛擬資金裡實際操作——<b>練壞不心疼</b>，輸了也睡得著。',
+  skill:'把知識變成「敢動手」的膽識',
+  help:'專屬模擬倉，讓你安全地重複練，技能就是這樣長出來的。'},
+ {id:'apply',n:'05',label:'知識應用',icon:IC.apply,
+  do:'把學到的，真的用在一筆決策上——知道自己為什麼買、為什麼賣。',
+  skill:'臨場「判斷力」',
+  help:'三師陪你在真實情境下做決定，不是一個人硬扛。'},
+ {id:'review',n:'06',label:'複盤優化',icon:IC.review,
+  do:'回頭看：哪裡判斷對、哪裡錯，為什麼。把運氣的成分擠出來。',
+  skill:'讓經驗變成可複製的規則',
+  help:'教練帶你覆盤每一筆，找出可以優化的點，下次更準。'},
+ {id:'journal',n:'07',label:'交易紀錄',icon:IC.journal,
+  do:'每一筆都記錄下來，累積成你自己的資料庫——看多了，就快。',
+  skill:'盤中「反應力」',
+  help:'交易紀錄系統，讓你的進步被看見，也讓下一圈吸收更有方向。'},
+];
+
+const svg = document.getElementById('ringsvg');
+const ringwrap = document.getElementById('ringwrap');
+const N = STAGES.length;
+const cx=50, cy=50, R=39;
+// dashed guide circle
+svg.innerHTML = '<circle cx="50" cy="50" r="'+R+'" fill="none" stroke="rgba(245,196,81,.35)" stroke-width="0.7" stroke-dasharray="1.6 2.4"/>';
+// direction chevrons at midpoints (clockwise)
+for(let i=0;i<N;i++){
+  const a0=-90+ i*360/N, a1=-90+ (i+1)*360/N;
+  const mid=(a0+a1)/2 * Math.PI/180;
+  const mx=cx+R*Math.cos(mid), my=cy+R*Math.sin(mid);
+  const rot=(a0+a1)/2 + 90; // tangent
+  svg.innerHTML += '<g transform="translate('+mx+','+my+') rotate('+rot+')"><path d="M -1.6 -1.4 L 1.4 0 L -1.6 1.4" fill="none" stroke="var(--gold)" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/></g>';
+}
+// place nodes
+STAGES.forEach((s,i)=>{
+  const a=(-90 + i*360/N)*Math.PI/180;
+  const x=50 + R*Math.cos(a), y=50 + R*Math.sin(a);
+  const el=document.createElement('div');
+  el.className='node'; el.style.left=x+'%'; el.style.top=y+'%'; el.dataset.i=i;
+  el.innerHTML='<div class="nn">'+s.n+'</div><div class="nic"><svg viewBox="0 0 24 24">'+s.icon+'</svg></div><div class="nl">'+s.label+'</div>';
+  el.addEventListener('click',()=>select(i));
+  ringwrap.appendChild(el);
+});
+
+// progress dots
+const dots=document.getElementById('dots');
+STAGES.forEach((s,i)=>{
+  const d=document.createElement('div'); d.className='dot'; d.dataset.i=i;
+  d.innerHTML='<span class="b">'+s.n+'</span>'+s.label;
+  d.addEventListener('click',()=>select(i));
+  dots.appendChild(d);
+});
+
+let cur=0;
+const detail=document.getElementById('detail');
+function select(i){
+  cur=i; const s=STAGES[i];
+  document.querySelectorAll('.node').forEach((n,ni)=>n.classList.toggle('on',ni===i));
+  document.querySelectorAll('.dots .dot').forEach((n,ni)=>n.classList.toggle('on',ni===i));
+  detail.innerHTML =
+    '<div class="dstep">STEP '+s.n+' / 07</div>'+
+    '<div class="dh"><div class="dic"><svg viewBox="0 0 24 24">'+s.icon+'</svg></div><h2>'+s.label+'</h2></div>'+
+    '<div class="row"><div class="rk">在做什麼</div><div class="rv">'+s.do+'</div></div>'+
+    '<div class="row skill"><div class="rk">這一步，練的是</div><div class="rv">▸ '+s.skill+'</div></div>'+
+    '<div class="row"><div class="rk">我們怎麼幫你</div><div class="rv">'+s.help+'</div></div>'+
+    '<div class="nav"><button class="prev">‹ 上一步</button><button class="next">'+(i===N-1?'↻ 回到第一圈':'下一步 ›')+'</button></div>';
+  detail.querySelector('.prev').addEventListener('click',()=>select((i-1+N)%N));
+  detail.querySelector('.next').addEventListener('click',()=>select((i+1)%N));
+}
+select(0);
+</script>
+</div>
+</body></html>

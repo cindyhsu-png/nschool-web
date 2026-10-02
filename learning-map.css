@@ -284,3 +284,38 @@
   .ascent-line { animation: none; stroke-dashoffset: 0; }
   .ascent-area, .anode { animation: none; opacity: 1; }
 }
+
+/* ---------- 分頁籤 ---------- */
+.lm-tabs {
+  display: flex; gap: 6px; margin: 30px 0 22px; clear: both;
+  padding: 5px; border-radius: 999px; width: fit-content; max-width: 100%;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(10, 10, 10, 0.08);
+  box-shadow: 0 6px 20px rgba(16, 12, 40, 0.05);
+}
+.lm-tabs button {
+  border: 0; cursor: pointer; background: transparent; color: rgba(10, 10, 10, 0.55);
+  font-family: inherit; font-size: clamp(13.5px, 1.1vw, 15px); font-weight: 700;
+  padding: 10px 22px; border-radius: 999px; letter-spacing: 0.01em;
+  transition: color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.lm-tabs button:hover { color: var(--ink); }
+.lm-tabs button[aria-selected="true"] {
+  background: var(--grad); color: #fff;
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.3);
+}
+.lm-panel[hidden] { display: none; }
+
+/* 訓練循環：獨立檔案用 iframe 嵌入，高度由 JS 量內容貼合 */
+#loopFrame {
+  width: 100%; height: 760px; border: 0; display: block;
+  border-radius: var(--radius-lg); overflow: hidden;
+  background: #3a2a6e;
+  box-shadow: 0 18px 50px rgba(16, 12, 40, 0.14);
+}
+
+@media (max-width: 560px) {
+  .lm-tabs { width: 100%; }
+  .lm-tabs button { flex: 1; padding: 10px 8px; }
+  #loopFrame { height: 1180px; }
+}
