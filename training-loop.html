@@ -97,7 +97,17 @@ footer b{color:var(--gold);}
   .embedwrap{background:radial-gradient(130% 90% at 82% 0%, #6f4bc0 0%, #533a9c 36%, #3a2a6e 64%, #241a44 100%);
     padding-bottom:34px;}
   .hero.embedded{padding-top:34px;}
+
+  /* 單獨開一個分頁看時，給一個回學習地圖的路；嵌在分頁籤裡就不顯示 */
+  .solo-back{display:none;position:fixed;left:18px;top:18px;z-index:50;
+    align-items:center;gap:7px;padding:9px 16px;border-radius:999px;
+    font-size:13.5px;font-weight:700;color:#fff;text-decoration:none;
+    background:rgba(20,14,42,.62);border:1px solid rgba(255,255,255,.26);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+  .solo-back:hover{background:rgba(20,14,42,.9);}
+  .solo .solo-back{display:inline-flex;}
 </style></head><body>
+<a class="solo-back" href="learning-map.html#loop">&#8592; 回學習地圖</a>
 <div class="embedwrap"><div class="stars"></div>
 
 <section class="hero embedded"><div class="wrap">
@@ -216,4 +226,8 @@ function select(i){
 select(0);
 </script>
 </div>
+<script>
+  // 被 iframe 嵌著就不顯示返回鈕；單獨開一個分頁才顯示
+  if (window === window.top) document.body.classList.add('solo');
+</script>
 </body></html>

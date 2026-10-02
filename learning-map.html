@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=69" />
-  <link rel="stylesheet" href="learning-map.css?v=7" />
+  <link rel="stylesheet" href="learning-map.css?v=8" />
 </head>
 <body class="lm-body">
 
@@ -213,7 +213,14 @@
         <!-- 這份是獨立檔案：它自己帶了一整套深色樣式，還重新定義了 --ink / --muted
              這些跟官網同名的變數，直接內嵌會互相蓋掉，所以用 iframe 隔開。
              同源，所以高度可以直接量內容再貼合，不會出現內捲軸。 -->
-        <iframe id="loopFrame" src="training-loop.html" title="訓練循環" loading="lazy" scrolling="no"></iframe>
+        <div class="loop-box" id="loopBox">
+          <button type="button" class="loop-expand" id="loopExpand">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg>
+            放大檢視
+          </button>
+          <iframe id="loopFrame" src="training-loop.html" title="訓練循環" loading="lazy" scrolling="no"
+                  allowfullscreen allow="fullscreen"></iframe>
+        </div>
       </div>
 
       <div class="lm-cta">
@@ -250,6 +257,6 @@
   </footer>
 
   <script src="assets/analytics.js" defer></script>
-  <script src="learning-map.js?v=1" defer></script>
+  <script src="learning-map.js?v=2" defer></script>
 </body>
 </html>

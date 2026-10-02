@@ -41,6 +41,7 @@
 
   // ---- 訓練循環 iframe：量內容高度貼合，避免出現內捲軸 ----
   const frame = document.getElementById("loopFrame");
+  const loopBox = document.getElementById("loopBox");
   let fitTimer = null;
 
   function fitFrame() {
@@ -52,6 +53,10 @@
       return; // 同源才量得到；量不到就讓 CSS 的預設高度頂著
     }
     if (!doc || !doc.body) return;
+    if (loopBox && loopBox.classList.contains("is-full")) {
+      frame.style.height = "100%";
+      return;
+    }
     const h = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
     if (h > 100) frame.style.height = h + "px";
   }
@@ -71,6 +76,42 @@
       clearTimeout(fitTimer);
       fitTimer = setTimeout(fitFrame, 150);
     });
+  }
+
+  // ---- 放大檢視 ----
+  // 嵌在 Kolable 裡時，上方導覽列加紅色公告大約吃掉 155px 的高度，
+  // 這個環形圖又高，常常被切掉。優先用全螢幕；
+  // 外層 iframe 沒給 allow="fullscreen" 時會被擋，就改開新分頁 ——
+  // 新分頁完全跳出 Kolable 的框，一定看得到完整內容。
+  const expandBtn = document.getElementById("loopExpand");
+  if (expandBtn && loopBox) {
+    expandBtn.addEventListener("click", () => {
+      // 要同步決定。嵌在 Kolable 的 iframe 裡、外層沒給 allow="fullscreen" 時，
+      // document.fullscreenEnabled 就是 false，這時直接開新分頁 ——
+      // 若等 requestFullscreen 的 promise 被拒再開，那已經脫離使用者操作，
+      // 會被當成彈出視窗擋掉。
+      if (!document.fullscreenEnabled) {
+        window.open("training-loop.html", "_blank", "noopener");
+        return;
+      }
+      const req = loopBox.requestFullscreen || loopBox.webkitRequestFullscreen;
+      if (!req) {
+        window.open("training-loop.html", "_blank", "noopener");
+        return;
+      }
+      try {
+        // 真的被擋下來時改成直接換頁，不用 window.open（不會被彈出視窗阻擋）
+        Promise.resolve(req.call(loopBox)).catch(() => { location.href = "training-loop.html"; });
+      } catch (e) {
+        location.href = "training-loop.html";
+      }
+    });
+    ["fullscreenchange", "webkitfullscreenchange"].forEach((ev) =>
+      document.addEventListener(ev, () => {
+        const on = document.fullscreenElement === loopBox || document.webkitFullscreenElement === loopBox;
+        loopBox.classList.toggle("is-full", on);
+        setTimeout(fitFrame, 60);
+      }));
   }
 
   show(location.hash === "#loop" ? "loop" : "map", false);

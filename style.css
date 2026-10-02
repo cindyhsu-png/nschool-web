@@ -1632,4 +1632,10 @@ h1, h2, h3, h4 {
 
 /* 首頁學習地圖區 → 完整學習地圖頁的入口。
    原本做成底線文字連結，在這個深底大標下面幾乎看不見，改成實體按鈕。 */
-.sec-more { margin-top: clamp(34px, 4.5vw, 56px); }
+/* 學習地圖區的標題列：沿用既有的 .sec-head 兩欄（1.5fr auto），
+   CTA 補右邊原本空著的地方。只改這一區，別動到其他用 .sec-head 的區塊。 */
+.core-sec .sec-head { margin-bottom: 0; }
+.core-sec .sec-head .sec-more { margin: 0 0 6px; }
+@media (max-width: 900px) {
+  .core-sec .sec-head .sec-more { margin: 4px 0 0; }
+}
