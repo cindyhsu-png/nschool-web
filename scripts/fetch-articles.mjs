@@ -50,6 +50,11 @@ function extract() {
       if (m && !covers[m[1]]) covers[m[1]] = u;
     }
   });
+
+  // 卡片裡標題、作者、日期是分開的元素，直接讀比對整串文字做字串處理可靠。
+  // 原本是把作者名寫死在正則裡（Dadazhi|游凱翔|撲滿日記…），換個作者就會
+  // 把人名留在標題上，而且不會報錯 —— 這種壞法最難發現。
+  const DATE = /^20\d{2}-\d{2}-\d{2}$/;
   const seen = new Set();
   const out = [];
   document.querySelectorAll('a[href^="/posts/"]').forEach((a) => {
@@ -57,14 +62,26 @@ function extract() {
     const id = href.split("/").pop();
     if (seen.has(id)) return;
     seen.add(id);
-    const txt = (a.innerText || a.textContent || "").replace(/\s+/g, " ").trim();
-    const dm = txt.match(/20\d{2}-\d{2}-\d{2}/);
-    const title = txt
-      .replace(/20\d{2}-\d{2}-\d{2}/, "")
-      .replace(/Dadazhi|游凱翔|撲滿日記|Minor|nSchool|pin/g, "")
-      .replace(/\s+/g, " ")
-      .trim();
-    out.push({ id, title, url: "https://nschool.tw" + href, cover: covers[id] || null, date: dm ? dm[0] : null });
+
+    let title = a.querySelector('[class*="featuring"]')?.innerText?.replace(/\s+/g, " ").trim() || "";
+    let date = null;
+    a.querySelectorAll("span").forEach((s) => {
+      const t = (s.innerText || "").trim();
+      if (DATE.test(t)) date = t;
+    });
+
+    // 後備：版型改了還能用——切到日期前，再去掉結尾的作者那一段
+    if (!title) {
+      const raw = (a.innerText || a.textContent || "").replace(/\s+/g, " ").trim();
+      const i = raw.search(/20\d{2}-\d{2}-\d{2}/);
+      title = (i > 0 ? raw.slice(0, i) : raw).trim().replace(/\s+\S+$/, "").trim();
+    }
+    if (!date) {
+      const dm = (a.innerText || "").match(/20\d{2}-\d{2}-\d{2}/);
+      date = dm ? dm[0] : null;
+    }
+
+    out.push({ id, title, url: "https://nschool.tw" + href, cover: covers[id] || null, date });
   });
   return out;
 }
