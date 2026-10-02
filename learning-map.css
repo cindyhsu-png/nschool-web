@@ -14,17 +14,11 @@
   background-attachment: fixed;
 }
 
-/* ---------- 頁首 ---------- */
-.lm-nav {
-  position: sticky; top: 0; z-index: 50;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px; padding: 14px var(--pad);
-  background: rgba(238, 240, 245, 0.82);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(10, 10, 10, 0.07);
-}
-.lm-nav .logo img { height: 42px; width: auto; display: block; }
+/* ---------- 返回鈕 ----------
+   不做整條頁首：嵌進 Kolable 後外層已經有一條導覽列和 logo，
+   自己再疊一條會變成兩個 nSchool 標誌。 */
 .lm-back {
+  float: right; margin: 0 0 10px 16px;
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 14px; font-weight: 600; color: rgba(10, 10, 10, 0.62);
   padding: 9px 16px; border-radius: 999px;
@@ -35,7 +29,8 @@
 .lm-back:hover { color: var(--accent); border-color: rgba(124, 58, 237, 0.42); background: #fff; }
 
 /* ---------- 版心 ---------- */
-.lm { padding: clamp(40px, 6vw, 76px) 0 clamp(56px, 8vw, 104px); }
+.lm { padding: clamp(26px, 4vw, 48px) 0 clamp(56px, 8vw, 104px); }
+.lm-head { clear: both; }
 .lm .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
 .lm section + section { margin-top: clamp(26px, 3.4vw, 44px); }
 
@@ -266,7 +261,6 @@
 }
 
 @media (max-width: 560px) {
-  .lm-nav .logo img { height: 34px; }
   .plan { grid-template-columns: minmax(0, 1fr); }
   .ascent { padding: 18px 14px; }
   .ascent-chart { height: 170px; }

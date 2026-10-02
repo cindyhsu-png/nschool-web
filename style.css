@@ -1630,13 +1630,6 @@ h1, h2, h3, h4 {
   .vbox.open .vbox-close { transform: translateX(50%); }
 }
 
-/* 首頁學習地圖區 → 完整學習地圖頁的入口 */
-.sec-more { margin-top: 18px; }
-.sec-more a {
-  display: inline-flex; align-items: center; gap: 9px;
-  font-size: 15px; font-weight: 600; color: #fff;
-  padding-bottom: 3px; border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  transition: border-color 0.25s var(--ease), gap 0.25s var(--ease);
-}
-.sec-more a:hover { border-bottom-color: #fff; gap: 13px; }
-.sec-more .arrow svg { width: 17px; height: 17px; display: block; }
+/* 首頁學習地圖區 → 完整學習地圖頁的入口。
+   原本做成底線文字連結，在這個深底大標下面幾乎看不見，改成實體按鈕。 */
+.sec-more { margin-top: 26px; }
