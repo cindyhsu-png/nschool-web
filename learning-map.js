@@ -100,11 +100,16 @@
         return;
       }
       try {
-        // 真的被擋下來時改成直接換頁，不用 window.open（不會被彈出視窗阻擋）
-        Promise.resolve(req.call(loopBox)).catch(() => { location.href = "training-loop.html"; });
-      } catch (e) {
-        location.href = "training-loop.html";
-      }
+        Promise.resolve(req.call(loopBox)).catch(() => {});
+      } catch (e) {}
+      // 不要只靠 promise 被拒來判斷：實測有瀏覽器既不進全螢幕、也不 reject。
+      // 直接看結果 —— 過一下還沒進去就換成整頁版（不用 window.open，
+      // 那時已經脫離使用者操作會被彈出視窗擋掉）。
+      setTimeout(() => {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+          location.href = "training-loop.html";
+        }
+      }, 700);
     });
     ["fullscreenchange", "webkitfullscreenchange"].forEach((ev) =>
       document.addEventListener(ev, () => {
