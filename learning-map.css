@@ -51,15 +51,22 @@
   color: transparent; -webkit-text-fill-color: transparent;
 }
 .lm-lead {
-  margin-top: 16px; max-width: 72ch; text-wrap: pretty;
-  font-size: clamp(14.5px, 1.15vw, 17px); line-height: 1.85; color: rgba(10, 10, 10, 0.66);
+  margin-top: 16px; max-width: 80ch;
+  font-size: clamp(14.5px, 1.15vw, 17px); line-height: 1.9; color: rgba(10, 10, 10, 0.66);
+}
+/* 桌機用 <br> 斷成她指定的兩行；手機交還給瀏覽器自己折，
+   這時兩句會黏在一起，所以改用逗號銜接。 */
+.lm-lead .lead-sep { display: none; }
+@media (max-width: 860px) {
+  .lm-lead br { display: none; }
+  .lm-lead .lead-sep { display: inline; font-style: normal; }
 }
 .lm-lead b { color: var(--ink); font-weight: 700; }
 
 /* ---------- 成長曲線 ---------- */
 .ascent {
   background: #fff; border-radius: var(--radius-lg);
-  padding: clamp(20px, 2.6vw, 34px);
+  padding: clamp(16px, 2vw, 24px);
   box-shadow: 0 18px 50px rgba(16, 12, 40, 0.07), 0 2px 6px rgba(16, 12, 40, 0.04);
 }
 .ascent-top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
@@ -70,7 +77,8 @@
 }
 .ascent-meta { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; color: rgba(10, 10, 10, 0.45); }
 
-.ascent-chart { position: relative; margin: 26px 0 0; height: clamp(190px, 26vw, 320px); }
+/* 這張圖資訊量不高，主要是視覺鋪陳，壓低一點把版面讓給下面的課程內容 */
+.ascent-chart { position: relative; margin: 20px 0 0; height: clamp(150px, 17vw, 215px); }
 .ascent-svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .ascent-grid line { stroke: rgba(10, 10, 10, 0.07); stroke-width: 1; vector-effect: non-scaling-stroke; }
 /* 線條等比縮放時不要跟著變粗變細 */
@@ -89,8 +97,8 @@
   opacity: 0; animation: lmPop 0.5s var(--ease) forwards;
 }
 .anode b {
-  position: absolute; left: 50%; bottom: calc(100% + 12px); transform: translateX(-50%);
-  font-family: var(--font-display); font-size: clamp(17px, 1.9vw, 27px);
+  position: absolute; left: 50%; bottom: calc(100% + 10px); transform: translateX(-50%);
+  font-family: var(--font-display); font-size: clamp(16px, 1.5vw, 22px);
   font-weight: 700; color: var(--c); line-height: 1; letter-spacing: -0.01em;
 }
 .anode.is-end { background: var(--c); box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.2); }
@@ -103,7 +111,7 @@
 
 .ascent-axis {
   display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
-  margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(10, 10, 10, 0.09);
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(10, 10, 10, 0.09);
 }
 .ascent-axis div { text-align: center; }
 .ascent-axis b { display: block; font-size: clamp(13px, 1.1vw, 16px); font-weight: 700; }
@@ -160,9 +168,11 @@
 }
 .cell.head h3 { margin-top: 10px; font-size: clamp(16px, 1.4vw, 19px); font-weight: 700; color: var(--ink); }
 .cell.head .tag {
-  display: inline-block; margin-top: 11px; padding: 6px 13px; border-radius: 999px;
-  background: var(--c); color: #fff; font-size: 12.5px; font-weight: 700;
-  line-height: 1.5; letter-spacing: 0.01em;
+  display: inline-block; margin-top: 11px; padding: 5px 12px; border-radius: 999px;
+  background: var(--c); color: #fff; font-weight: 700;
+  line-height: 1.5; letter-spacing: 0;
+  /* 要維持一行：字級跟著欄寬縮，不要折成兩行破壞膠囊形狀 */
+  white-space: nowrap; font-size: clamp(10px, 0.92vw, 12.5px);
 }
 /* 階段價值那一列也帶色邊，視覺上跟抬頭呼應 */
 .col .cell:nth-child(3) { border-top-color: var(--c); }
@@ -241,7 +251,7 @@
   .matrix .cell { box-shadow: none; border-top: 0; border-radius: 0; background: transparent; padding: 12px 20px; }
   .matrix .cell.head { padding: 10px 20px 14px; }
   .matrix .cell.head .lv-row, .matrix .cell.head h3 { display: none; }
-  .matrix .cell.head .tag { margin-top: 0; }
+  .matrix .cell.head .tag { margin-top: 0; font-size: 13px; padding: 6px 14px; }
   .matrix .col .cell:nth-child(3) { border-top: 0; }
   /* 桌機的列標題在這裡消失了，改成每格自己的小標 */
   .matrix .cell[data-r]::before {
