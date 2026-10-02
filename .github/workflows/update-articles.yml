@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: blog-render-debug
-          path: .debug/
+          path: playwright-debug/
           if-no-files-found: ignore
           retention-days: 14
 

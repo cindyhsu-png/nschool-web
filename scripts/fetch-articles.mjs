@@ -31,7 +31,8 @@ import { fileURLToPath } from "node:url";
 
 const BLOG = "https://nschool.tw/blog";
 const OUT = fileURLToPath(new URL("../articles.json", import.meta.url));
-const DEBUG_DIR = fileURLToPath(new URL("../.debug/", import.meta.url));
+// 不要用 . 開頭：upload-artifact 預設會把隱藏檔案整個跳過
+const DEBUG_DIR = fileURLToPath(new URL("../playwright-debug/", import.meta.url));
 const ATTEMPTS = 3;
 
 const UA =
@@ -101,7 +102,7 @@ async function attempt(n) {
         mkdirSync(DEBUG_DIR, { recursive: true });
         await page.screenshot({ path: DEBUG_DIR + "blog.png", fullPage: false });
         writeFileSync(DEBUG_DIR + "blog.html", await page.content());
-        console.error("Saved .debug/blog.png and .debug/blog.html");
+        console.error("Saved playwright-debug/blog.png and playwright-debug/blog.html");
       } catch (e2) {
         console.error("Could not save debug artifacts:", e2.message);
       }
