@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=68" />
+  <link rel="stylesheet" href="style.css?v=73" />
   <script type="importmap">
   {
     "imports": {
@@ -89,6 +89,7 @@
         <p class="eyebrow">學習地圖 <span>Learning Map</span></p>
         <h2 class="h-section">「想學投資」變成「真的會投資」</h2>
         <p class="sec-lead">別再靠感覺進場，打好基本功，五個等級一路練到能自己判斷 —— 你會很清楚現在在哪一級、下一步該練什麼。</p>
+        <p class="sec-more"><a href="learning-map.html">看完整學習地圖（L1→L5 對應課程與走期） <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></a></p>
 
         <!-- 五個等級：細軌 + 進度填色 + 脈衝點，一站一站推進 -->
         <div class="circuit" id="circuit">
@@ -586,7 +587,7 @@
         </div>
         <div class="footer-col">
           <h4>探索 <i>Explore</i></h4>
-          <a href="#method">為什麼選擇</a><a href="#pillars">課程主題</a><a href="#simulator">模擬工具系統</a><a href="#approach">學習地圖</a><a href="#partners">企業合作夥伴</a><a href="#courses">文章專欄</a><a href="#faculty">顧問師資</a>
+          <a href="#method">為什麼選擇</a><a href="#pillars">課程主題</a><a href="#simulator">模擬工具系統</a><a href="learning-map.html">學習地圖</a><a href="#partners">企業合作夥伴</a><a href="#courses">文章專欄</a><a href="#faculty">顧問師資</a>
         </div>
         <div class="footer-col">
           <h4>資訊 <i>Info</i></h4>
@@ -608,7 +609,15 @@
     <div class="vbox-backdrop" data-vclose></div>
     <div class="vbox-panel">
       <button type="button" class="vbox-close" data-vclose aria-label="關閉">&#10005;</button>
-      <video id="simLightboxVideo" controls playsinline preload="none" poster="img/sim/poster.jpg"></video>
+      <!-- 影片是直式 1080x1920，橫向螢幕擺不下原尺寸，所以給縮放＋拖曳 -->
+      <div class="vbox-stage" id="vboxStage">
+        <video id="simLightboxVideo" controls playsinline preload="none" poster="img/sim/poster.jpg"></video>
+      </div>
+      <div class="vbox-zoom" role="group" aria-label="影片縮放">
+        <button type="button" data-z="out" aria-label="縮小">&minus;</button>
+        <span id="vboxPct" aria-live="polite">100%</span>
+        <button type="button" data-z="in" aria-label="放大">&plus;</button>
+      </div>
     </div>
   </div>
   <!-- TRIAL COURSE MODAL -->
@@ -628,7 +637,7 @@
   </div>
 
   <script type="module" src="hero.js?v=12"></script>
-  <script src="main.js?v=32"></script>
+  <script src="main.js?v=34"></script>
 <script defer src="assets/analytics.js"></script>
 </body>
 </html>

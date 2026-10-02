@@ -1552,16 +1552,68 @@ h1, h2, h3, h4 {
 .vbox-backdrop { position: absolute; inset: 0; background: rgba(10, 7, 20, 0.88); }
 .vbox-panel {
   position: relative; z-index: 1;
-  width: min(430px, 100%); max-height: 100%;
+  /* 要給死高度：高度若由內容決定，放大時 panel 會跟著被影片撐大，
+     stage 就永遠不會溢出，也就捲不動、拖不動。 */
+  width: 100%; height: 100%; min-height: 0; min-width: 0;
   display: flex; align-items: center; justify-content: center;
   transform: scale(0.97); transition: transform 0.35s var(--ease);
 }
 .vbox.open .vbox-panel { transform: none; }
-.vbox-panel video {
-  width: 100%; max-height: min(86vh, 900px); height: auto;
-  border-radius: 20px; background: #0d0b12; display: block;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+/* 影片是 1080×1920 的直式，橫向螢幕上「高度」才是瓶頸：
+   讓它吃滿可用高度、寬度自己跟著算，不要再被固定寬度卡住。 */
+/* stage 是可捲動的視窗；影片用 margin:auto 置中 —— flex 置中在內容溢出時
+   會把開頭切掉，margin:auto 不會，放大後才拖得到左右兩邊。 */
+.vbox-stage {
+  width: 100%; height: 100%; min-height: 0; min-width: 0;
+  overflow: auto; display: flex;
+  scrollbar-width: none; overscroll-behavior: contain;
+  touch-action: pan-x pan-y;
 }
+.vbox-stage::-webkit-scrollbar { width: 0; height: 0; }
+.vbox-stage.grabbable { cursor: grab; }
+.vbox-stage.grabbing { cursor: grabbing; }
+.vbox-panel video {
+  --z: 1;
+  height: calc(min(92vh, 1700px) * var(--z));
+  width: auto; max-width: none; margin: auto; flex: none;
+  border-radius: 18px; background: #0d0b12; display: block;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+  transition: height 0.22s var(--ease);
+}
+
+/* 縮放控制列 */
+.vbox-zoom {
+  /* 放左上角：底部置中會壓在影片原生的播放控制列上 */
+  position: absolute; left: 0; top: 0;
+  z-index: 3; display: flex; align-items: center; gap: 4px;
+  padding: 5px; border-radius: 999px;
+  background: rgba(14, 11, 22, 0.82); border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.vbox-zoom button {
+  width: 34px; height: 34px; border: 0; border-radius: 50%; cursor: pointer;
+  background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 17px; line-height: 1;
+  display: grid; place-items: center;
+  transition: background 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+.vbox-zoom button:hover { background: rgba(255, 255, 255, 0.24); }
+.vbox-zoom button:disabled { opacity: 0.3; cursor: default; background: rgba(255, 255, 255, 0.06); }
+.vbox-zoom span {
+  min-width: 56px; text-align: center; color: #fff;
+  font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.04em;
+}
+
+/* 系統全螢幕：用的是「螢幕」高度而不是瀏覽器視窗高度，這才是真的放大 */
+.vbox:fullscreen { padding: 0; }
+.vbox:fullscreen .vbox-backdrop { background: #07050f; }
+.vbox:fullscreen .vbox-panel { width: 100%; height: 100%; }
+.vbox:fullscreen .vbox-panel video {
+  height: 100%; max-height: 100%; width: auto; border-radius: 0; box-shadow: none;
+}
+.vbox:fullscreen .vbox-close { top: 20px; right: 20px; bottom: auto; transform: none; }
+.vbox:-webkit-full-screen { padding: 0; }
+.vbox:-webkit-full-screen .vbox-panel { width: 100%; height: 100%; }
+.vbox:-webkit-full-screen .vbox-panel video { height: 100%; max-height: 100%; width: auto; border-radius: 0; }
 .vbox-close {
   position: absolute; top: -52px; right: 0; z-index: 2;
   width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
@@ -1577,3 +1629,14 @@ h1, h2, h3, h4 {
   .vbox-close { top: auto; bottom: -52px; right: 50%; transform: translateX(50%); }
   .vbox.open .vbox-close { transform: translateX(50%); }
 }
+
+/* 首頁學習地圖區 → 完整學習地圖頁的入口 */
+.sec-more { margin-top: 18px; }
+.sec-more a {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 15px; font-weight: 600; color: #fff;
+  padding-bottom: 3px; border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  transition: border-color 0.25s var(--ease), gap 0.25s var(--ease);
+}
+.sec-more a:hover { border-bottom-color: #fff; gap: 13px; }
+.sec-more .arrow svg { width: 17px; height: 17px; display: block; }

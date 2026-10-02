@@ -263,9 +263,72 @@
         const start = () => { try { big.currentTime = at; } catch (e) {} big.play().catch(() => {}); };
         if (big.readyState >= 1) start();
         else big.addEventListener("loadedmetadata", start, { once: true });
+        // 全螢幕用的是「螢幕」高度而不是視窗高度，拿得到就多賺一點。
+        // 嵌在 Kolable 的 iframe 裡時外層沒給 allow="fullscreen" 會被擋，
+        // 擋掉也沒關係，下面的縮放才是主要手段。
+        const fs = box.requestFullscreen || box.webkitRequestFullscreen;
+        if (fs) { try { Promise.resolve(fs.call(box)).catch(() => {}); } catch (e) {} }
+        setZoom(1);
         box.querySelector(".vbox-close")?.focus();
       };
+
+      // ---- 縮放與拖曳 ----
+      // 來源影片是 1080×1920 的直式畫面，橫向螢幕放得下的高度換算回去
+      // 大概只有原尺寸四成，字當然看不清楚。所以讓它可以放大到超出視窗再用拖的。
+      const NATIVE_W = 1080;
+      const stage = document.getElementById("vboxStage");
+      const pct = document.getElementById("vboxPct");
+      const STEPS = [1, 1.4, 1.9, 2.5, 3.2];
+      let zi = 0;
+
+      function setZoom(z) {
+        zi = Math.max(0, Math.min(STEPS.length - 1, z === 1 ? 0 : zi));
+        apply();
+      }
+      function apply() {
+        big.style.setProperty("--z", STEPS[zi]);
+        box.querySelector('[data-z="out"]').disabled = zi === 0;
+        box.querySelector('[data-z="in"]').disabled = zi === STEPS.length - 1;
+        // 顯示「相對原始畫質」的比例，使用者才知道還有沒有放大的空間
+        requestAnimationFrame(() => {
+          const w = big.getBoundingClientRect().width;
+          if (w) pct.textContent = Math.round((w / NATIVE_W) * 100) + "%";
+          const over = big.offsetHeight > stage.clientHeight + 2 || big.offsetWidth > stage.clientWidth + 2;
+          stage.classList.toggle("grabbable", over);
+          if (zi === 0) { stage.scrollTop = 0; stage.scrollLeft = 0; }
+        });
+      }
+      box.querySelectorAll("[data-z]").forEach((b) =>
+        b.addEventListener("click", () => {
+          zi += b.dataset.z === "in" ? 1 : -1;
+          zi = Math.max(0, Math.min(STEPS.length - 1, zi));
+          apply();
+        }));
+
+      // 拖曳平移：避開影片底部的原生控制列，不然會跟拖進度條打架
+      let drag = null;
+      stage.addEventListener("pointerdown", (e) => {
+        if (!stage.classList.contains("grabbable") || e.button !== 0) return;
+        const r = big.getBoundingClientRect();
+        if (e.clientY > r.bottom - 64) return;
+        drag = { x: e.clientX, y: e.clientY, sl: stage.scrollLeft, st: stage.scrollTop };
+        stage.classList.add("grabbing");
+        stage.setPointerCapture(e.pointerId);
+      });
+      stage.addEventListener("pointermove", (e) => {
+        if (!drag) return;
+        e.preventDefault();
+        stage.scrollLeft = drag.sl - (e.clientX - drag.x);
+        stage.scrollTop = drag.st - (e.clientY - drag.y);
+      });
+      const endDrag = () => { drag = null; stage.classList.remove("grabbing"); };
+      stage.addEventListener("pointerup", endDrag);
+      stage.addEventListener("pointercancel", endDrag);
+      addEventListener("resize", () => { if (box.classList.contains("open")) apply(); });
       const close = () => {
+        if (document.fullscreenElement || document.webkitFullscreenElement) {
+          (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
+        }
         box.classList.remove("open"); box.setAttribute("aria-hidden", "true");
         document.body.style.overflow = "";
         const at = big.currentTime || 0;
@@ -277,6 +340,12 @@
       openBtn.addEventListener("click", open);
       box.querySelectorAll("[data-vclose]").forEach((el) => el.addEventListener("click", close));
       addEventListener("keydown", (e) => { if (e.key === "Escape" && box.classList.contains("open")) close(); });
+      // 使用者直接離開全螢幕（Esc 或系統手勢）時，燈箱也一起收掉，不要留一個半開的狀態
+      ["fullscreenchange", "webkitfullscreenchange"].forEach((ev) =>
+        document.addEventListener(ev, () => {
+          const out = !document.fullscreenElement && !document.webkitFullscreenElement;
+          if (out && box.classList.contains("open")) close();
+        }));
     })();
 
     if (reduce) return;                       // 使用者要求減少動態就不自動播
