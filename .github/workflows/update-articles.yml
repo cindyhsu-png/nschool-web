@@ -17,15 +17,27 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
+      # Playwright 版本要釘住。之前寫 `npm install -D playwright` 沒釘版本，
+      # 等於每天抓一個可能換掉預設行為的新版 —— 這類無聲漂移很難事後追。
       - name: Install Playwright
         run: |
-          npm install -D playwright
+          npm install -D playwright@1.49.1
           npx playwright install --with-deps chromium
 
       - name: Fetch latest articles
         run: node scripts/fetch-articles.mjs
+
+      # 失敗時把 runner 實際看到的頁面存起來，下次不必再瞎猜
+      - name: Upload debug artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blog-render-debug
+          path: .debug/
+          if-no-files-found: ignore
+          retention-days: 14
 
       - name: Commit if changed
         run: |
