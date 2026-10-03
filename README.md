@@ -65,5 +65,11 @@ archive/v1/      — v1.0 舊版首頁封存，不部署（見 archive/v1/ARCHIV
 - 排程已停用（`.github/workflows/update-articles.yml` 的 cron 註解掉）
 - 已向 Kolable 提出公開讀取端點的需求：`docs/kolable-posts-api-request.md`
 - **在那之前要更新文章**：在**本機**（不是 GitHub）跑
-  `node scripts/fetch-articles.mjs`，再 commit `articles.json`
+
+  ```bash
+  cd ~/Desktop/營運處/nschool財經/nschool-web && npm run articles && git add articles.json && git commit -m "chore: 更新文章專區" && git push
+  ```
+
+  第一次要先裝一次瀏覽器（約 130MB，只需做一次）：
+  `npm install && npx playwright install chromium`
 - 端點做好後：把 `fetch-articles.mjs` 改成打那支 API，再解開 cron

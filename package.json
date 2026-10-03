@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "playwright": "^1.49.1"
+  },
+  "name": "nschool-web",
+  "private": true,
+  "scripts": {
+    "articles": "node scripts/fetch-articles.mjs"
+  }
+}
