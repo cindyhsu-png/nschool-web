@@ -54,3 +54,16 @@ archive/v1/      — v1.0 舊版首頁封存，不部署（見 archive/v1/ARCHIV
 - 文章 / 課程 / 試看：nschool.tw
 
 不使用 emoji；裝飾一律 inline SVG 與文字符號。
+
+## 文章專區目前不會自動更新（2026-10-03）
+
+`articles.json` 餵首頁的文章專區。原本有每日排程去抓 `nschool.tw/blog`，
+但 **nschool.tw 擋掉 GitHub Actions 的機房 IP**（403 Forbidden），
+從 2026 年 6 月中起每天失敗，資料停在 6/16 沒人發現 ——
+因為頁面抓不到檔案時會**無聲改用寫死的舊文章**，畫面看起來永遠正常。
+
+- 排程已停用（`.github/workflows/update-articles.yml` 的 cron 註解掉）
+- 已向 Kolable 提出公開讀取端點的需求：`docs/kolable-posts-api-request.md`
+- **在那之前要更新文章**：在**本機**（不是 GitHub）跑
+  `node scripts/fetch-articles.mjs`，再 commit `articles.json`
+- 端點做好後：把 `fetch-articles.mjs` 改成打那支 API，再解開 cron

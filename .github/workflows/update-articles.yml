@@ -1,9 +1,16 @@
 name: Update latest articles
 
-# 每天台灣時間 08:00（UTC 00:00）自動抓最新文章；也可手動觸發
+# 2026-10-03 停掉每日排程。
+# 原因：nschool.tw 擋掉 GitHub Actions 的機房 IP，這支工作從 2026 年 6 月中起
+# 每天失敗一次（403 Forbidden，runner 拿到的是空白頁），不可能成功，
+# 只是每天產生一封失敗通知而已。
+# 已向 Kolable 提出公開讀取端點的需求：docs/kolable-posts-api-request.md
+# 端點做好之後，把 fetch-articles.mjs 改成打那支 API，再把下面的 schedule 解開。
+# 在那之前要更新文章：從辦公室的電腦手動跑 workflow_dispatch 不會成功（它仍在 runner 上跑），
+# 要在本機執行 node scripts/fetch-articles.mjs 再 commit。
 on:
-  schedule:
-    - cron: "0 0 * * *"
+  # schedule:
+  #   - cron: "0 0 * * *"   # 每天台灣時間 08:00（UTC 00:00）
   workflow_dispatch: {}
 
 permissions:
