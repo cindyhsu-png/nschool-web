@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "playwright": "^1.49.1"
+    "playwright": "1.49.1"
   },
   "name": "nschool-web",
   "private": true,
