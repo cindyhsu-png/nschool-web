@@ -1,20 +1,22 @@
 name: Update latest articles
 
-# 2026-10-03 停掉每日排程。
-# 原因：nschool.tw 擋掉 GitHub Actions 的機房 IP，這支工作從 2026 年 6 月中起
-# 每天失敗一次（403 Forbidden，runner 拿到的是空白頁），不可能成功，
-# 只是每天產生一封失敗通知而已。
-# 已向 Kolable 提出公開讀取端點的需求：docs/kolable-posts-api-request.md
-# 端點做好之後，把 fetch-articles.mjs 改成打那支 API，再把下面的 schedule 解開。
-# 在那之前要更新文章：從辦公室的電腦手動跑 workflow_dispatch 不會成功（它仍在 runner 上跑），
-# 要在本機執行 node scripts/fetch-articles.mjs 再 commit。
+# 每天從 Kolable 的 GraphQL 抓 nschool 最新 4 篇已發布文章，更新 articles.json。
+#
+# 2026-10-06 恢復每日排程。原本是用無頭瀏覽器渲染 nschool.tw/blog，
+# 但 nschool.tw 擋掉 GitHub Actions 的機房 IP（6 月中起每天 403），
+# 改成直接查 Kolable 的 GraphQL（scripts/fetch-articles.mjs），不再經過 nschool.tw。
+#
+# 需要兩個 repo secrets（Settings → Secrets and variables → Actions）：
+#   KOLABLE_CLIENT_ID、KOLABLE_CLIENT_KEY（nschool 品牌）
+# 這個 repo 是 public：不要在任何步驟把它們或換來的 token 印出來。
 on:
-  # schedule:
-  #   - cron: "0 0 * * *"   # 每天台灣時間 08:00（UTC 00:00）
+  schedule:
+    - cron: "0 0 * * *"   # 每天台灣時間 08:00（UTC 00:00）
   workflow_dispatch: {}
 
 permissions:
   contents: write
+  actions: write   # 用來叫起 deploy.yml，見最後一步
 
 jobs:
   update:
@@ -26,27 +28,15 @@ jobs:
         with:
           node-version: 22
 
-      # Playwright 版本要釘住。之前寫 `npm install -D playwright` 沒釘版本，
-      # 等於每天抓一個可能換掉預設行為的新版 —— 這類無聲漂移很難事後追。
-      - name: Install Playwright
-        run: |
-          npm install -D playwright@1.49.1
-          npx playwright install --with-deps chromium
-
+      # 腳本只用 Node 內建的 fetch，不需要 npm install
       - name: Fetch latest articles
+        env:
+          KOLABLE_CLIENT_ID: ${{ secrets.KOLABLE_CLIENT_ID }}
+          KOLABLE_CLIENT_KEY: ${{ secrets.KOLABLE_CLIENT_KEY }}
         run: node scripts/fetch-articles.mjs
 
-      # 失敗時把 runner 實際看到的頁面存起來，下次不必再瞎猜
-      - name: Upload debug artifacts on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: blog-render-debug
-          path: playwright-debug/
-          if-no-files-found: ignore
-          retention-days: 14
-
       - name: Commit if changed
+        id: commit
         run: |
           if git diff --quiet -- articles.json; then
             echo "No change in articles.json"
@@ -56,4 +46,13 @@ jobs:
             git add articles.json
             git commit -m "chore: refresh latest articles"
             git push
+            echo "pushed=1" >> "$GITHUB_OUTPUT"
           fi
+
+      # 用 GITHUB_TOKEN push 的 commit 不會觸發其他 workflow（GitHub 的規則，防無限迴圈），
+      # 所以 deploy.yml 的 on: push 不會跑、網站不會更新。要明確叫它一次。
+      - name: Trigger Pages deploy
+        if: steps.commit.outputs.pushed == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref "${{ github.ref_name }}"

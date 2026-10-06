@@ -1,15 +1,16 @@
 # 部署與文章自動更新
 
 repo 根目錄就是網站根目錄（純靜態、無 build、無後端）。
-文章專區讀取同目錄的 `articles.json`；一個排程（GitHub Action）每天用無頭瀏覽器
-抓 nschool.tw/blog 的最新四則、更新 `articles.json` 並 push，push 再觸發重新部署。
+文章專區讀取同目錄的 `articles.json`；一個排程（GitHub Action）每天查 Kolable 的 GraphQL
+拿 nschool 最新四篇已發布文章、更新 `articles.json` 並 push，再明確叫起一次部署
+（用 `GITHUB_TOKEN` push 的 commit 不會自動觸發 `deploy.yml`）。
 
 ```
 （repo 根 = 網站根）
 ├─ index.html / style.css / hero.js / main.js   ← 網站本體（純靜態）
 ├─ articles.json                                 ← 文章資料（CI 自動更新）
 ├─ img/                                          ← logo + 師資照片（自包含）
-├─ scripts/fetch-articles.mjs                    ← 抓文章腳本（Playwright，僅 CI 用）
+├─ scripts/fetch-articles.mjs                    ← 抓文章腳本（查 Kolable GraphQL，僅 CI／本機用）
 ├─ .github/workflows/deploy.yml                  ← 推 main → 部署到 GitHub Pages
 ├─ .github/workflows/update-articles.yml         ← 每日抓文章
 └─ archive/v1/                                   ← v1.0 舊版封存（不是正式站）
@@ -33,9 +34,11 @@ repo 根目錄就是網站根目錄（純靜態、無 build、無後端）。
 
 1. repo → Settings → Actions → General → Workflow permissions → 選 **Read and write permissions**
    （讓 Action 能把更新後的 `articles.json` commit 回 repo）。
-2. 改頻率：編輯 workflow 裡的 `cron`（UTC 時間）
+2. repo → Settings → Secrets and variables → Actions → New repository secret，加兩個：
+   `KOLABLE_CLIENT_ID`、`KOLABLE_CLIENT_KEY`（nschool 品牌）。repo 是 public，值只能放這裡。
+3. 改頻率：編輯 workflow 裡的 `cron`（UTC 時間）
    - 每天：`0 0 * * *`　每 6 小時：`0 */6 * * *`　每週一：`0 0 * * 1`
-3. 想立即跑一次：repo → Actions →「Update latest articles」→ Run workflow。
+4. 想立即跑一次：repo → Actions →「Update latest articles」→ Run workflow。
 
 ## 三、遷入 Kolable（比照 nova）
 
@@ -75,18 +78,16 @@ python3 -m http.server 5500
 ## 本機測試抓取腳本（選用）
 
 ```bash
-npm install -D playwright
-npx playwright install chromium
-node scripts/fetch-articles.mjs   # 會更新 articles.json
+KOLABLE_CLIENT_ID=… KOLABLE_CLIENT_KEY=… node scripts/fetch-articles.mjs   # 文章有變才會改 articles.json
 ```
 
-（這些 Node 套件只在本機／CI 用，不會進 repo。）
+（只用 Node 內建的 fetch，不需要 `npm install`。）
 
 ## 運作原理 / 注意
 
-- 部落格封面是 CSS background-image、且站台是 SPA（私有 Hasura GraphQL，需平台 auth），
-  所以用 Playwright 渲染真實頁面抓取，比硬打私有 API 穩定。
-- 若 nschool.tw 部落格版型大改，`fetch-articles.mjs` 的選擇器可能要調整
-  （Action 會失敗並保留上一版 `articles.json`，網站不會壞）。
+- 文章資料在 Kolable 的 Hasura GraphQL（`rhdb.kolable.com`）。用品牌 clientId／clientKey
+  向 `api.kolable.app` 換 token，直接讀 `post` 表的結構化欄位，不必渲染頁面、不受版型影響。
+- 換 token 回 403 多半是來源 IP 被 Kolable 擋，腳本會分開提示；任何失敗都不會覆寫
+  `articles.json`（Action 失敗、網站保留上一版）。
 - 前端讀不到 `articles.json` 時，會自動沿用 `index.html` 內建的四則作為 fallback。
 - 3D 場景與字體走 CDN（unpkg three、Google Fonts），需要對外網路；離線環境會退化但不會壞版。

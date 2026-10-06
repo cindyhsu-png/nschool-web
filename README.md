@@ -23,7 +23,7 @@ hero.js          — 持續性 WebGL 場景（粒子光球 + 結晶核心 + 六�
 main.js          — Hero 股市標註、文章專區動態渲染、師資輪播、計數、進場、彈窗
 articles.json    — 文章專區資料（由 CI 每日自動更新）
 img/             — logo 與師資照片（自包含）
-scripts/         — 文章抓取腳本（Playwright，僅 CI 用）
+scripts/         — 文章抓取腳本（查 Kolable GraphQL，僅 CI／本機用）
 .github/         — deploy.yml（Pages 部署）＋ update-articles.yml（每日排程）
 archive/v1/      — v1.0 舊版首頁封存，不部署（見 archive/v1/ARCHIVE.md）
 ```
@@ -55,21 +55,22 @@ archive/v1/      — v1.0 舊版首頁封存，不部署（見 archive/v1/ARCHIV
 
 不使用 emoji；裝飾一律 inline SVG 與文字符號。
 
-## 文章專區目前不會自動更新（2026-10-03）
+## 文章專區的資料來源（2026-10-06 起）
 
-`articles.json` 餵首頁的文章專區。原本有每日排程去抓 `nschool.tw/blog`，
+`articles.json` 餵首頁的文章專區。原本每日排程用無頭瀏覽器去渲染 `nschool.tw/blog`，
 但 **nschool.tw 擋掉 GitHub Actions 的機房 IP**（403 Forbidden），
 從 2026 年 6 月中起每天失敗，資料停在 6/16 沒人發現 ——
 因為頁面抓不到檔案時會**無聲改用寫死的舊文章**，畫面看起來永遠正常。
 
-- 排程已停用（`.github/workflows/update-articles.yml` 的 cron 註解掉）
-- 已向 Kolable 提出公開讀取端點的需求：`docs/kolable-posts-api-request.md`
-- **在那之前要更新文章**：在**本機**（不是 GitHub）跑
+現在改成**直接查 Kolable 的 GraphQL**（`scripts/fetch-articles.mjs`），不經過 nschool.tw：
+
+- 用 nschool 品牌的 clientId／clientKey 換 token，查 `post` 表最新 4 篇已發布文章
+  （沒刪除、有發布時間、發布時間已到）。
+- 需要 repo secrets `KOLABLE_CLIENT_ID`、`KOLABLE_CLIENT_KEY`。**這個 repo 是 public**，
+  值只放 Secrets，不要寫進任何檔案或 log。
+- 原本向 Kolable 提的公開端點需求（`docs/kolable-posts-api-request.md`）因此不需要了。
+- 本機手動更新：
 
   ```bash
-  cd ~/Desktop/營運處/nschool財經/nschool-web && npm run articles && git add articles.json && git commit -m "chore: 更新文章專區" && git push
+  KOLABLE_CLIENT_ID=… KOLABLE_CLIENT_KEY=… npm run articles
   ```
-
-  第一次要先裝一次瀏覽器（約 130MB，只需做一次）：
-  `npm install && npx playwright install chromium`
-- 端點做好後：把 `fetch-articles.mjs` 改成打那支 API，再解開 cron
