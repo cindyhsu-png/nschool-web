@@ -523,6 +523,9 @@ function tick() {
 
   // expose the orb's screen position + pixel radius so the hero ticker
   // can grow its stock quotes outward from the ball
+  // 相機矩陣平常是 render 時才更新：第一幀還沒 render 過，直接投影會除以零變 NaN，
+  // 之後每幀也會用到上一幀的相機位置，所以投影前先自己更新。
+  camera.updateMatrixWorld();
   _oc.copy(group.position).project(camera);
   _oe.copy(group.position); _oe.x += 0.95 * group.scale.x; _oe.project(camera);
   window.__orb = {
