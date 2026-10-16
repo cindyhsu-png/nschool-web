@@ -11,4 +11,3 @@ npm-debug.log*
 .vscode/
 .idea/
 *.swp
-playwright-debug/
