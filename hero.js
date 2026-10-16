@@ -421,25 +421,21 @@ addEventListener("resize", recomputeVisibility);
 // ---------- 跑不動就自動降級 ----------
 // 機器差異很大，與其猜一組參數，不如量實際幀時間：連續偏慢就逐級簡化，
 // 每級都只拿掉「最貴但最不影響辨識度」的東西。
-let perfLevel = 0;              // 0 = 完整，1 = 關殘影，2 = 再降解析度
-let frameAcc = 0, frameN = 0, lastDowngrade = 0;
-function watchPerf(ms, now) {
-  if (perfLevel >= 2) return;
-  frameAcc += ms; frameN++;
-  if (frameN < 60) return;
-  const avg = frameAcc / frameN;
-  frameAcc = 0; frameN = 0;
-  if (avg < 23 || now - lastDowngrade < 2500) return;   // 23ms ≒ 43fps 以下才算跑不動
-  lastDowngrade = now;
-  perfLevel++;
-  // 降級順序照實測效益排：解析度最有感，其次才是折射
-  if (perfLevel === 1) {
-    const lo = Math.min(DPR, 1);
+// 量的是「兩幀之間實際隔多久」（rAF 間隔），不是 composer.render() 呼叫本身：
+// WebGL 是把指令丟給 GPU 就返回，GPU 慢時 CPU 端只花 1–2ms，舊版量那個
+// 永遠判定「不慢」，弱顯卡實測 2fps 跑了 11 秒都沒降級。
+let perfLevel = 0;              // 0 完整｜1 降解析度＋關殘影｜2 關折射｜3 再降解析度＋關 SMAA｜4 低頻更新
+let frameAcc = 0, frameN = 0, lastDowngrade = 0, lastFrameAt = 0;
+const perfStart = performance.now();     // 前 1.5 秒在編 shader、解圖，慢是正常的，不算
+function applyLevel(level) {
+  if (level >= 1) {
+    const lo = Math.min(DPR, level >= 3 ? 0.75 : 1);
     renderer.setPixelRatio(lo);
     composer.setPixelRatio(lo);
     composer.setSize(innerWidth, innerHeight);
     afterimage.enabled = false;                          // 殘影要多讀寫一整張畫面
-  } else {
+  }
+  if (level >= 2 && glassMat.transmission !== 0) {
     // 折射要把整個場景再畫一次（實測單這項就佔三成），真的跑不動時關掉最有感；
     // 用半透明玻璃頂替，造型與亮度都還在，只是少了背景穿透與彩散。
     glassMat.transmission = 0;
@@ -448,7 +444,30 @@ function watchPerf(ms, now) {
     glassMat.transparent = true;
     glassMat.needsUpdate = true;
   }
+  if (level >= 3) smaa.enabled = false;                 // 解析度已經降了，鋸齒不明顯
 }
+function watchPerf(now) {
+  // 畫布剛恢復顯示（或分頁切回來）的第一幀間隔是暫停時間，不算
+  const gap = lastFrameAt ? now - lastFrameAt : 0;
+  lastFrameAt = now;
+  if (perfLevel >= 4 || !gap || gap > 1000 || now - perfStart < 1500) return;
+  frameAcc += gap; frameN++;
+  // 用「累積滿 1 秒」而不是固定 60 幀判斷：2fps 時 60 幀要等 30 秒
+  if (frameAcc < 1000 && frameN < 60) return;
+  const avg = frameAcc / frameN;
+  frameAcc = 0; frameN = 0;
+  if (avg < 23 || now - lastDowngrade < 1200) return;   // 23ms ≒ 43fps 以下才算跑不動
+  lastDowngrade = now;
+  perfLevel++;
+  applyLevel(perfLevel);
+}
+// 沒有硬體加速（軟體算圖）時不用等量測，直接從最省的一級開始
+try {
+  const gl = renderer.getContext();
+  const info = gl.getExtension("WEBGL_debug_renderer_info");
+  const name = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : "";
+  if (/swiftshader|llvmpipe|softpipe|basic render|software/i.test(name)) { perfLevel = 3; applyLevel(3); }
+} catch (_) {}
 
 // ---------- render loop ----------
 const clock = new THREE.Clock();
@@ -457,8 +476,11 @@ function tick() {
   const dt = Math.min(clock.getDelta(), 0.05);
   const t = clock.elapsedTime;
 
-  if (!canvasVisible || document.hidden) { requestAnimationFrame(tick); return; }
-  const frameT0 = performance.now();
+  if (!canvasVisible || document.hidden) { lastFrameAt = 0; requestAnimationFrame(tick); return; }
+  const now = performance.now();
+  // 最後一級：場景改成約 8fps 更新，把 GPU 讓給捲動與其他互動
+  if (perfLevel >= 4 && now - lastFrameAt < 120) { requestAnimationFrame(tick); return; }
+  watchPerf(now);
 
   progress += (targetProgress - progress) * 0.08;
   mouse.x += (mTarget.x - mouse.x) * 0.05;
@@ -511,7 +533,6 @@ function tick() {
 
   lastP = progress;
   composer.render();
-  watchPerf(performance.now() - frameT0, frameT0);
   requestAnimationFrame(tick);
 }
 tick();
