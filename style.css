@@ -230,7 +230,7 @@ h1, h2, h3, h4 {
 .hero { min-height: 100svh; display: flex; align-items: center; }
 .hero .wrap { width: 100%; }
 .hero h1 { color: #fff; max-width: 14ch; mix-blend-mode: normal; }
-.hero .actions { display: flex; gap: 12px; margin-top: 34px; }
+.hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 
 /* DNA — brand purple gradient text */
 .gtext {
