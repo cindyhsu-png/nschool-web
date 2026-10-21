@@ -661,6 +661,7 @@ h1, h2, h3, h4 {
 .cb-me { height: clamp(34px, 3.4vw, 46px); }
 .cb-logos img[data-brand="capital"] { height: clamp(56px, 5.6vw, 74px); }
 .cb-logos img[data-brand="pocket"] { height: clamp(30px, 3.2vw, 42px); }
+.cb-logos img[data-brand="yuanta"] { height: clamp(30px, 3vw, 40px); }
 .cb-x { font-size: 22px; color: rgba(255, 255, 255, 0.45); font-weight: 300; }
 
 .cb-go {
@@ -1645,4 +1646,9 @@ h1, h2, h3, h4 {
 /* 窄螢幕：大按鈕允許換行、不超出卡片 */
 @media (max-width: 420px) {
   .btn-xl { white-space: normal; max-width: 100%; padding: 16px 20px; font-size: 16px; text-align: left; }
+}
+
+/* 企業合作第三張：兩欄排版時單獨一排置中，維持跟上面同寬 */
+@media (min-width: 861px) {
+  .cb-grid .cobrand:nth-child(3):last-child { grid-column: 1 / -1; justify-self: center; width: calc(50% - 12px); }
 }
