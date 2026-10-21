@@ -1639,3 +1639,10 @@ h1, h2, h3, h4 {
 @media (max-width: 900px) {
   .core-sec .sec-head .sec-more { margin: 4px 0 0; }
 }
+
+/* 嵌在 Kolable 的 iframe 裡：外層已有導覽列與 logo，自家 header 整條不顯示 */
+.in-frame .nav { display: none; }
+/* 窄螢幕：大按鈕允許換行、不超出卡片 */
+@media (max-width: 420px) {
+  .btn-xl { white-space: normal; max-width: 100%; padding: 16px 20px; font-size: 16px; text-align: left; }
+}

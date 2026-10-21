@@ -27,7 +27,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=77" />
+  <!-- 嵌在 Kolable 的 iframe 裡時，外層已有自己的導覽列與 logo，自家 header 不再顯示 -->
+  <script>if (window !== window.top) document.documentElement.classList.add("in-frame");</script>
+  <link rel="stylesheet" href="style.css?v=78" />
   <script type="importmap">
   {
     "imports": {
