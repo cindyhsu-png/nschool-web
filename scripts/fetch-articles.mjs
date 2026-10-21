@@ -1,160 +1,109 @@
 // ============================================================
 //  fetch-articles.mjs
-//  Renders nschool.tw/blog in a headless browser, extracts the
-//  latest 4 articles (title / url / cover / date) and writes
-//  articles.json. Run by the GitHub Action on a schedule.
+//  直接向 Kolable 的 GraphQL（rhdb.kolable.com）查 nschool 最新已發布的
+//  4 篇文章（標題／網址／封面／日期），寫成 articles.json。
+//  由 GitHub Action 每天跑一次，也可以在本機跑。
 //
-//  Why a headless browser (not a direct API call)?
-//  The blog is a JS-rendered SPA backed by a private Hasura
-//  GraphQL endpoint (rhdb.kolable.com) that needs platform auth.
-//  The sitemap lists post URLs but carries no titles, dates or
-//  covers, and the post pages render their OG tags client-side —
-//  so plain HTTP gets us nothing. Rendering the page is the only
-//  option that does not involve reverse-engineering private auth.
+//  為什麼不再用無頭瀏覽器渲染 nschool.tw/blog（2026-10-06）：
+//    - nschool.tw 擋掉 GitHub Actions 的機房 IP（403），從 6 月中起每天失敗。
+//    - 解析畫面本身就不穩：版型一改就靜默抓錯（例如作者名留在標題上）。
+//  文章資料本來就在 Kolable 的 GraphQL 後面，用品牌的 clientId／clientKey
+//  換一張 token 就能直接讀結構化欄位，不必再猜畫面。
 //
-//  2026-10-02: the job had been failing silently since mid-June
-//  (waitForSelector timing out on the runner). The extraction
-//  logic itself was still correct — verified against the live
-//  page, 104 links / 104 covers. So the fixes here are all about
-//  making the RUNNER look like a normal browser, and about
-//  leaving evidence behind when it still doesn't:
-//    - full Chromium instead of the headless shell that newer
-//      Playwright defaults to (more detectable, renders less)
-//    - zh-TW locale / Asia-Taipei timezone / desktop UA
-//    - domcontentloaded + explicit wait, not networkidle
-//      (an SPA that polls never goes idle)
-//    - 3 attempts, and a screenshot + HTML dump on the last one
+//  需要兩個環境變數（GitHub → Settings → Secrets and variables → Actions）：
+//    KOLABLE_CLIENT_ID   nschool 品牌的 clientId
+//    KOLABLE_CLIENT_KEY  nschool 品牌的 clientKey
+//  token 只用在這次執行，不寫檔、不印出來。
 // ============================================================
-import { chromium } from "playwright";
-import { writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
-const BLOG = "https://nschool.tw/blog";
+const AUTH_URL = "https://api.kolable.app/api/v1/auth/token";
+const GRAPHQL_URL = "https://rhdb.kolable.com/v1/graphql";
+const SITE = "https://nschool.tw";
 const OUT = fileURLToPath(new URL("../articles.json", import.meta.url));
-// 不要用 . 開頭：upload-artifact 預設會把隱藏檔案整個跳過
-const DEBUG_DIR = fileURLToPath(new URL("../playwright-debug/", import.meta.url));
-const ATTEMPTS = 3;
+const LIMIT = 4;
 
-const UA =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 " +
-  "(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
-
-function extract() {
-  // 封面是 CSS background-image，用網址裡的文章 id 當 key 對回文章
-  const covers = {};
-  document.querySelectorAll("*").forEach((e) => {
-    const b = getComputedStyle(e).backgroundImage;
-    if (b && b.includes("post_covers")) {
-      const u = b.slice(b.indexOf("url(") + 4).replace(/["')]/g, "").replace(/\)$/, "");
-      const m = u.match(/post_covers\/nschool\/([0-9a-f-]{36})\//);
-      if (m && !covers[m[1]]) covers[m[1]] = u;
-    }
-  });
-
-  // 卡片裡標題、作者、日期是分開的元素，直接讀比對整串文字做字串處理可靠。
-  // 原本是把作者名寫死在正則裡（Dadazhi|游凱翔|撲滿日記…），換個作者就會
-  // 把人名留在標題上，而且不會報錯 —— 這種壞法最難發現。
-  const DATE = /^20\d{2}-\d{2}-\d{2}$/;
-  const seen = new Set();
-  const out = [];
-  document.querySelectorAll('a[href^="/posts/"]').forEach((a) => {
-    const href = a.getAttribute("href");
-    const id = href.split("/").pop();
-    if (seen.has(id)) return;
-    seen.add(id);
-
-    let title = a.querySelector('[class*="featuring"]')?.innerText?.replace(/\s+/g, " ").trim() || "";
-    let date = null;
-    a.querySelectorAll("span").forEach((s) => {
-      const t = (s.innerText || "").trim();
-      if (DATE.test(t)) date = t;
-    });
-
-    // 後備：版型改了還能用——切到日期前，再去掉結尾的作者那一段
-    if (!title) {
-      const raw = (a.innerText || a.textContent || "").replace(/\s+/g, " ").trim();
-      const i = raw.search(/20\d{2}-\d{2}-\d{2}/);
-      title = (i > 0 ? raw.slice(0, i) : raw).trim().replace(/\s+\S+$/, "").trim();
-    }
-    if (!date) {
-      const dm = (a.innerText || "").match(/20\d{2}-\d{2}-\d{2}/);
-      date = dm ? dm[0] : null;
-    }
-
-    out.push({ id, title, url: "https://nschool.tw" + href, cover: covers[id] || null, date });
-  });
-  return out;
-}
-
-async function attempt(n) {
-  const browser = await chromium.launch({ channel: "chromium" });
-  let page;
-  try {
-    const ctx = await browser.newContext({
-      viewport: { width: 1440, height: 1400 },
-      userAgent: UA,
-      locale: "zh-TW",
-      timezoneId: "Asia/Taipei",
-      extraHTTPHeaders: { "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8" },
-    });
-    page = await ctx.newPage();
-    await page.goto(BLOG, { waitUntil: "domcontentloaded", timeout: 60000 });
-    await page.waitForSelector('a[href^="/posts/"]', { timeout: 45000 });
-
-    // 捲動觸發封面圖的 lazy load
-    for (let i = 0; i < 6; i++) {
-      await page.mouse.wheel(0, 1400);
-      await page.waitForTimeout(500);
-    }
-    await page.waitForTimeout(1500);
-
-    const items = await page.evaluate(extract);
-    console.log(`attempt ${n}: ${items.length} links, ${items.filter((i) => i.cover).length} with cover`);
-    return items;
-  } catch (err) {
-    // 最後一次才留證據：下次再壞的時候看得到 runner 到底拿到什麼頁面，
-    // 不必再瞎猜是被擋、沒渲染、還是版型改了
-    if (n === ATTEMPTS && page) {
-      try {
-        mkdirSync(DEBUG_DIR, { recursive: true });
-        await page.screenshot({ path: DEBUG_DIR + "blog.png", fullPage: false });
-        writeFileSync(DEBUG_DIR + "blog.html", await page.content());
-        console.error("Saved playwright-debug/blog.png and playwright-debug/blog.html");
-      } catch (e2) {
-        console.error("Could not save debug artifacts:", e2.message);
-      }
-    }
-    throw err;
-  } finally {
-    await browser.close();
-  }
-}
-
-let items = [];
-let lastErr;
-for (let n = 1; n <= ATTEMPTS; n++) {
-  try {
-    items = await attempt(n);
-    if (items.length) break;
-  } catch (err) {
-    lastErr = err;
-    console.error(`attempt ${n} failed: ${err.message.split("\n")[0]}`);
-    if (n < ATTEMPTS) await new Promise((r) => setTimeout(r, 5000));
-  }
-}
-
-const latest = items
-  .filter((i) => i.cover && i.date && i.title)
-  .sort((a, b) => b.date.localeCompare(a.date))
-  .slice(0, 4)
-  .map(({ title, url, cover, date }) => ({ title, url, cover, date }));
-
-if (latest.length < 1) {
-  console.error("No articles extracted — page did not render, or structure changed.");
-  if (lastErr) console.error(lastErr.message);
+function fail(msg) {
+  console.error(msg);
   process.exit(1);
 }
 
-const json = { updatedAt: new Date().toISOString().slice(0, 10), source: BLOG, items: latest };
+const clientId = process.env.KOLABLE_CLIENT_ID;
+const clientKey = process.env.KOLABLE_CLIENT_KEY;
+if (!clientId || !clientKey) fail("缺 KOLABLE_CLIENT_ID 或 KOLABLE_CLIENT_KEY，停在這裡（articles.json 不動）。");
+
+async function post(url, body, headers = {}) {
+  const r = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...headers },
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(30000),
+  });
+  const text = await r.text();
+  let json = null;
+  try { json = JSON.parse(text); } catch { /* 非 JSON（例如被擋時的 HTML 頁）*/ }
+  return { status: r.status, json, text };
+}
+
+// 1. 換 token。permission 給空陣列＝不要求額外權限，只讀文章用不到更多。
+const auth = await post(AUTH_URL, { clientId, key: clientKey, permission: [] });
+const token = auth.json?.result?.authToken;
+if (!token) {
+  // 403 多半是來源 IP 被擋，跟帳密錯誤分開講，下次壞掉才知道要找誰
+  const hint = auth.status === 403 ? "（403：來源 IP 可能被 Kolable 擋了，不是帳密問題）" : "";
+  fail(`換不到 Kolable token：HTTP ${auth.status}${hint}`);
+}
+
+// 2. 只拿已發布的：沒刪除、有發布時間、而且發布時間已經到了（排程中的未來文章不算）
+const now = new Date().toISOString();
+const query = `query ($now: timestamptz!, $limit: Int!) {
+  post(
+    where: { is_deleted: { _eq: false }, published_at: { _is_null: false, _lte: $now } }
+    order_by: { published_at: desc }
+    limit: $limit
+  ) {
+    id
+    title
+    cover_url
+    published_at
+    abstract
+    post_roles(where: { name: { _eq: "author" } }) { member { name } }
+  }
+}`;
+const res = await post(GRAPHQL_URL, { query, variables: { now, limit: LIMIT } },
+  { Authorization: `Bearer ${token}` });
+if (res.status !== 200 || res.json?.errors || !Array.isArray(res.json?.data?.post)) {
+  const err = res.json?.errors?.[0]?.message || res.text.slice(0, 200);
+  fail(`GraphQL 查詢失敗：HTTP ${res.status} ${err}`);
+}
+
+// 發布時間存 UTC，首頁顯示的是台灣日期
+const taipeiDate = (iso) =>
+  new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Taipei" }).format(new Date(iso));
+
+const items = res.json.data.post
+  .filter((p) => p.title && p.cover_url)
+  .map((p) => ({
+    title: p.title.trim(),
+    url: `${SITE}/posts/${p.id}`,
+    cover: p.cover_url,
+    date: taipeiDate(p.published_at),
+    author: p.post_roles?.[0]?.member?.name || null,
+    excerpt: p.abstract?.trim() || null,
+  }));
+
+// 一篇都沒有就不覆蓋：前端讀到空清單會退回寫死的舊文章，畫面看不出壞掉
+if (items.length < 1) fail("Kolable 回來 0 篇已發布文章，停在這裡（articles.json 不動）。");
+
+// 文章沒變就不重寫：不然每天只因 updatedAt 換日就多一個 commit、多部署一次
+let prev = null;
+try { prev = JSON.parse(readFileSync(OUT, "utf8")); } catch { /* 第一次或檔案壞掉就照寫 */ }
+if (prev && JSON.stringify(prev.items) === JSON.stringify(items)) {
+  console.log(`No change: ${items.length} articles, newest ${items[0].date}`);
+  process.exit(0);
+}
+
+const json = { updatedAt: taipeiDate(now), source: `${SITE}/blog`, items };
 writeFileSync(OUT, JSON.stringify(json, null, 2) + "\n");
-console.log(`Wrote ${latest.length} articles to articles.json (newest ${latest[0].date})`);
+console.log(`Wrote ${items.length} articles to articles.json (newest ${items[0].date})`);

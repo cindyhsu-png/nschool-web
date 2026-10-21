@@ -1,30 +1,38 @@
 {
-  "updatedAt": "2026-10-03",
+  "updatedAt": "2026-10-06",
   "source": "https://nschool.tw/blog",
   "items": [
     {
       "title": "晶片也要蓋立體城市？一次看懂先進製程與 ALD 的關鍵角色",
       "url": "https://nschool.tw/posts/8c48a44f-6b65-4336-8875-8aba704ad72f",
       "cover": "https://static.kolable.com/post_covers/nschool/8c48a44f-6b65-4336-8875-8aba704ad72f/1790915274365/1200",
-      "date": "2026-10-02"
+      "date": "2026-10-02",
+      "author": "nSchool",
+      "excerpt": "先進製程到底在做什麼？用蓋城市的比喻，認識沉積、微影、蝕刻與 CMP，並看懂 ALD 為何適合精細立體結構，以及設備商受惠前必須跨過的量產門檻。"
     },
     {
       "title": "AI 資料中心驅動傳輸變革：光通訊與 CPO 概念股產業鏈全解析",
       "url": "https://nschool.tw/posts/af9bced0-8e32-4ac6-89f6-e2ca48427815",
       "cover": "https://static.kolable.com/post_covers/nschool/af9bced0-8e32-4ac6-89f6-e2ca48427815/1790230596340-d25dc148-1910-48dc-ad48-c42f75c025c9/1200",
-      "date": "2026-09-30"
+      "date": "2026-09-30",
+      "author": "撲滿日記",
+      "excerpt": "AI 資料中心為何從銅線走向光通訊？一次看懂傳統光模組、矽光子與 CPO 的差異，並掌握台股從光元件、封裝測試到交換器的產業鏈角色。"
     },
     {
       "title": "川習會為什麼牽動 AI 股？一次看懂油價、利率與科技股的連動",
       "url": "https://nschool.tw/posts/baca48fa-4af6-4ca2-8e1f-0a6a4290f5de",
       "cover": "https://static.kolable.com/post_covers/nschool/baca48fa-4af6-4ca2-8e1f-0a6a4290f5de/1790648907729-9866df7d-2ee2-46cd-9ca3-4d1e10f55b65/1200",
-      "date": "2026-09-25"
+      "date": "2026-09-25",
+      "author": "Minor",
+      "excerpt": "川習會與中東情勢為何可能牽動 AI 股？從航運與油價、通膨預期、市場利率到企業資金成本，拆解外交消息傳向科技股的可能路徑。"
     },
     {
       "title": "升息1碼衝擊有多大？快速看懂對「台股、金融股、房貸」的三大影響",
       "url": "https://nschool.tw/posts/c40403c1-9de1-48d2-a607-1a17ae52c63f",
       "cover": "https://static.kolable.com/post_covers/nschool/c40403c1-9de1-48d2-a607-1a17ae52c63f/1790156700447/1200",
-      "date": "2026-09-23"
+      "date": "2026-09-23",
+      "author": "撲滿日記",
+      "excerpt": "美國升息、台灣凍息，台股、金融股與房貸會受到哪些影響？從一碼換算、資金成本到房貸試算，一次掌握利率變動期的新手防守策略。"
     }
   ]
 }
